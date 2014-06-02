@@ -1,12 +1,17 @@
 package r2b.apps.base;
 
+import r2b.apps.utils.Logger;
+import android.annotation.TargetApi;
+import android.app.Fragment;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
+
+@TargetApi(11/*Build.VERSION_CODES.HONEYCOMB*/)
 public abstract class BaseFragment extends Fragment {
 	
 	protected final OnClickListener clickListener = new OnClickListener() {		
@@ -68,5 +73,46 @@ public abstract class BaseFragment extends Fragment {
 	protected void switchFragment(Fragment fragment, String tag, boolean addToStack) {
 		((BaseActivity) getActivity()).switchFragment(fragment, tag, addToStack);
 	}
+	
+	/**
+	 * Switch between child fragments inner the base fragment.
+	 * @param fragment
+	 * @param tag
+	 * @param addToStack
+	 * @param frgContainerId
+	 */
+	@TargetApi(17/*Build.VERSION_CODES.JELLY_BEAN_MR1*/)
+	protected void switchChildFragment(Fragment fragment, String tag, boolean addToStack, int frgContainerId) {
+
+		if (Build.VERSION.SDK_INT >= 17/*Build.VERSION_CODES.JELLY_BEAN_MR1*/) {
+			if (addToStack) {
+				getChildFragmentManager().beginTransaction()
+						.add(frgContainerId, fragment, tag)
+						.addToBackStack(fragment.getClass().getName()).commit();
+				Logger.i(BaseActivity.class.getSimpleName(), "Add child: " + tag + ", saving to stack");
+			} else {
+				getChildFragmentManager().popBackStack();
+				getChildFragmentManager().beginTransaction()
+						.add(frgContainerId, fragment, tag)
+						.addToBackStack(fragment.getClass().getName()).commit();
+				Logger.i(BaseActivity.class.getSimpleName(), "Add child: " + tag + ", without saving to stack");
+			}			
+		}
+		else {
+			if (addToStack) {
+				getFragmentManager().beginTransaction()
+						.add(frgContainerId, fragment, tag)
+						.addToBackStack(fragment.getClass().getName()).commit();
+				Logger.i(BaseActivity.class.getSimpleName(), "Add: " + tag + ", saving to stack");
+			} else {
+				getFragmentManager().popBackStack();
+				getFragmentManager().beginTransaction()
+						.add(frgContainerId, fragment, tag)
+						.addToBackStack(fragment.getClass().getName()).commit();
+				Logger.i(BaseActivity.class.getSimpleName(), "Add: " + tag + ", without saving to stack");
+			}			
+		}
+
+	}	
 	
 }

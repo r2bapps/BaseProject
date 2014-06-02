@@ -1,8 +1,8 @@
-package r2b.apps.base;
+package r2b.apps.base.support;
 
 import java.util.List;
 
-import android.annotation.TargetApi;
+import r2b.apps.base.BaseAdapter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
@@ -12,8 +12,8 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-@TargetApi(11/*Build.VERSION_CODES.HONEYCOMB*/)
-public abstract class BaseAbsListFragment<T> extends BaseFragment {
+
+public abstract class SupportBaseAbsListFragment<T> extends SupportBaseFragment {
 	
 	/**
 	 * Key to store scroll offset when app goes to background.

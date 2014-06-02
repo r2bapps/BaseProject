@@ -32,6 +32,7 @@
 
 package r2b.apps.utils;
 
+
 /**
  * Constants class.
  */

@@ -2,11 +2,13 @@ package r2b.apps.base;
 
 import r2b.apps.R;
 import r2b.apps.utils.Logger;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 
-public abstract class BaseActivity extends FragmentActivity {	
+@TargetApi(11/*Build.VERSION_CODES.HONEYCOMB*/)
+public abstract class BaseActivity extends Activity {	
 	
 	protected abstract void initWindowFeatures();
 	
@@ -49,8 +51,8 @@ public abstract class BaseActivity extends FragmentActivity {
 	
 	@Override
 	public void onBackPressed() {
-		if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-			getSupportFragmentManager().popBackStack();
+		if (getFragmentManager().getBackStackEntryCount() > 1) {
+			getFragmentManager().popBackStack();
 			Logger.i(BaseActivity.class.getSimpleName(), "PopBackStack");
 		} else {
 			super.onBackPressed();
@@ -60,13 +62,13 @@ public abstract class BaseActivity extends FragmentActivity {
 	protected void switchFragment(Fragment fragment, String tag, boolean addToStack) {
 
 		if (addToStack) {
-			getSupportFragmentManager().beginTransaction()
+			getFragmentManager().beginTransaction()
 					.add(R.id.container, fragment, tag)
 					.addToBackStack(fragment.getClass().getName()).commit();
 			Logger.i(BaseActivity.class.getSimpleName(), "Add: " + tag + ", saving to stack");
 		} else {
-			getSupportFragmentManager().popBackStack();
-			getSupportFragmentManager().beginTransaction()
+			getFragmentManager().popBackStack();
+			getFragmentManager().beginTransaction()
 					.add(R.id.container, fragment, tag)
 					.addToBackStack(fragment.getClass().getName()).commit();
 			Logger.i(BaseActivity.class.getSimpleName(), "Add: " + tag + ", without saving to stack");
