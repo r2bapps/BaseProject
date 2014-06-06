@@ -5,6 +5,37 @@ Android project with a base common development
 
 
 
+Main functionality
+------------------
+**Base Activity**:
+* Methods for common operations like: findById, set values to this views, set listeners 
+to this views, ... 
+* Show common toast.
+* Show correctly only one fragment dialog, in all app.
+* A main click listener to send to current fragments and centralized its management.
+* Shared preferences only for activity.
+* A switch fragment method that runs correctly on back and retry again.
+
+**Base Fragment**:
+* Activity methods façade: You do not need to call ((MyActivity) getActivity())... methods.
+* Methods for common operations like: findById, set values to this views, set listeners 
+to this views, ... 
+* Shared preferences only for fragment.
+* A switch fragment method for child fragments.
+
+**Base Dialog Fragment**:
+* A dialog that can show a title, up to three buttons, a traditional 
+single choice list, a list of selectable items (single with radio or multiple choice with 
+checkbox), or a custom layout.
+
+**Base AbsList Fragment**: 
+* Parametrized with templates and capable to show list or grid views.
+
+**Base AbsList Adapter**:
+* Adapter to the AbsList.
+
+
+
 Description
 ===========
 - TODO
