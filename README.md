@@ -23,12 +23,15 @@ to this views, ...
 * Shared preferences only for fragment.
 * A switch fragment method for child fragments.
 
-**Base Dialog Fragment**: A dialog that can show a title, up to three buttons, a traditional 
+**Base Dialog Fragment**:
+* A dialog that can show a title, up to three buttons, a traditional 
 single choice list, a list of selectable items (single with radio or multiple choice with 
 checkbox), or a custom layout
 
-**Base AbsList Fragment**: Parametrized with templates and capable to show list or grid views.
-**Base AbsList Adapter**: Adapter to the AbsList.
+**Base AbsList Fragment**: 
+* Parametrized with templates and capable to show list or grid views.
+**Base AbsList Adapter**:
+* Adapter to the AbsList.
 
 
 
