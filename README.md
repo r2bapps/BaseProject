@@ -26,10 +26,11 @@ to this views, ...
 **Base Dialog Fragment**:
 * A dialog that can show a title, up to three buttons, a traditional 
 single choice list, a list of selectable items (single with radio or multiple choice with 
-checkbox), or a custom layout
+checkbox), or a custom layout.
 
 **Base AbsList Fragment**: 
 * Parametrized with templates and capable to show list or grid views.
+
 **Base AbsList Adapter**:
 * Adapter to the AbsList.
 
