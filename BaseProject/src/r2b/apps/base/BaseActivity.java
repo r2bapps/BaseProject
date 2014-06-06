@@ -81,7 +81,6 @@ public abstract class BaseActivity extends FragmentActivity
 		super.onPause();
 	}
 	
-	@SuppressLint("NewApi")
 	@Override
 	public void onBackPressed() {
 		if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
