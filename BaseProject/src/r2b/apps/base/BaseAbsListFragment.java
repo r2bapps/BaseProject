@@ -2,7 +2,6 @@ package r2b.apps.base;
 
 import java.util.List;
 
-import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
@@ -12,7 +11,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-@TargetApi(11/*Build.VERSION_CODES.HONEYCOMB*/)
+
 public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	
 	/**

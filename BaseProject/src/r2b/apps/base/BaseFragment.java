@@ -1,25 +1,21 @@
 package r2b.apps.base;
 
+import r2b.apps.base.BaseDialog.BaseDialogListener;
 import r2b.apps.utils.Logger;
-import android.annotation.TargetApi;
-import android.app.Fragment;
-import android.os.Build;
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
-
-@TargetApi(11/*Build.VERSION_CODES.HONEYCOMB*/)
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends android.support.v4.app.Fragment implements ClickableFragment {
 	
-	protected final OnClickListener clickListener = new OnClickListener() {		
-		@Override
-		public void onClick(View v) {
-			click(v.getId());
-		}
-	};
+	protected OnClickListener clickListener;
+	
+	protected SharedPreferences preferences;
 	
 	protected abstract int getLayout();
 	
@@ -35,10 +31,21 @@ public abstract class BaseFragment extends Fragment {
 	
 	protected abstract void close();
 	
-	protected abstract void onRestoreInstanceState(Bundle savedInstanceState);
-	
-	protected abstract void click(int id);
+	protected void onRestoreInstanceState(Bundle savedInstanceState) { }
+
+	public abstract void click(View view);
 		
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		
+		preferences = activity.getSharedPreferences(
+				this.getClass().getSimpleName(), 
+				Activity.MODE_PRIVATE);
+		
+	}
+
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {		
 		
@@ -56,6 +63,8 @@ public abstract class BaseFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		
+		this.clickListener = ((BaseActivity) getActivity()).getClickListener();
+		
 		initViews();
 		initValues();
 		initListeners();
@@ -64,13 +73,16 @@ public abstract class BaseFragment extends Fragment {
 	
 	@Override
 	public void onPause() {
+		
+		this.clickListener = null;
+		
 		removeListeners();
 		close();
 		
 		super.onPause();
-	}
+	}	
 	
-	protected void switchFragment(Fragment fragment, String tag, boolean addToStack) {
+	protected void switchFragment(android.support.v4.app.Fragment fragment, String tag, boolean addToStack) {
 		((BaseActivity) getActivity()).switchFragment(fragment, tag, addToStack);
 	}
 	
@@ -81,38 +93,37 @@ public abstract class BaseFragment extends Fragment {
 	 * @param addToStack
 	 * @param frgContainerId
 	 */
-	@TargetApi(17/*Build.VERSION_CODES.JELLY_BEAN_MR1*/)
-	protected void switchChildFragment(Fragment fragment, String tag, boolean addToStack, int frgContainerId) {
+	protected void switchChildFragment(android.support.v4.app.Fragment fragment, String tag, boolean addToStack, int frgContainerId) {
 
-		if (Build.VERSION.SDK_INT >= 17/*Build.VERSION_CODES.JELLY_BEAN_MR1*/) {
-			if (addToStack) {
-				getChildFragmentManager().beginTransaction()
-						.add(frgContainerId, fragment, tag)
-						.addToBackStack(fragment.getClass().getName()).commit();
-				Logger.i(BaseActivity.class.getSimpleName(), "Add child: " + tag + ", saving to stack");
-			} else {
-				getChildFragmentManager().popBackStack();
-				getChildFragmentManager().beginTransaction()
-						.add(frgContainerId, fragment, tag)
-						.addToBackStack(fragment.getClass().getName()).commit();
-				Logger.i(BaseActivity.class.getSimpleName(), "Add child: " + tag + ", without saving to stack");
-			}			
-		}
-		else {
-			if (addToStack) {
-				getFragmentManager().beginTransaction()
-						.add(frgContainerId, fragment, tag)
-						.addToBackStack(fragment.getClass().getName()).commit();
-				Logger.i(BaseActivity.class.getSimpleName(), "Add: " + tag + ", saving to stack");
-			} else {
-				getFragmentManager().popBackStack();
-				getFragmentManager().beginTransaction()
-						.add(frgContainerId, fragment, tag)
-						.addToBackStack(fragment.getClass().getName()).commit();
-				Logger.i(BaseActivity.class.getSimpleName(), "Add: " + tag + ", without saving to stack");
-			}			
+		if (addToStack) {
+			getChildFragmentManager().beginTransaction()
+					.add(frgContainerId, fragment, tag)
+					.addToBackStack(fragment.getClass().getName()).commit();
+			Logger.i(BaseActivity.class.getSimpleName(), "Add child: " + tag + ", saving to stack");
+		} else {
+			getChildFragmentManager().popBackStack();
+			getChildFragmentManager().beginTransaction()
+					.add(frgContainerId, fragment, tag)
+					.addToBackStack(fragment.getClass().getName()).commit();
+			Logger.i(BaseActivity.class.getSimpleName(), "Add child: " + tag + ", without saving to stack");
 		}
 
 	}	
+	
+	protected void showToast(final String msg) {
+		((BaseActivity) getActivity()).showToast(msg);
+	}
+	
+	protected void showDialog(DialogFragment dialog, BaseDialogListener listener) {
+		((BaseActivity) getActivity()).showDialog(dialog, listener);
+	}	
+	
+	protected SharedPreferences getPreferences() {
+		return preferences;
+	}
+
+	protected SharedPreferences getActivityPreferences() {
+		return ((BaseActivity) getActivity()).getPreferences();
+	}
 	
 }

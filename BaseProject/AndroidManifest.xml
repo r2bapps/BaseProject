@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="r2b.apps.base.TestSupportAct"
+            android:name="r2b.apps.base.TestAct"
             android:label="@string/title_activity_test_support" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

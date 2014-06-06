@@ -1,4 +1,4 @@
-package r2b.apps.base.support;
+package r2b.apps.base;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +14,11 @@ import android.view.LayoutInflater;
 /**
  * 
  * A fragment that handles a dialog that can show a title, up to three 
- * buttons, a tradicional single choice list, a list of selectable items 
+ * buttons, a traditional single choice list, a list of selectable items 
  * (single with radio or multiple choice with checkbox), or a custom layout.
  * 
  */
-public class SupportBaseDialog extends DialogFragment {
+public class BaseDialog extends android.support.v4.app.DialogFragment {
 
 	private static final String ICON_RES_KEY = "ICON_RES_KEY";
 	private static final String TITLE_KEY = "TITLE_KEY";
@@ -49,7 +49,7 @@ public class SupportBaseDialog extends DialogFragment {
 	/**
 	 * The interface to deliver action events
 	 */
-    private SupportBaseDialogListener dialogListener;
+    private BaseDialogListener dialogListener;
 	    
     /**
      * 
@@ -58,7 +58,7 @@ public class SupportBaseDialog extends DialogFragment {
      * DialogFragment in case the host needs to query it.
      *
      */
-    public interface SupportBaseDialogListener {
+    public interface BaseDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog);
         public void onDialogNegativeClick(DialogFragment dialog);
         public void onDialogNeutralClick(DialogFragment dialog);
@@ -85,13 +85,13 @@ public class SupportBaseDialog extends DialogFragment {
      * @param multiChoiceListArrayRes 0 disabled
      * @return
      */
-	public static SupportBaseDialog newInstance(int iconRes, String title, String text,
+	public static BaseDialog newInstance(int iconRes, String title, String text,
 			boolean isCancelable, int customTitleViewRes, int viewRes,
 			int positiveButonTextRes, int negativeButonTextRes,
 			int neutralButonTextRes, int listArrayRes, 
 			int singleChoiceListArrayRes, int multiChoiceListArrayRes) {
 		
-		SupportBaseDialog f = new SupportBaseDialog();
+		BaseDialog f = new BaseDialog();
 		
 		Bundle args = new Bundle();
 		args.putInt(ICON_RES_KEY, iconRes);
@@ -118,7 +118,7 @@ public class SupportBaseDialog extends DialogFragment {
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the SupportBaseDialogListener so we can send events to the host
-        	dialogListener = (SupportBaseDialogListener) activity;
+        	dialogListener = (BaseDialogListener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
@@ -181,11 +181,11 @@ public class SupportBaseDialog extends DialogFragment {
 	            public void onClick(DialogInterface dialog, int id) {
 					if(multiChoiceListArrayRes == 0) {
 		            	// Send the positive button event back to the host activity
-		            	dialogListener.onDialogPositiveClick(SupportBaseDialog.this);						
+		            	dialogListener.onDialogPositiveClick(BaseDialog.this);						
 					}
 					else {
 		            	// Send the positive items selected to the host activity
-		            	dialogListener.onSelectedItems(SupportBaseDialog.this, selectedItems);
+		            	dialogListener.onSelectedItems(BaseDialog.this, selectedItems);
 					}
 
 	            }
@@ -197,7 +197,7 @@ public class SupportBaseDialog extends DialogFragment {
 				@Override				
 	            public void onClick(DialogInterface dialog, int id) {
 	            	// Send the negative button event back to the host activity
-	            	dialogListener.onDialogNegativeClick(SupportBaseDialog.this);
+	            	dialogListener.onDialogNegativeClick(BaseDialog.this);
 	            }
 	        });
 		}
@@ -207,7 +207,7 @@ public class SupportBaseDialog extends DialogFragment {
 				@Override				
 				public void onClick(DialogInterface dialog, int id) {
 	            	// Send the neutral button event back to the host activity
-	            	dialogListener.onDialogNeutralClick(SupportBaseDialog.this);
+	            	dialogListener.onDialogNeutralClick(BaseDialog.this);
 	            }
 	        });		
 		}
@@ -217,7 +217,7 @@ public class SupportBaseDialog extends DialogFragment {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					// The 'which' argument contains the index position of the selected item
-					dialogListener.onItemClick(SupportBaseDialog.this, which);
+					dialogListener.onItemClick(BaseDialog.this, which);
 				}
 			});
 		}
@@ -229,7 +229,7 @@ public class SupportBaseDialog extends DialogFragment {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					// The 'which' argument contains the index position of the selected item
-					dialogListener.onItemClick(SupportBaseDialog.this, which);					
+					dialogListener.onItemClick(BaseDialog.this, which);					
 				}
 			});
 		}
