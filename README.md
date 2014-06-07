@@ -7,6 +7,10 @@ Android project with a base common development
 
 Main functionality
 ------------------
+**Base Application**:
+* Load config constants as debug, show logs, use tracker, use fake data, ...
+* Used as singleton and main manager to get other managers as tracker, db manager, ...
+
 **Base Activity**:
 * Methods for common operations like: findById, set values to this views, set listeners 
 to this views, ... 
@@ -34,7 +38,12 @@ checkbox), or a custom layout.
 **Base AbsList Adapter**:
 * Adapter to the AbsList.
 
+**Base Tracker**:
+* Wraps a tracker like Google Analytics. If you do not need tracking you only need to 
+disable the feature and all tracking goes to Logger, this one can disable this logs.
 
+**Logger**:
+* Logs all events. You can disable it.
 
 Description
 ===========
