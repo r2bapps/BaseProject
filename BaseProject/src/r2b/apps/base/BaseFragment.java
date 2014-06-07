@@ -1,6 +1,7 @@
 package r2b.apps.base;
 
 import r2b.apps.base.BaseDialog.BaseDialogListener;
+import r2b.apps.utils.ITracker;
 import r2b.apps.utils.Logger;
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -43,7 +44,7 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment imple
 		preferences = activity.getSharedPreferences(
 				this.getClass().getSimpleName(), 
 				Activity.MODE_PRIVATE);
-		
+		Logger.i(this.getClass().getSimpleName(), "Init fragment shared preferences on private mode.");
 	}
 
 	@Override
@@ -64,6 +65,8 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment imple
 		super.onResume();
 		
 		this.clickListener = ((BaseActivity) getActivity()).getClickListener();
+
+		getTracker().sendScreenName(this.getClass().getSimpleName());
 		
 		initViews();
 		initValues();
@@ -124,6 +127,10 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment imple
 
 	protected SharedPreferences getActivityPreferences() {
 		return ((BaseActivity) getActivity()).getPreferences();
+	}
+	
+	public ITracker getTracker() {
+		return ((BaseActivity) getActivity()).getTracker();
 	}
 	
 }

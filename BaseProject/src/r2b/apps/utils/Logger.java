@@ -1,7 +1,7 @@
 /*
  * Logger
  * 
- * 0.1
+ * 0.1.1
  * 
  * 2014/05/16
  * 
@@ -35,7 +35,6 @@ package r2b.apps.utils;
 import android.util.Log;
 
 // TODO ADD HERE LOG4J FOR ANDROID: https://code.google.com/p/android-logging-log4j/
-// TODO ADD HERE Analitycs FOR ANDROID
 
 /**
  * Android log wrapper. Useful to add several implementations about log
@@ -43,6 +42,21 @@ import android.util.Log;
  */
 public final class Logger {
 
+	/**
+	 * Send a VERBOSE log message.
+	 * 
+	 * @param tag
+	 *            Used to identify the source of a log message. It usually
+	 *            identifies the class or activity where the log call occurs.
+	 * @param msg
+	 *            The message you would like logged.
+	 */
+	public static final void v(String tag, String msg) {
+		if (Cons.SHOW_LOGS) {
+			Log.v(tag, msg);
+		}
+	}
+	
 	/**
 	 * Send a INFO log message.
 	 * 
@@ -89,5 +103,6 @@ public final class Logger {
 			Log.e(tag, msg, tr);
 		}
 	}
-
+	
+	
 }

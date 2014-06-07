@@ -2,8 +2,8 @@ package r2b.apps.base;
 
 import java.util.List;
 
+import r2b.apps.R;
 import r2b.apps.base.BaseDialog.BaseDialogListener;
-import android.R;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -70,6 +70,9 @@ public class TestFrg extends BaseFragment {
 	
 	@Override
 	public void click(View view) {
+		
+		getTracker().sendEvent("GUI", "click", "R.id.btn", 0);
+		
 		txt.setText(((Button)view).getText().toString());
 		currentTime = System.currentTimeMillis();
 		showDialog(BaseDialog.newInstance(

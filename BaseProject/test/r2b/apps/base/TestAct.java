@@ -11,6 +11,7 @@ public class TestAct extends BaseActivity {
 		if (savedInstanceState == null) {
 			switchFragment(new TestFrg(), "main", true);
 		}
+
 	}	
 	
 	@Override

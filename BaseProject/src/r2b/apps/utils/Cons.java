@@ -1,7 +1,7 @@
 /*
  * Cons
  * 
- * 0.1
+ * 0.2
  * 
  * 2014/05/16
  * 
@@ -33,14 +33,16 @@
 package r2b.apps.utils;
 
 
+
 /**
  * Constants class.
  */
 public final class Cons {
 	
+	public static boolean DEBUG;
+	public static boolean SHOW_LOGS;
+	public static boolean FAKE_DATA;
 	
-	public static final boolean DEBUG = true;
-	public static final boolean SHOW_LOGS = DEBUG && true;
-	public static final boolean FAKE_DATA = DEBUG && true;
+	public static boolean TRACKER;
 
 }

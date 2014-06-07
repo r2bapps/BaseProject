@@ -124,7 +124,8 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
             throw new ClassCastException(activity.toString()
                     + " must implement SupportBaseDialogListener");
         }
-    }
+        
+    }	
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources 
+    xmlns:tools="https://schemas.android.com/tools" 
+    tools:ignore="TypographyDashes" >
+    
+    <!--  The following value should be replaced with correct property id. -->
+    <string name="ga_trackingId">UA-49519701-2</string>
+    
+    <!--  Enable automatic activity tracking. -->
+    <bool name="ga_autoActivityTracking">true</bool>
+    
+    <!--  Enable automatic exception tracking. -->
+    <bool name="ga_reportUncaughtExceptionsTracking">true</bool>
+    
+    <!--  The interval period of time, in seconds, after all collected data should be sent. -->
+    <integer name="ga_dispatchPeriod">60</integer>
+    
+    <integer name="ga_sessionTimeout">300</integer>
+
+    <!--  Enable debugging. -->
+    <bool name="ga_debug">true</bool>
+
+</resources>

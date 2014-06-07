@@ -4,8 +4,8 @@ import java.util.List;
 
 import r2b.apps.R;
 import r2b.apps.base.BaseDialog.BaseDialogListener;
+import r2b.apps.utils.ITracker;
 import r2b.apps.utils.Logger;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -56,7 +56,9 @@ public abstract class BaseActivity extends FragmentActivity
 		
 		preferences = getSharedPreferences(
 				this.getClass().getSimpleName(), 
-				Activity.MODE_PRIVATE);
+				Activity.MODE_PRIVATE);		
+		Logger.i(this.getClass().getSimpleName(), "Init activity shared preferences on private mode.");
+		
 	}	
 	
 	public OnClickListener getClickListener() {
@@ -108,7 +110,7 @@ public abstract class BaseActivity extends FragmentActivity
 					.add(R.id.container, fragment, tag)
 					.addToBackStack(fragment.getClass().getName()).commit();
 			Logger.i(BaseActivity.class.getSimpleName(), "Add: " + tag + ", without saving to stack");
-		}
+		}		
 
 	}
 	
@@ -131,6 +133,10 @@ public abstract class BaseActivity extends FragmentActivity
 	
 	public SharedPreferences getPreferences() {
 		return preferences;
+	}
+	
+	public ITracker getTracker() {
+		return ((BaseApplication) getApplication()).getTracker();
 	}
 	
 	@Override
