@@ -102,13 +102,13 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment imple
 			getChildFragmentManager().beginTransaction()
 					.add(frgContainerId, fragment, tag)
 					.addToBackStack(fragment.getClass().getName()).commit();
-			Logger.i(BaseActivity.class.getSimpleName(), "Add child: " + tag + ", saving to stack");
+			Logger.i(this.getClass().getSimpleName(), "Add child: " + tag + ", saving to stack");
 		} else {
 			getChildFragmentManager().popBackStack();
 			getChildFragmentManager().beginTransaction()
 					.add(frgContainerId, fragment, tag)
 					.addToBackStack(fragment.getClass().getName()).commit();
-			Logger.i(BaseActivity.class.getSimpleName(), "Add child: " + tag + ", without saving to stack");
+			Logger.i(this.getClass().getSimpleName(), "Add child: " + tag + ", without saving to stack");
 		}
 
 	}	

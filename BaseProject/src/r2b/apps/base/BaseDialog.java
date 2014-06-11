@@ -127,6 +127,13 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
         
     }	
 	
+	
+	@Override
+	public void onDetach() {
+		dialogListener = null;
+		super.onDetach();
+	}
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		

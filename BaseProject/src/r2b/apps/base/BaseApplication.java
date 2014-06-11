@@ -25,7 +25,7 @@ public class BaseApplication extends Application {
 		
 		initConfig();
 		
-		tracker = new BaseTracker(this);		
+		tracker = new BaseTracker(this);			
 
 	}
 
@@ -43,6 +43,11 @@ public class BaseApplication extends Application {
 		Cons.SHOW_LOGS = Cons.DEBUG && Boolean.parseBoolean(config.getProperty("baseLogInfo"));
 		Cons.FAKE_DATA = Cons.DEBUG && Boolean.parseBoolean(config.getProperty("baseFakeData"));
 		Cons.TRACKER = Boolean.parseBoolean(config.getProperty("baseTrackApp"));
+		
+		Logger.i(this.getClass().getSimpleName(), "Config DEBUG: " + String.valueOf(Cons.DEBUG));
+		Logger.i(this.getClass().getSimpleName(), "Config SHOW_LOGS: " + String.valueOf(Cons.SHOW_LOGS));
+		Logger.i(this.getClass().getSimpleName(), "Config FAKE_DATA: " + String.valueOf(Cons.FAKE_DATA));
+		Logger.i(this.getClass().getSimpleName(), "Config TRACKER: " + String.valueOf(Cons.TRACKER));
 		
 		config.clear();
 		

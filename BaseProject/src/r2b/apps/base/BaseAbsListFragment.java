@@ -79,6 +79,9 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 		if(adapter == null) {
 			adapter = initAdapter(list);
 		}			
+		else {
+			((BaseAdapter<T>) adapter).update(list);
+		}
 		
 		if(absListView instanceof ListView) {
 			((ListView) absListView).setAdapter(adapter);	

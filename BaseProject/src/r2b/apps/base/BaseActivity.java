@@ -19,7 +19,7 @@ import android.widget.Toast;
 public abstract class BaseActivity extends FragmentActivity 
 	implements BaseDialogListener {	
 	
-	private ClickableFragment currentFragment; // TODO UPDATE ON BACK AND ON CAME FROM BACKGROUND??
+	private ClickableFragment currentFragment;
 	
 	private BaseDialogListener dialogListenerWrapper;
 	
@@ -87,7 +87,7 @@ public abstract class BaseActivity extends FragmentActivity
 	public void onBackPressed() {
 		if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
 			getSupportFragmentManager().popBackStack();
-			Logger.i(BaseActivity.class.getSimpleName(), "PopBackStack");
+			Logger.i(this.getClass().getSimpleName(), "PopBackStack");
 		} else {
 			super.onBackPressed();
 		}	
@@ -103,13 +103,13 @@ public abstract class BaseActivity extends FragmentActivity
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment, tag)
 					.addToBackStack(fragment.getClass().getName()).commit();
-			Logger.i(BaseActivity.class.getSimpleName(), "Add: " + tag + ", saving to stack");
+			Logger.i(this.getClass().getSimpleName(), "Add: " + tag + ", saving to stack");
 		} else {
 			getSupportFragmentManager().popBackStack();
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment, tag)
 					.addToBackStack(fragment.getClass().getName()).commit();
-			Logger.i(BaseActivity.class.getSimpleName(), "Add: " + tag + ", without saving to stack");
+			Logger.i(this.getClass().getSimpleName(), "Add: " + tag + ", without saving to stack");
 		}		
 
 	}

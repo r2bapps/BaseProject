@@ -23,7 +23,8 @@ public class BaseTracker implements ITracker {
 	public BaseTracker(Context context) {
 		if(Cons.TRACKER) {
 			tracker = GoogleAnalytics.getInstance(context.getApplicationContext())
-					.newTracker(R.xml.analytics_tracker);			
+					.newTracker(R.xml.analytics_tracker);
+			Logger.i(this.getClass().getSimpleName(), "Analytics tracker initialized.");
 		}
 	}
 
