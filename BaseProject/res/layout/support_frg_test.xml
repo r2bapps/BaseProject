@@ -10,14 +10,29 @@
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
 
+        <EditText
+        android:id="@+id/etInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/textView1"
+        android:hint="Text to encrypt" />
+
+                <EditText
+        android:id="@+id/etOutput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/etInput"
+        android:hint="Text to decrypt" />
+                
     <Button
         android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
         android:layout_marginLeft="36dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/etOutput"
         android:text="Button" />
 
 </RelativeLayout>

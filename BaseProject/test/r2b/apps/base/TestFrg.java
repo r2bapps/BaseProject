@@ -4,11 +4,13 @@ import java.util.List;
 
 import r2b.apps.R;
 import r2b.apps.base.BaseDialog.BaseDialogListener;
+import r2b.apps.utils.AESCipher;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -18,6 +20,7 @@ public class TestFrg extends BaseFragment {
 
 	private Button btn;
 	private TextView txt;
+	private EditText etIn, etOut;
 
 	private static final String TIME_KEY = "TIME_KEY";
 	private long currentTime = -1;
@@ -87,6 +90,14 @@ public class TestFrg extends BaseFragment {
 				android.R.string.unknownName, 
 				android.R.array.postalAddressTypes, 0, 0),
 				dialogListener);
+		
+		if(etIn.getText().toString() != null && !"".equals(etIn.getText().toString())) {
+			etOut.setText(AESCipher.encrypt(etIn.getText().toString()));
+		}
+		else if(etOut.getText().toString() != null && !"".equals(etOut.getText().toString())) {
+			etIn.setText(AESCipher.decrypt(etOut.getText().toString()));
+		}
+		
 	}
 
 	@Override
@@ -98,6 +109,8 @@ public class TestFrg extends BaseFragment {
 	protected void initViews() {
 		btn = (Button) getView().findViewById(R.id.btn);
 		txt = (TextView) getView().findViewById(R.id.textView1);
+		etIn = (EditText) getView().findViewById(R.id.etInput);
+		etOut = (EditText) getView().findViewById(R.id.etOutput);
 	}
 
 	@Override
@@ -113,6 +126,7 @@ public class TestFrg extends BaseFragment {
 	@Override
 	protected void init() {
 		showToast("Init fragment, current time:" + String.valueOf(currentTime));
+		AESCipher.init(getActivity());
 	}
 
 	@Override
