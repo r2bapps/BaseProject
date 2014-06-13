@@ -18,7 +18,7 @@ import android.widget.TextView;
  */
 public class TestFrg extends BaseFragment {
 
-	private Button btn;
+	private Button btn, btnTransition;
 	private TextView txt;
 	private EditText etIn, etOut;
 
@@ -74,7 +74,9 @@ public class TestFrg extends BaseFragment {
 	@Override
 	public void click(View view) {
 		
-		getTracker().sendEvent("GUI", "click", "R.id.btn", 0);
+		if(view.getId() == R.id.btnTransition) {
+			switchFragment(new TestFrg2(), "test", true);
+		} else {
 		
 		txt.setText(((Button)view).getText().toString());
 		currentTime = System.currentTimeMillis();
@@ -98,6 +100,7 @@ public class TestFrg extends BaseFragment {
 			etIn.setText(AESCipher.decrypt(etOut.getText().toString()));
 		}
 		
+		}
 	}
 
 	@Override
@@ -108,6 +111,7 @@ public class TestFrg extends BaseFragment {
 	@Override
 	protected void initViews() {
 		btn = (Button) getView().findViewById(R.id.btn);
+		btnTransition = (Button) getView().findViewById(R.id.btnTransition);
 		txt = (TextView) getView().findViewById(R.id.textView1);
 		etIn = (EditText) getView().findViewById(R.id.etInput);
 		etOut = (EditText) getView().findViewById(R.id.etOutput);
@@ -121,6 +125,7 @@ public class TestFrg extends BaseFragment {
 	@Override
 	protected void initListeners() {
 		btn.setOnClickListener(clickListener);
+		btnTransition.setOnClickListener(clickListener);
 	}
 
 	@Override

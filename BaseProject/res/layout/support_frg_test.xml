@@ -34,5 +34,14 @@
         android:layout_marginTop="30dp"
         android:layout_below="@id/etOutput"
         android:text="Button" />
+    
+    <Button
+        android:id="@+id/btnTransition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/btn"
+        android:text="ButtonTransition" />    
 
 </RelativeLayout>

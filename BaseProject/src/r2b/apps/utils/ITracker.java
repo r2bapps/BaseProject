@@ -38,6 +38,16 @@ package r2b.apps.utils;
 public interface ITracker {
 	
 	/**
+	 * Category for GUI actions.
+	 */
+	public static final String CATEGORY_GUI = "GUI";
+	
+	/**
+	 * Action click.
+	 */
+	public static final String ACTION_CLICK = "click";
+	
+	/**
 	 * Set and send the screen name.
 	 * @param screenName The screen name.
 	 */

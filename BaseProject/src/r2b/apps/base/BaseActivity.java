@@ -29,6 +29,13 @@ public abstract class BaseActivity extends FragmentActivity
 		@Override
 		public void onClick(View v) {
 			if(currentFragment != null) {
+				
+				getTracker().sendEvent(
+						ITracker.CATEGORY_GUI, 
+						ITracker.ACTION_CLICK, 
+						getResources().getResourceEntryName(v.getId()), 
+						v.getId());
+				
 				currentFragment.click(v);
 			}
 		}
@@ -102,13 +109,15 @@ public abstract class BaseActivity extends FragmentActivity
 		if (addToStack) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment, tag)
-					.addToBackStack(fragment.getClass().getName()).commit();
+					.addToBackStack(fragment.getClass().getName())
+					.commit();
 			Logger.i(this.getClass().getSimpleName(), "Add: " + tag + ", saving to stack");
 		} else {
 			getSupportFragmentManager().popBackStack();
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment, tag)
-					.addToBackStack(fragment.getClass().getName()).commit();
+					.addToBackStack(fragment.getClass().getName())
+					.commit();
 			Logger.i(this.getClass().getSimpleName(), "Add: " + tag + ", without saving to stack");
 		}		
 
