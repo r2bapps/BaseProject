@@ -1,7 +1,7 @@
 /*
  * AESCipher
  * 
- * 0.1
+ * 0.2
  * 
  * 2014/05/16
  * 
@@ -32,6 +32,7 @@
 
 package r2b.apps.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.provider.Settings;
 import android.util.Base64;
@@ -43,7 +44,6 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -64,7 +64,16 @@ public class AESCipher {
     private static final byte[] ivBytes =
             { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
+    /**
+     * Init the class. 
+     * You must call this method to fix Java Cryptography Architecture bug.
+     * @param context
+     */
     public static void init(final Context context) {
+    	
+    	// The fixes need to be applied via apply() before any use of Java Cryptography Architecture primitives.
+    	PRNGFixes.apply();
+    	
         // 64 bit hex string
         final String id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         key = id.concat(id);
@@ -76,7 +85,8 @@ public class AESCipher {
      * @return The plain text encrypted if no error, the 
      * plain text no encrypted otherwise or null if the plain text is null.
      */
-    public static String encrypt(String plainText) {
+    @SuppressLint("TrulyRandom")
+	public static String encrypt(String plainText) {
 
         if(plainText == null) {
            return null;

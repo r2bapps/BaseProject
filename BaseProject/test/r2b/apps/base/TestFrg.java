@@ -126,6 +126,7 @@ public class TestFrg extends BaseFragment {
 	@Override
 	protected void init() {
 		showToast("Init fragment, current time:" + String.valueOf(currentTime));
+		
 		AESCipher.init(getActivity());
 	}
 
