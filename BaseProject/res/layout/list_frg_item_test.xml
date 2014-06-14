@@ -1,0 +1,16 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="r2b.apps.TestSupportAct$PlaceholderFragment" >
+    
+    <TextView
+        android:id="@+id/person"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:layout_centerInParent="true"
+        android:textColor="#000000"
+        android:text="Empty" />
+
+</RelativeLayout>

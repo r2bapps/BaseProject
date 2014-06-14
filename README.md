@@ -48,15 +48,24 @@ disable the feature and all tracking goes to Logger, this one can disable this l
 **AESCipher**:
 * Encrypt/Decrypt strings with AES 128-bits using key based on device ANDROID_ID.
 
-Description
-===========
-- TODO
-
 
 
 Documentation
 =============
-- TODO
+You have the [JavaDoc](BaseProject/doc/javadoc) files on doc/javadoc directory, 
+and [UML](BaseProject/doc/uml) diagrams on doc/uml directory.
+
+Class diagram
+-------------
+![Class diagram](BaseProject/doc/uml/ClassDiagram.png?raw=true "Class diagram")
+
+Utilities diagram
+-----------------
+![Utilities diagram](BaseProject/doc/uml/UtilitiesDiagram.png?raw=true "Utilities diagram")
+
+Test example diagram
+--------------------
+![Test example diagram](BaseProject/doc/uml/TestingDiagram.png?raw=true "Test example diagram")
 
 
 
@@ -70,6 +79,9 @@ obtain a better performance or add more things will be gratefully accepted.
 Developed by
 ============
 R2B Apps
+
+AESCipher class uses PRNGFixes class extracted from Android Developers Blog,
+http://android-developers.blogspot.com.es/2013/08/some-securerandom-thoughts.html
 
 If you use BaseProject code in your application you should inform R2B Apps about it ( *email: r2b.apps[at]gmail[dot]com* ) like this:
 > **Subject:** BaseProject usage notification<br />
