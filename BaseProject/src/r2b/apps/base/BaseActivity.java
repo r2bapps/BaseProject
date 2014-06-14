@@ -19,7 +19,8 @@ import android.widget.Toast;
 public abstract class BaseActivity extends FragmentActivity 
 	implements BaseDialogListener {	
 	
-	private ClickableFragment currentFragment;
+	private ClickableFragment currentFragment; // TODO WHEN SWITCH FRAGMENT LOSE THE CLICK LISTENER
+
 	
 	private BaseDialogListener dialogListenerWrapper;
 	

@@ -2,6 +2,7 @@ package r2b.apps.base;
 
 import java.util.List;
 
+import r2b.apps.utils.ITracker;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
@@ -38,14 +39,29 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	protected final OnItemClickListener itemClickListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+			getTracker().sendEvent(
+					ITracker.CATEGORY_GUI, 
+					ITracker.ACTION_LIST_ITEM_CLICK, 
+					String.valueOf(position),
+					id);
+			
 			itemClick(view, position, id);
 		}	
 	};
 	
 	protected abstract void itemClick(View view, int position, long id);
 	
+	/**
+	 * Build and set info on the adapter.
+	 * @param list The info list.
+	 * @return The adapter populated.
+	 */
 	protected abstract r2b.apps.base.BaseAdapter<T> initAdapter(final List<T> list);
 	
+	/**
+	 * Load the info list to the adapter.
+	 * @return The info list.
+	 */
 	protected abstract List<T> loadData();
 	
 	@Override

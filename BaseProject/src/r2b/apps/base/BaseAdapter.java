@@ -35,6 +35,10 @@ package r2b.apps.base;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
 
 	/**
@@ -42,9 +46,12 @@ public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
 	 */
 	private List<T> items;	
 	
+	
+	protected abstract int getLayout();
+	protected abstract void initViewsAndValues(T item, int position, View convertView);
+	
 	/**
 	 * Build adapter with the list items.
-	 * The modifying of external list has no effect on adapter.
 	 * @param items The items list.
 	 */
 	public BaseAdapter(final List<T> items) {
@@ -59,7 +66,22 @@ public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
 		}
 		
 	}
-
+	
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		
+		T item = getItem(position);
+		
+		if (convertView == null) {
+			convertView = LayoutInflater.
+					from(parent.getContext()).inflate(getLayout(), parent, false);
+		}
+		
+		initViewsAndValues(item, position, convertView);
+		
+		return convertView;
+	}
+	
 	@Override
 	public int getCount() {
 		return items.size();
@@ -72,17 +94,12 @@ public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
 	
 	/**
 	 * Update adapter items.
-	 * The modifying of external list has no effect on adapter.
 	 * @param items the items list.
 	 */
 	public void update(final List<T> items) {
 		this.items.clear();
 		
-		if (items == null) {
-			this.items = new ArrayList<T>(0);
-		}
-		else {
-			this.items = new ArrayList<T>(items.size());
+		if (items != null) {
 			this.items.addAll(items);
 		}
 		

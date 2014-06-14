@@ -36,12 +36,22 @@
         android:text="Button" />
     
     <Button
-        android:id="@+id/btnTransition"
+        android:id="@+id/btnListFrg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="36dp"
         android:layout_marginTop="30dp"
         android:layout_below="@id/btn"
-        android:text="ButtonTransition" />    
+        android:text="List" />    
 
+        <Button
+        android:id="@+id/btnListFrgEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/btn"
+        android:layout_toRightOf="@id/btnListFrg"
+        android:text="Empty list" /> 
+        
 </RelativeLayout>

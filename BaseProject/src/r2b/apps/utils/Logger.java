@@ -73,7 +73,7 @@ public final class Logger {
 	}
 
 	/**
-	 * Send a INFO log message.
+	 * Send an ERROR log message.
 	 * 
 	 * @param tag
 	 *            Used to identify the source of a log message. It usually
@@ -88,7 +88,7 @@ public final class Logger {
 	}
 
 	/**
-	 * Send a ERROR log message and log the exception.
+	 * Send an ERROR log message and log the exception.
 	 * 
 	 * @param tag
 	 *            Used to identify the source of a log message. It usually

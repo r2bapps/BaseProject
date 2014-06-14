@@ -18,7 +18,7 @@ import android.widget.TextView;
  */
 public class TestFrg extends BaseFragment {
 
-	private Button btn, btnTransition;
+	private Button btn, btnListFrg, btnListFrgEmpty;
 	private TextView txt;
 	private EditText etIn, etOut;
 
@@ -74,9 +74,13 @@ public class TestFrg extends BaseFragment {
 	@Override
 	public void click(View view) {
 		
-		if(view.getId() == R.id.btnTransition) {
-			switchFragment(new TestFrg2(), "test", true);
-		} else {
+		if(view.getId() == R.id.btnListFrg) {
+			switchFragment(TestFrg2.newInstance(false), "test", true);
+		} 
+		else if(view.getId() == R.id.btnListFrgEmpty) {
+			switchFragment(TestFrg2.newInstance(true), "test", true);
+		} 
+		else {
 		
 		txt.setText(((Button)view).getText().toString());
 		currentTime = System.currentTimeMillis();
@@ -105,13 +109,14 @@ public class TestFrg extends BaseFragment {
 
 	@Override
 	protected int getLayout() {
-		return R.layout.support_frg_test;
+		return R.layout.frg_test;
 	}
 
 	@Override
 	protected void initViews() {
 		btn = (Button) getView().findViewById(R.id.btn);
-		btnTransition = (Button) getView().findViewById(R.id.btnTransition);
+		btnListFrg = (Button) getView().findViewById(R.id.btnListFrg);
+		btnListFrgEmpty = (Button) getView().findViewById(R.id.btnListFrgEmpty);
 		txt = (TextView) getView().findViewById(R.id.textView1);
 		etIn = (EditText) getView().findViewById(R.id.etInput);
 		etOut = (EditText) getView().findViewById(R.id.etOutput);
@@ -125,7 +130,8 @@ public class TestFrg extends BaseFragment {
 	@Override
 	protected void initListeners() {
 		btn.setOnClickListener(clickListener);
-		btnTransition.setOnClickListener(clickListener);
+		btnListFrg.setOnClickListener(clickListener);
+		btnListFrgEmpty.setOnClickListener(clickListener);
 	}
 
 	@Override
@@ -138,6 +144,8 @@ public class TestFrg extends BaseFragment {
 	@Override
 	protected void removeListeners() {
 		btn.setOnClickListener(null);
+		btnListFrg.setOnClickListener(null);
+		btnListFrgEmpty.setOnClickListener(null);
 	}
 
 	@Override
