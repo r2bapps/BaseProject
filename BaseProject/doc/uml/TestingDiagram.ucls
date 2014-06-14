@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.6" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="r2b.apps.base.TestFrg" project="BaseProject" 
+    file="/BaseProject/test/r2b/apps/base/TestFrg.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="423" width="206" x="81" y="-1"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="r2b.apps.base.PersonAdapter" project="BaseProject" 
+    file="/BaseProject/test/r2b/apps/base/PersonAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="232" x="327" y="-1"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="r2b.apps.base.TestAct" project="BaseProject" 
+    file="/BaseProject/test/r2b/apps/base/TestAct.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="138" x="599" y="-1"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="r2b.apps.base.Person" project="BaseProject" 
+    file="/BaseProject/test/r2b/apps/base/Person.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="147" x="777" y="-1"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="r2b.apps.base.TestFrg2" project="BaseProject" 
+    file="/BaseProject/test/r2b/apps/base/TestFrg2.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="243" width="262" x="964" y="-1"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

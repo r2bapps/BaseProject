@@ -106,7 +106,7 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
      * @param text null disabled
      * @param isCancelable By default true
      * @param positiveButonTextRes 0 disabled
-     * @return
+     * @return BaseDialog
      */
 	public static BaseDialog newInstance(int iconRes, String title, String text,
 			boolean isCancelable, int positiveButonTextRes) {
@@ -134,7 +134,7 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
      * @param isCancelable By default true
      * @param positiveButonTextRes 0 disabled
      * @param negativeButonTextRes 0 disabled
-     * @return
+     * @return BaseDialog
      */
 	public static BaseDialog newInstance(int iconRes, String title, String text,
 			boolean isCancelable, int positiveButonTextRes, int negativeButonTextRes) {
@@ -164,7 +164,7 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
      * @param positiveButonTextRes 0 disabled
      * @param negativeButonTextRes 0 disabled
      * @param listArrayRes 0 disabled
-     * @return
+     * @return BaseDialog 
      */
 	public static BaseDialog newInstance(int iconRes, String title, String text,
 			boolean isCancelable, int positiveButonTextRes, 
@@ -196,7 +196,7 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
      * @param positiveButonTextRes 0 disabled
      * @param negativeButonTextRes 0 disabled
      * @param singleChoiceListArrayRes 0 disabled
-     * @return
+     * @return BaseDialog
      */
 	public static BaseDialog newInstanceSingleChoice(int iconRes, String title, String text,
 			boolean isCancelable, int positiveButonTextRes, 
@@ -228,7 +228,7 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
      * @param positiveButonTextRes 0 disabled
      * @param negativeButonTextRes 0 disabled
      * @param multiChoiceListArrayRes 0 disabled
-     * @return
+     * @return BaseDialog
      */
 	public static BaseDialog newInstanceMultiChoice(int iconRes, String title, String text,
 			boolean isCancelable, int positiveButonTextRes, 
@@ -265,7 +265,7 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
      * @param listArrayRes 0 disabled
      * @param singleChoiceListArrayRes 0 disabled
      * @param multiChoiceListArrayRes 0 disabled
-     * @return
+     * @return BaseDialog
      */
 	public static BaseDialog newInstance(int iconRes, String title, String text,
 			boolean isCancelable, int customTitleViewRes, int viewRes,
