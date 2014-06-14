@@ -34,6 +34,13 @@ package r2b.apps.base;
 
 import android.view.View;
 
+/**
+ * Add support to fragments to receive from activity click events.
+ */
 public interface ClickableFragment {
+	/**
+	 * Click event.
+	 * @param view The view clicked.
+	 */
 	public void click(View view);
 }

@@ -1,3 +1,35 @@
+/*
+ * BaseAbsListFragment
+ * 
+ * 0.1
+ * 
+ * 2014/05/16
+ * 
+ * (The MIT License)
+ * 
+ * Copyright (c) R2B Apps <r2b.apps@gmail.com>
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * 'Software'), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ */
+
 package r2b.apps.base;
 
 import java.util.List;
@@ -12,7 +44,10 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
+/**
+ * Wrapper for AbsList main functionality.
+ * @param <T> The item type to show.
+ */
 public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	
 	/**
@@ -36,6 +71,9 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	 */
 	protected int scrollY;
 	
+	/**
+	 * List/Grid item click.
+	 */
 	protected final OnItemClickListener itemClickListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
@@ -49,6 +87,12 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 		}	
 	};
 	
+	/**
+	 * 
+	 * @param view The view clicked
+	 * @param position the position of this view.
+	 * @param id The id of the item on the view.
+	 */
 	protected abstract void itemClick(View view, int position, long id);
 	
 	/**
@@ -64,6 +108,9 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	 */
 	protected abstract List<T> loadData();
 	
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onSaveInstanceState(android.os.Bundle)
+	 */
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 	  super.onSaveInstanceState(savedInstanceState);
@@ -71,10 +118,6 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	  savedInstanceState.putInt(SCROLL_OFFSET_KEY, absListView.getFirstVisiblePosition());
 	}
 
-	/**
-	 * Data returned from background needed to restore.
-	 * @param savedInstanceState
-	 */
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		if (savedInstanceState.containsKey(SCROLL_OFFSET_KEY)) {
@@ -82,12 +125,20 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see r2b.apps.base.BaseFragment#initViews()
+	 */
+	@Override
 	protected void initViews() { 
 		absListView = (AbsListView) getView().findViewById(android.R.id.list);
 		empty = (TextView) getView().findViewById(android.R.id.empty);
 		absListView.setEmptyView(empty);
 	} 
 	
+	/* (non-Javadoc)
+	 * @see r2b.apps.base.BaseFragment#initValues()
+	 */
+	@Override
 	protected void initValues() {
 		
 		final List<T> list = loadData();
@@ -108,10 +159,18 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see r2b.apps.base.BaseFragment#initListeners()
+	 */
+	@Override
 	protected void initListeners() {
 		absListView.setOnItemClickListener(itemClickListener);
 	}
 	
+	/* (non-Javadoc)
+	 * @see r2b.apps.base.BaseFragment#init()
+	 */
+	@Override
 	protected void init() {		
 		if(scrollY != 0) {
 			absListView.smoothScrollToPosition(scrollY);

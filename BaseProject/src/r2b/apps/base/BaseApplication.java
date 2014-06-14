@@ -44,6 +44,9 @@ import r2b.apps.utils.Logger;
 import android.app.Application;
 import android.content.res.Resources.NotFoundException;
 
+/**
+ * Used as singleton class to initialize managers and utilities.
+ */
 public class BaseApplication extends Application {
 
 	/**
@@ -61,6 +64,10 @@ public class BaseApplication extends Application {
 
 	}
 
+	/**
+	 * Get the events tracker.
+	 * @return The events tracker.
+	 */
 	public ITracker getTracker() {
 		return tracker;
 	}

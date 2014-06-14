@@ -1,5 +1,6 @@
 package r2b.apps.base;
 
+import r2b.apps.R;
 import android.os.Bundle;
 
 public class TestAct extends BaseActivity {
@@ -13,6 +14,11 @@ public class TestAct extends BaseActivity {
 		}
 
 	}	
+	
+	@Override
+	protected int getLayout() {
+		return R.layout.act_base;
+	}
 	
 	@Override
 	protected void initViews() {
@@ -45,9 +51,11 @@ public class TestAct extends BaseActivity {
 	}
 
 	@Override
-	protected void close() {
+	protected void clear() {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 
 }

@@ -8,6 +8,14 @@
  * freely, as long as the origin is not misrepresented.
  */
 
+/*
+ * Copyright notice:
+ * MIT License of the project is not applied to this file.
+ * 
+ * Extracted from:
+ * http://android-developers.blogspot.com.es/2013/08/some-securerandom-thoughts.html 
+ */
+
 package r2b.apps.utils;
 
 import android.os.Build;

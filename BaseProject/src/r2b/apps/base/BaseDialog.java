@@ -1,7 +1,7 @@
 /*
  * BaseDialog
  * 
- * 0.1
+ * 0.2
  * 
  * 2014/05/16
  * 
@@ -44,11 +44,9 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 
 /**
- * 
  * A fragment that handles a dialog that can show a title, up to three 
  * buttons, a traditional single choice list, a list of selectable items 
  * (single with radio or multiple choice with checkbox), or a custom layout.
- * 
  */
 public class BaseDialog extends android.support.v4.app.DialogFragment {
 
@@ -100,6 +98,158 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
 		public void onDismiss(DialogInterface dialog);
     }
     
+    /**
+     * Set dialog style and functionality.
+     * 
+     * @param iconRes 0 disabled
+     * @param title null disabled
+     * @param text null disabled
+     * @param isCancelable By default true
+     * @param positiveButonTextRes 0 disabled
+     * @return
+     */
+	public static BaseDialog newInstance(int iconRes, String title, String text,
+			boolean isCancelable, int positiveButonTextRes) {
+		
+		BaseDialog f = new BaseDialog();
+		
+		Bundle args = new Bundle();
+		args.putInt(ICON_RES_KEY, iconRes);
+		args.putString(TITLE_KEY, title);
+		args.putString(TEXT_KEY, text);		
+		args.putBoolean(IS_CANCELABLE_KEY, isCancelable);
+		args.putInt(POSITIVE_BUTTON_TEXT_RES, positiveButonTextRes);
+		
+		f.setArguments(args);
+
+		return f;
+	}
+	
+    /**
+     * Set dialog style and functionality.
+     * 
+     * @param iconRes 0 disabled
+     * @param title null disabled
+     * @param text null disabled
+     * @param isCancelable By default true
+     * @param positiveButonTextRes 0 disabled
+     * @param negativeButonTextRes 0 disabled
+     * @return
+     */
+	public static BaseDialog newInstance(int iconRes, String title, String text,
+			boolean isCancelable, int positiveButonTextRes, int negativeButonTextRes) {
+		
+		BaseDialog f = new BaseDialog();
+		
+		Bundle args = new Bundle();
+		args.putInt(ICON_RES_KEY, iconRes);
+		args.putString(TITLE_KEY, title);
+		args.putString(TEXT_KEY, text);		
+		args.putBoolean(IS_CANCELABLE_KEY, isCancelable);
+		args.putInt(POSITIVE_BUTTON_TEXT_RES, positiveButonTextRes);
+		args.putInt(NEGATIVE_BUTTON_TEXT_RES, negativeButonTextRes);
+		
+		f.setArguments(args);
+
+		return f;
+	}
+	
+    /**
+     * Set dialog style and functionality.
+     * 
+     * @param iconRes 0 disabled
+     * @param title null disabled
+     * @param text null disabled
+     * @param isCancelable By default true
+     * @param positiveButonTextRes 0 disabled
+     * @param negativeButonTextRes 0 disabled
+     * @param listArrayRes 0 disabled
+     * @return
+     */
+	public static BaseDialog newInstance(int iconRes, String title, String text,
+			boolean isCancelable, int positiveButonTextRes, 
+			int negativeButonTextRes, int listArrayRes) {
+		
+		BaseDialog f = new BaseDialog();
+		
+		Bundle args = new Bundle();
+		args.putInt(ICON_RES_KEY, iconRes);
+		args.putString(TITLE_KEY, title);
+		args.putString(TEXT_KEY, text);		
+		args.putBoolean(IS_CANCELABLE_KEY, isCancelable);
+		args.putInt(POSITIVE_BUTTON_TEXT_RES, positiveButonTextRes);
+		args.putInt(NEGATIVE_BUTTON_TEXT_RES, negativeButonTextRes);
+		args.putInt(LIST_ARRAY_RES, listArrayRes);
+		
+		f.setArguments(args);
+
+		return f;
+	}
+	
+    /**
+     * Set dialog style and functionality.
+     * 
+     * @param iconRes 0 disabled
+     * @param title null disabled
+     * @param text null disabled
+     * @param isCancelable By default true
+     * @param positiveButonTextRes 0 disabled
+     * @param negativeButonTextRes 0 disabled
+     * @param singleChoiceListArrayRes 0 disabled
+     * @return
+     */
+	public static BaseDialog newInstanceSingleChoice(int iconRes, String title, String text,
+			boolean isCancelable, int positiveButonTextRes, 
+			int negativeButonTextRes, int singleChoiceListArrayRes) {
+		
+		BaseDialog f = new BaseDialog();
+		
+		Bundle args = new Bundle();
+		args.putInt(ICON_RES_KEY, iconRes);
+		args.putString(TITLE_KEY, title);
+		args.putString(TEXT_KEY, text);		
+		args.putBoolean(IS_CANCELABLE_KEY, isCancelable);
+		args.putInt(POSITIVE_BUTTON_TEXT_RES, positiveButonTextRes);
+		args.putInt(NEGATIVE_BUTTON_TEXT_RES, negativeButonTextRes);
+		args.putInt(SINGLE_CHOICE_LIST_ARRAY_RES, singleChoiceListArrayRes);
+		
+		f.setArguments(args);
+
+		return f;
+	}
+	
+    /**
+     * Set dialog style and functionality.
+     * 
+     * @param iconRes 0 disabled
+     * @param title null disabled
+     * @param text null disabled
+     * @param isCancelable By default true
+     * @param positiveButonTextRes 0 disabled
+     * @param negativeButonTextRes 0 disabled
+     * @param multiChoiceListArrayRes 0 disabled
+     * @return
+     */
+	public static BaseDialog newInstanceMultiChoice(int iconRes, String title, String text,
+			boolean isCancelable, int positiveButonTextRes, 
+			int negativeButonTextRes, int multiChoiceListArrayRes) {
+		
+		BaseDialog f = new BaseDialog();
+		
+		Bundle args = new Bundle();
+		args.putInt(ICON_RES_KEY, iconRes);
+		args.putString(TITLE_KEY, title);
+		args.putString(TEXT_KEY, text);		
+		args.putBoolean(IS_CANCELABLE_KEY, isCancelable);
+		args.putInt(POSITIVE_BUTTON_TEXT_RES, positiveButonTextRes);
+		args.putInt(NEGATIVE_BUTTON_TEXT_RES, negativeButonTextRes);
+		args.putInt(MULTI_CHOICE_LIST_ARRAY_RES, multiChoiceListArrayRes);
+		
+		f.setArguments(args);
+
+		return f;
+	}
+	
     /**
      * Set dialog style and functionality.
      * 

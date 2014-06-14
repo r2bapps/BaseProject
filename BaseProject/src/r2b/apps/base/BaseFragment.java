@@ -1,3 +1,35 @@
+/*
+ * BaseFragment
+ * 
+ * 0.1
+ * 
+ * 2014/05/16
+ * 
+ * (The MIT License)
+ * 
+ * Copyright (c) R2B Apps <r2b.apps@gmail.com>
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * 'Software'), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ */
+
 package r2b.apps.base;
 
 import r2b.apps.base.BaseDialog.BaseDialogListener;
@@ -6,34 +38,75 @@ import r2b.apps.utils.Logger;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
+/**
+ * wrapper for the main functionality of the fragment.
+ */
 public abstract class BaseFragment extends android.support.v4.app.Fragment implements ClickableFragment {
 	
+	/**
+	 * Main click listener.
+	 */
 	protected OnClickListener clickListener;
-	
+	/**
+	 * Fragment shared preferences.
+	 */
 	protected SharedPreferences preferences;
 	
+	/**
+	 * Get the layout to show.
+	 * @return The fragment layout.
+	 */
 	protected abstract int getLayout();
 	
+	/**
+	 * Initialize all activity views. It is call on onResume.
+	 * Used with findViewByid...
+	 * Order of call on onResume 1.
+	 */
 	protected abstract void initViews();
-	
+			
+	/**
+	 * Initialize views values. It is call on onResume.
+	 * Order of call on onResume 2.
+	 */
 	protected abstract void initValues();
 	
+	/**
+	 * Initialize views listeners or other listeners. It is call on onResume.
+	 * Order of call on onResume 3.
+	 */
 	protected abstract void initListeners();
 	
+	/**
+	 * Initialize other things. It is call on onResume.
+	 * Order of call on onResume 4.
+	 */
 	protected abstract void init();
 
+	/**
+	 * Remove listeners.
+	 */
 	protected abstract void removeListeners();
 	
-	protected abstract void close();
+	/**
+	 * Clear or closes all resources needed to close the fragment.
+	 */
+	protected abstract void clear();
 	
+	/**
+	 * Restore state when came from background.
+	 * @param savedInstanceState The state bundle.
+	 */
 	protected void onRestoreInstanceState(Bundle savedInstanceState) { }
 
+	/**
+	 * Receive calls for click listeners and main click listener from activity.
+	 */
 	public abstract void click(View view);
 		
 	
@@ -80,17 +153,24 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment imple
 		this.clickListener = null;
 		
 		removeListeners();
-		close();
+		clear();
 		
 		super.onPause();
 	}	
 	
+	/**
+	 * Switch between fragments.
+	 * @param fragment The new fragment.
+	 * @param tag The tag to identify the fragment.
+	 * @param addToStack True to add to back stack, false otherwise.
+	 */
 	protected void switchFragment(android.support.v4.app.Fragment fragment, String tag, boolean addToStack) {
 		((BaseActivity) getActivity()).switchFragment(fragment, tag, addToStack);
 	}
 	
 	/**
 	 * Switch between child fragments inner the base fragment.
+	 * WARNING: NOT TESTED!!
 	 * @param fragment
 	 * @param tag
 	 * @param addToStack
@@ -113,22 +193,43 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment imple
 
 	}	
 	
+	/**
+	 * Show a simple toast with short length.
+	 * @param msg The message to show.
+	 */
 	protected void showToast(final String msg) {
 		((BaseActivity) getActivity()).showToast(msg);
 	}
 	
-	protected void showDialog(DialogFragment dialog, BaseDialogListener listener) {
+	/**
+	 * Show a dialog fragment.
+	 * @param dialog The dialog.
+	 * @param listener The dialog listener if it is needed, null for not needed.
+	 */
+	protected void showDialog(android.support.v4.app.DialogFragment dialog, BaseDialogListener listener) {
 		((BaseActivity) getActivity()).showDialog(dialog, listener);
 	}	
 	
+	/**
+	 * Get the fragment shared preferences.
+	 * @return The fragment shared preferences.
+	 */
 	protected SharedPreferences getPreferences() {
 		return preferences;
 	}
 
+	/**
+	 * Get the activity shared preferences.
+	 * @return The activity shared preferences.
+	 */
 	protected SharedPreferences getActivityPreferences() {
 		return ((BaseActivity) getActivity()).getPreferences();
 	}
 	
+	/**
+	 * Get the application tracker.
+	 * @return The tracker.
+	 */
 	public ITracker getTracker() {
 		return ((BaseActivity) getActivity()).getTracker();
 	}

@@ -143,13 +143,13 @@ public class TestFrg extends BaseFragment {
 
 	@Override
 	protected void removeListeners() {
-		btn.setOnClickListener(null);
-		btnListFrg.setOnClickListener(null);
-		btnListFrgEmpty.setOnClickListener(null);
+//		btn.setOnClickListener(null);
+//		btnListFrg.setOnClickListener(null);
+//		btnListFrgEmpty.setOnClickListener(null);
 	}
 
 	@Override
-	protected void close() {
+	protected void clear() {
 		showToast("Closing fragment");
 	}
 

@@ -39,6 +39,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * Wrapper for base adapter main functionality.
+ * @param <T> The item type of the list.
+ */
 public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
 
 	/**
@@ -46,8 +50,18 @@ public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
 	 */
 	private List<T> items;	
 	
-	
+	/**
+	 * Get the layout of the item. 
+	 * @return The layout.
+	 */
 	protected abstract int getLayout();
+	
+	/**
+	 * Initialize views and values.
+	 * @param item The item.
+	 * @param position The position of the item.
+	 * @param convertView The view where find views.
+	 */
 	protected abstract void initViewsAndValues(T item, int position, View convertView);
 	
 	/**
@@ -67,6 +81,9 @@ public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
@@ -82,11 +99,17 @@ public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
 		return convertView;
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.widget.Adapter#getCount()
+	 */
 	@Override
 	public int getCount() {
 		return items.size();
 	}
 
+	/* (non-Javadoc)
+	 * @see android.widget.Adapter#getItem(int)
+	 */
 	@Override
 	public T getItem(int position) {
 		return items.get(position);

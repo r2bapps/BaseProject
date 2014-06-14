@@ -51,6 +51,10 @@ public class BaseTracker implements ITracker {
 	 */
 	private Tracker tracker;
 	
+	/**
+	 * Builder. Only tracks if Cons.TRACKER is available
+	 * @param context The application context.
+	 */
 	public BaseTracker(Context context) {
 		if(Cons.TRACKER) {
 			tracker = GoogleAnalytics.getInstance(context.getApplicationContext())
