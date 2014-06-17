@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Enable debugging -->
+    <bool name="debug">true</bool>
+    
+    <!-- Enable logging -->
+    <bool name="log">true</bool>
+    
+    <!-- Enable fake data -->
+    <bool name="fake">true</bool>
+    
+    <!-- Enable tracking -->
+    <bool name="track">true</bool>
+
+</resources>
