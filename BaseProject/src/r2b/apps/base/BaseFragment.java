@@ -40,18 +40,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 /**
- * wrapper for the main functionality of the fragment.
+ * Wrapper for the main functionality of the fragment.
  */
-public abstract class BaseFragment extends android.support.v4.app.Fragment implements ClickableFragment {
+public abstract class BaseFragment extends android.support.v4.app.Fragment 
+	implements View.OnClickListener, BaseActivity.CallableBackFragment {
 	
-	/**
-	 * Main click listener.
-	 */
-	protected OnClickListener clickListener;
 	/**
 	 * Fragment shared preferences.
 	 */
@@ -107,9 +103,15 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment imple
 	/**
 	 * Receive calls for click listeners and main click listener from activity.
 	 */
-	public abstract void click(View view);
+	@Override
+	public void onClick(View view) { }
 		
-	
+	/**
+	 * Receive calls for back event from activity.
+	 */
+	@Override
+	public void onBackPressed() { }
+
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -137,7 +139,8 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment imple
 	public void onResume() {
 		super.onResume();
 		
-		this.clickListener = ((BaseActivity) getActivity()).getClickListener();
+		((BaseActivity) getActivity()).setClickListener(this);
+		((BaseActivity) getActivity()).setBackListener(this);
 
 		getTracker().sendScreenName(this.getClass().getSimpleName());
 		
@@ -150,7 +153,8 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment imple
 	@Override
 	public void onPause() {
 		
-		this.clickListener = null;
+		((BaseActivity) getActivity()).setClickListener(null);
+		((BaseActivity) getActivity()).setBackListener(null);
 		
 		removeListeners();
 		clear();

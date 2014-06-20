@@ -72,7 +72,8 @@ public class TestFrg extends BaseFragment {
 	};
 	
 	@Override
-	public void click(View view) {
+	public void onClick(View view) {
+		super.onClick(view);
 		
 		if(view.getId() == R.id.btnListFrg) {
 			switchFragment(TestFrg2.newInstance(false), "test", true);
@@ -129,9 +130,9 @@ public class TestFrg extends BaseFragment {
 
 	@Override
 	protected void initListeners() {
-		btn.setOnClickListener(clickListener);
-		btnListFrg.setOnClickListener(clickListener);
-		btnListFrgEmpty.setOnClickListener(clickListener);
+		btn.setOnClickListener(this);
+		btnListFrg.setOnClickListener(this);
+		btnListFrgEmpty.setOnClickListener(this);
 	}
 
 	@Override
@@ -143,9 +144,9 @@ public class TestFrg extends BaseFragment {
 
 	@Override
 	protected void removeListeners() {
-//		btn.setOnClickListener(null);
-//		btnListFrg.setOnClickListener(null);
-//		btnListFrgEmpty.setOnClickListener(null);
+		btn.setOnClickListener(null);
+		btnListFrg.setOnClickListener(null);
+		btnListFrgEmpty.setOnClickListener(null);
 	}
 
 	@Override
@@ -165,5 +166,12 @@ public class TestFrg extends BaseFragment {
 		outState.putLong(TIME_KEY, currentTime);
 		showToast("Saving currentTime");
 	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		showToast("Back pressed on fragment.");
+	}
 	
+
 }

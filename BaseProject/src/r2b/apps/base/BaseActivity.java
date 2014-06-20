@@ -33,7 +33,6 @@
 package r2b.apps.base;
 
 import java.util.List;
-import java.util.Stack;
 
 import r2b.apps.R;
 import r2b.apps.base.BaseDialog.BaseDialogListener;
@@ -56,13 +55,13 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	implements BaseDialogListener {	
 	
 	/**
-	 * Save tags for fragments stored on back stack.
+	 * The current fragment.
 	 */
-	private final Stack<String> fragTagStack = new Stack<String>();
+	private View.OnClickListener currentClickListener;
 	/**
 	 * The current fragment.
 	 */
-	private ClickableFragment currentFragment;
+	private CallableBackFragment currentBackListener;
 	/**
 	 * The dialog fragment listener.
 	 */
@@ -77,7 +76,7 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	protected final OnClickListener clickListener = new OnClickListener() {		
 		@Override
 		public void onClick(View v) {
-			if(currentFragment != null) {
+			if(currentClickListener != null) {
 				
 				getTracker().sendEvent(
 						ITracker.CATEGORY_GUI, 
@@ -85,7 +84,7 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 						getResources().getResourceEntryName(v.getId()), 
 						v.getId());
 				
-				currentFragment.click(v);
+				currentClickListener.onClick(v);
 			}
 		}
 	};
@@ -151,11 +150,17 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	}	
 	
 	/**
-	 * Get the main click listener.
-	 * @return The activity main click listener.
+	 * Set the activity current click listener.
 	 */
-	public OnClickListener getClickListener() {
-		return clickListener;
+	public void setClickListener(OnClickListener currentClickListener) {
+		this.currentClickListener = currentClickListener;
+	}
+
+	/**
+	 * Set the activity current back listener.
+	 */
+	public void setBackListener(CallableBackFragment currentBackListener) {
+		this.currentBackListener = currentBackListener;
 	}
 	
 	@Override
@@ -179,17 +184,12 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	@Override
 	public void onBackPressed() {
 		if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-			super.onBackPressed();
-				
-			fragTagStack.pop();
-			String tag = fragTagStack.peek();
-			android.support.v4.app.Fragment frag = (android.support.v4.app.Fragment) 
-					getSupportFragmentManager().findFragmentByTag(tag);
 			
-			if (frag.isVisible() && frag instanceof ClickableFragment) {
-			   currentFragment = (ClickableFragment) frag;
+			if(this.currentBackListener != null) {
+				this.currentBackListener.onBackPressed();
 			}
-							
+			
+			super.onBackPressed();										
 		} else {			
 			clear();
 			finish();
@@ -203,10 +203,6 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	 * @param addToStack True to add to back stack, false otherwise.
 	 */
 	public void switchFragment(android.support.v4.app.Fragment fragment, String tag, boolean addToStack) {
-
-		if(fragment instanceof ClickableFragment) {
-			currentFragment = (ClickableFragment) fragment;
-		}
 		
 		if (addToStack) {
 			getSupportFragmentManager().beginTransaction()
@@ -214,9 +210,6 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 					.addToBackStack(fragment.getClass().getName())
 					.commit();
 			Logger.i(this.getClass().getSimpleName(), "Add: " + tag + ", saving to stack");
-			
-			fragTagStack.push(tag);
-			Logger.i(this.getClass().getSimpleName(), "Add: " + tag + ", saving to tag stack");
 			
 		} else {
 			getSupportFragmentManager().popBackStack();
@@ -322,5 +315,15 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 			dialogListenerWrapper = null;
 		}
 	}
+	
+	/**
+	 * Add support to fragments to receive from activity back events.
+	 */
+	public interface CallableBackFragment {
+		/**
+		 * Back event.
+		 */
+		public void onBackPressed();
+	};
 	
 }

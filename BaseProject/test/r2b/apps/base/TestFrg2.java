@@ -60,11 +60,11 @@ public class TestFrg2 extends BaseAbsListFragment<Person> {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
-	public void click(View view) {
-		// TODO Auto-generated method stub
-		
+	public void onBackPressed() {
+		super.onBackPressed();
+		showToast("Back pressed on fragment.");
 	}
 	
 }
