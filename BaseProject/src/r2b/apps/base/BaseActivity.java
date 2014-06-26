@@ -1,7 +1,7 @@
 /*
  * BaseActivity
  * 
- * 0.1
+ * 0.1.1
  * 
  * 2014/05/16
  * 
@@ -36,8 +36,10 @@ import java.util.List;
 
 import r2b.apps.R;
 import r2b.apps.base.BaseDialog.BaseDialogListener;
+import r2b.apps.utils.Cons;
 import r2b.apps.utils.ITracker;
 import r2b.apps.utils.Logger;
+import r2b.apps.utils.SecurePreferences;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -148,10 +150,20 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 		initWindowFeatures();
 		setContentView(getLayout());
 		
-		preferences = getSharedPreferences(
-				this.getClass().getSimpleName(), 
-				Activity.MODE_PRIVATE);		
-		Logger.i(this.getClass().getSimpleName(), "Init activity shared preferences on private mode.");
+		if(Cons.ENCRYPT) {
+			preferences = SecurePreferences.getSecurePreferences(
+					this,
+					this.getClass().getSimpleName());
+			
+			Logger.i(this.getClass().getSimpleName(), "Init activity shared preferences on encryption mode.");
+		}
+		else {
+			preferences = getSharedPreferences(
+					this.getClass().getSimpleName(), 
+					Activity.MODE_PRIVATE);
+			
+			Logger.i(this.getClass().getSimpleName(), "Init activity shared preferences on private mode.");
+		}		
 		
 	}	
 	

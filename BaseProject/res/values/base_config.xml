@@ -13,4 +13,7 @@
     <!-- Enable tracking -->
     <bool name="track">true</bool>
 
+    <!-- Enable encryption -->
+    <bool name="encrypt">true</bool>
+    
 </resources>

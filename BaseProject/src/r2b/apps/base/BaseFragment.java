@@ -1,7 +1,7 @@
 /*
  * BaseFragment
  * 
- * 0.1
+ * 0.1.1
  * 
  * 2014/05/16
  * 
@@ -33,8 +33,10 @@
 package r2b.apps.base;
 
 import r2b.apps.base.BaseDialog.BaseDialogListener;
+import r2b.apps.utils.Cons;
 import r2b.apps.utils.ITracker;
 import r2b.apps.utils.Logger;
+import r2b.apps.utils.SecurePreferences;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -116,10 +118,21 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		
-		preferences = activity.getSharedPreferences(
-				this.getClass().getSimpleName(), 
-				Activity.MODE_PRIVATE);
-		Logger.i(this.getClass().getSimpleName(), "Init fragment shared preferences on private mode.");
+		if(Cons.ENCRYPT) {
+			preferences = SecurePreferences.getSecurePreferences(
+					this.getActivity(),
+					this.getClass().getSimpleName());
+			
+			Logger.i(this.getClass().getSimpleName(), "Init fragment shared preferences on encryption mode.");
+		}
+		else {
+			preferences = activity.getSharedPreferences(
+					this.getClass().getSimpleName(), 
+					Activity.MODE_PRIVATE);
+			
+			Logger.i(this.getClass().getSimpleName(), "Init fragment shared preferences on private mode.");
+		}
+
 	}
 
 	@Override

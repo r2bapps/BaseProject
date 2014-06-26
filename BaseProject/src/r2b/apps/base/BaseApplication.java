@@ -1,7 +1,7 @@
 /*
  * BaseApplication
  * 
- * 0.1
+ * 0.1.1
  * 
  * 2014/05/16
  * 
@@ -33,6 +33,7 @@
 package r2b.apps.base;
 
 import r2b.apps.R;
+import r2b.apps.utils.AESCipher;
 import r2b.apps.utils.BaseTracker;
 import r2b.apps.utils.Cons;
 import r2b.apps.utils.ITracker;
@@ -55,7 +56,11 @@ public class BaseApplication extends Application {
 		
 		initConfig();
 		
-		tracker = new BaseTracker(this);			
+		tracker = new BaseTracker(this);
+		
+		if(Cons.ENCRYPT) {
+			AESCipher.init(getApplicationContext());
+		}
 
 	}
 
@@ -76,11 +81,13 @@ public class BaseApplication extends Application {
 		Cons.SHOW_LOGS = Cons.DEBUG && getResources().getBoolean(R.bool.log);
 		Cons.FAKE_DATA = Cons.DEBUG && getResources().getBoolean(R.bool.fake);
 		Cons.TRACKER = getResources().getBoolean(R.bool.track);
+		Cons.ENCRYPT = getResources().getBoolean(R.bool.encrypt);
 		
 		Logger.i(this.getClass().getSimpleName(), "Config DEBUG: " + String.valueOf(Cons.DEBUG));
 		Logger.i(this.getClass().getSimpleName(), "Config SHOW_LOGS: " + String.valueOf(Cons.SHOW_LOGS));
 		Logger.i(this.getClass().getSimpleName(), "Config FAKE_DATA: " + String.valueOf(Cons.FAKE_DATA));
 		Logger.i(this.getClass().getSimpleName(), "Config TRACKER: " + String.valueOf(Cons.TRACKER));
+		Logger.i(this.getClass().getSimpleName(), "Config ENCRYPT: " + String.valueOf(Cons.ENCRYPT));
 
 		
 	}
