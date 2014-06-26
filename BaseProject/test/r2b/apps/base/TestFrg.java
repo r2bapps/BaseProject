@@ -138,8 +138,8 @@ public class TestFrg extends BaseFragment {
 	@Override
 	protected void init() {
 		showToast("Init fragment, current time:" + String.valueOf(currentTime));
-		
-		AESCipher.init(getActivity());
+		getPreferences().edit().putString("test", "test value");
+		showToast("Added 'test' to preferences");
 	}
 
 	@Override
@@ -152,6 +152,7 @@ public class TestFrg extends BaseFragment {
 	@Override
 	protected void clear() {
 		showToast("Closing fragment");
+		showToast("Get 'test' from preferences: " + getPreferences().getString("test", "eror"));
 	}
 
 	@Override
