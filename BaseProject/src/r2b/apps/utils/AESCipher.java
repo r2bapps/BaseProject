@@ -1,7 +1,7 @@
 /*
  * AESCipher
  * 
- * 0.2
+ * 0.3
  * 
  * 2014/05/16
  * 
@@ -76,7 +76,14 @@ public class AESCipher {
     	
         // 64 bit hex string
         final String id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        key = id.concat(id);
+        key = id;
+        
+        while(key.length() < 32) {
+        	key += key;
+        }
+        
+        key = key.substring(0, 32);
+        
     }
 
     /**
@@ -99,7 +106,7 @@ public class AESCipher {
 
             AlgorithmParameterSpec ivSpec = new IvParameterSpec(ivBytes);
             SecretKeySpec newKey = new SecretKeySpec(keyBytes, "AES");
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
             cipher.init(Cipher.ENCRYPT_MODE, newKey, ivSpec);
             byte[] cipherData = cipher.doFinal(textBytes);
 
@@ -138,7 +145,7 @@ public class AESCipher {
 
             AlgorithmParameterSpec ivSpec = new IvParameterSpec(ivBytes);
             SecretKeySpec newKey = new SecretKeySpec(keyBytes, "AES");
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
             cipher.init(Cipher.DECRYPT_MODE, newKey, ivSpec);
             byte [] cipherData = cipher.doFinal(textBytes);
 
