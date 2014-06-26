@@ -172,6 +172,14 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 		((BaseActivity) getActivity()).switchFragment(fragment, tag, addToStack);
 	}
 	
+	/***
+	 * Clear the back stack to its initial state.
+	 * Normally with the first fragment setted when activity is created firstly.
+	 */
+	protected void clearBackStack() {
+		((BaseActivity) getActivity()).clearBackStack();
+	}
+	
 	/**
 	 * Switch between child fragments inner the base fragment.
 	 * WARNING: NOT TESTED!!

@@ -55,6 +55,12 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	implements BaseDialogListener {	
 	
 	/**
+	 * Setup the initial back stack size as one fragment on the activity.
+	 * Normally you do not need to change this param.
+	 */
+	private static final int INITIAL_BACK_STACK_SIZE = 1;
+	
+	/**
 	 * The current fragment.
 	 */
 	private View.OnClickListener currentClickListener;
@@ -183,7 +189,7 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	
 	@Override
 	public void onBackPressed() {
-		if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+		if (getSupportFragmentManager().getBackStackEntryCount() > INITIAL_BACK_STACK_SIZE) {
 			
 			if(this.currentBackListener != null) {
 				this.currentBackListener.onBackPressed();
@@ -220,6 +226,20 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 			Logger.i(this.getClass().getSimpleName(), "Add: " + tag + ", without saving to stack");
 		}		
 
+	}
+	
+	/***
+	 * Clear the back stack to its initial state.
+	 * Normally with the first fragment setted when activity is created firstly.
+	 */
+	public void clearBackStack() {
+		android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+
+	    while (fragmentManager.getBackStackEntryCount() > INITIAL_BACK_STACK_SIZE) {
+	    	// If you use popBackStack you probably setup an infinite loop.
+	        fragmentManager.popBackStackImmediate();
+	    }
+	    
 	}
 	
 	/**
