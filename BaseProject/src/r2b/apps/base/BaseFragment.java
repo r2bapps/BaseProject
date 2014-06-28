@@ -37,7 +37,7 @@ import r2b.apps.utils.Cons;
 import r2b.apps.utils.ITracker;
 import r2b.apps.utils.Logger;
 import r2b.apps.utils.SecurePreferences;
-import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -49,11 +49,6 @@ import android.view.ViewGroup;
  */
 public abstract class BaseFragment extends android.support.v4.app.Fragment 
 	implements View.OnClickListener, BaseActivity.CallableBackFragment {
-	
-	/**
-	 * Fragment shared preferences.
-	 */
-	protected SharedPreferences preferences;
 	
 	/**
 	 * Get the layout to show.
@@ -114,25 +109,32 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 	@Override
 	public void onBackPressed() { }
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+	/**
+	 * Get the shared preferences.
+	 * @param context The activity.
+	 * @param name The name of the file.
+	 * @param mode The mode.
+	 * @return Shared preferences or encrypted shared preferences.
+	 */
+	private SharedPreferences getSharedPreferences(Context context, String name, int mode) {
+		
+		final SharedPreferences exit;
 		
 		if(Cons.ENCRYPT) {
-			preferences = SecurePreferences.getSecurePreferences(
-					this.getActivity(),
-					this.getClass().getSimpleName());
+			exit = SecurePreferences.getSecurePreferences(
+					context,
+					name);
 			
 			Logger.i(this.getClass().getSimpleName(), "Init fragment shared preferences on encryption mode.");
 		}
 		else {
-			preferences = activity.getSharedPreferences(
-					this.getClass().getSimpleName(), 
-					Activity.MODE_PRIVATE);
+			exit = context.getSharedPreferences(name, mode);
 			
 			Logger.i(this.getClass().getSimpleName(), "Init fragment shared preferences on private mode.");
 		}
-
+		
+		return exit;
+		
 	}
 
 	@Override
@@ -236,15 +238,17 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 	}	
 	
 	/**
-	 * Get the fragment shared preferences.
+	 * Get the fragment private shared preferences.
+	 * If ENCRYPT mode is enable the preferences are encrypted.
 	 * @return The fragment shared preferences.
 	 */
-	protected SharedPreferences getPreferences() {
-		return preferences;
+	protected SharedPreferences getFragmentPreferences() {
+		return getSharedPreferences(getActivity(), this.getClass().getSimpleName(), Context.MODE_PRIVATE);
 	}
 
 	/**
-	 * Get the activity shared preferences.
+	 * Get the activity private shared preferences.
+	 * If ENCRYPT mode is enable the preferences are encrypted.
 	 * @return The activity shared preferences.
 	 */
 	protected SharedPreferences getActivityPreferences() {

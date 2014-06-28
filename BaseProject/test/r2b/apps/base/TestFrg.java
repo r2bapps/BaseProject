@@ -1,10 +1,13 @@
 package r2b.apps.base;
 
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
+import junit.framework.Assert;
 import r2b.apps.R;
 import r2b.apps.base.BaseDialog.BaseDialogListener;
 import r2b.apps.utils.AESCipher;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -83,27 +86,27 @@ public class TestFrg extends BaseFragment {
 		} 
 		else {
 		
-		txt.setText(((Button)view).getText().toString());
-		currentTime = System.currentTimeMillis();
-		showDialog(BaseDialog.newInstance(
-				android.R.drawable.ic_dialog_info, 
-				"Title", 
-				"Message", 
-				true, 
-				0, 
-				0, 
-				android.R.string.ok, 
-				android.R.string.cancel, 
-				android.R.string.unknownName, 
-				android.R.array.postalAddressTypes, 0, 0),
-				dialogListener);
-		
-		if(etIn.getText().toString() != null && !"".equals(etIn.getText().toString())) {
-			etOut.setText(AESCipher.encrypt(etIn.getText().toString()));
-		}
-		else if(etOut.getText().toString() != null && !"".equals(etOut.getText().toString())) {
-			etIn.setText(AESCipher.decrypt(etOut.getText().toString()));
-		}
+			txt.setText(((Button)view).getText().toString());
+			currentTime = System.currentTimeMillis();
+			showDialog(BaseDialog.newInstance(
+					android.R.drawable.ic_dialog_info, 
+					"Title", 
+					"Message", 
+					true, 
+					0, 
+					0, 
+					android.R.string.ok, 
+					android.R.string.cancel, 
+					android.R.string.unknownName, 
+					android.R.array.postalAddressTypes, 0, 0),
+					dialogListener);
+			
+			if(etIn.getText().toString() != null && !"".equals(etIn.getText().toString())) {
+				etOut.setText(AESCipher.encrypt(etIn.getText().toString()));
+			}
+			else if(etOut.getText().toString() != null && !"".equals(etOut.getText().toString())) {
+				etIn.setText(AESCipher.decrypt(etOut.getText().toString()));
+			}
 		
 		}
 	}
@@ -135,11 +138,35 @@ public class TestFrg extends BaseFragment {
 		btnListFrgEmpty.setOnClickListener(this);
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void init() {
 		showToast("Init fragment, current time:" + String.valueOf(currentTime));
-		getPreferences().edit().putString("test", "test value");
-		showToast("Added 'test' to preferences");
+
+		getFragmentPreferences().edit().putString("test", "test value").commit();
+		Assert.assertEquals("test value", getFragmentPreferences().getString("test", "eror"));
+		
+		getFragmentPreferences().edit().putInt("test", 5).commit();
+		Assert.assertEquals(5, getFragmentPreferences().getInt("test", 0));
+		
+		getFragmentPreferences().edit().putLong("test", 5l).commit();
+		Assert.assertEquals(5l, getFragmentPreferences().getLong("test", 0l));
+		
+		getFragmentPreferences().edit().putFloat("test", 5.5f).commit();
+		Assert.assertEquals(5.5f, getFragmentPreferences().getFloat("test", 0.0f));
+		
+		getFragmentPreferences().edit().putBoolean("test", true).commit();
+		Assert.assertEquals(true, getFragmentPreferences().getBoolean("test", false));
+		
+		Set<String> set = new HashSet<String>(2);
+		set.add("hello");
+		set.add("world");
+		getFragmentPreferences().edit().putStringSet("test", set).commit();
+		
+		set = getFragmentPreferences().getStringSet("test", null);
+		Assert.assertNotNull(set);
+		Assert.assertEquals("hello", set.toArray()[0]);
+		Assert.assertEquals("world", set.toArray()[1]);
 	}
 
 	@Override
@@ -152,7 +179,6 @@ public class TestFrg extends BaseFragment {
 	@Override
 	protected void clear() {
 		showToast("Closing fragment");
-		showToast("Get 'test' from preferences: " + getPreferences().getString("test", "eror"));
 	}
 
 	@Override

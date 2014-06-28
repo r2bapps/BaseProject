@@ -40,7 +40,7 @@ import r2b.apps.utils.Cons;
 import r2b.apps.utils.ITracker;
 import r2b.apps.utils.Logger;
 import r2b.apps.utils.SecurePreferences;
-import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -74,10 +74,6 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	 * The dialog fragment listener.
 	 */
 	private BaseDialogListener dialogListenerWrapper;
-	/**
-	 * The activity preferences.
-	 */
-	protected SharedPreferences preferences;
 	/**
 	 * Main click listener for the activity and all fragments.
 	 */
@@ -144,27 +140,37 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	 */
 	protected abstract void clear();
 	
+	
+	/* (non-Javadoc)
+	 * @see android.content.ContextWrapper#getSharedPreferences(java.lang.String, int)
+	 */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		initWindowFeatures();
-		setContentView(getLayout());
+	public SharedPreferences getSharedPreferences(String name, int mode) {
+		
+		final SharedPreferences exit;
 		
 		if(Cons.ENCRYPT) {
-			preferences = SecurePreferences.getSecurePreferences(
+			exit = SecurePreferences.getSecurePreferences(
 					this,
-					this.getClass().getSimpleName());
+					name);
 			
 			Logger.i(this.getClass().getSimpleName(), "Init activity shared preferences on encryption mode.");
 		}
 		else {
-			preferences = getSharedPreferences(
-					this.getClass().getSimpleName(), 
-					Activity.MODE_PRIVATE);
+			exit = super.getSharedPreferences(name, mode);
 			
 			Logger.i(this.getClass().getSimpleName(), "Init activity shared preferences on private mode.");
-		}		
+		}
 		
+		return exit;
+		
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		initWindowFeatures();
+		setContentView(getLayout());		
 	}	
 	
 	/**
@@ -277,11 +283,12 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	}
 	
 	/**
-	 * Get the activity shared preferences.
+	 * Get the activity private shared preferences.
+	 * If ENCRYPT mode is enable the preferences are encrypted.
 	 * @return The activity shared preferences.
 	 */
 	public SharedPreferences getPreferences() {
-		return preferences;
+		return getSharedPreferences(this.getClass().getSimpleName(), Context.MODE_PRIVATE);
 	}
 	
 	/**
