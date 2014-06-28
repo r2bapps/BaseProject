@@ -1,7 +1,7 @@
 /*
  * BaseActivity
  * 
- * 0.1
+ * 0.1.1
  * 
  * 2014/05/16
  * 
@@ -33,13 +33,14 @@
 package r2b.apps.base;
 
 import java.util.List;
-import java.util.Stack;
 
 import r2b.apps.R;
 import r2b.apps.base.BaseDialog.BaseDialogListener;
+import r2b.apps.utils.Cons;
 import r2b.apps.utils.ITracker;
 import r2b.apps.utils.Logger;
-import android.app.Activity;
+import r2b.apps.utils.SecurePreferences;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -56,28 +57,30 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	implements BaseDialogListener {	
 	
 	/**
-	 * Save tags for fragments stored on back stack.
+	 * Setup the initial back stack size as one fragment on the activity.
+	 * Normally you do not need to change this param.
 	 */
-	private final Stack<String> fragTagStack = new Stack<String>();
+	private static final int INITIAL_BACK_STACK_SIZE = 1;
+	
 	/**
 	 * The current fragment.
 	 */
-	private ClickableFragment currentFragment;
+	private View.OnClickListener currentClickListener;
+	/**
+	 * The current fragment.
+	 */
+	private CallableBackFragment currentBackListener;
 	/**
 	 * The dialog fragment listener.
 	 */
 	private BaseDialogListener dialogListenerWrapper;
-	/**
-	 * The activity preferences.
-	 */
-	protected SharedPreferences preferences;
 	/**
 	 * Main click listener for the activity and all fragments.
 	 */
 	protected final OnClickListener clickListener = new OnClickListener() {		
 		@Override
 		public void onClick(View v) {
-			if(currentFragment != null) {
+			if(currentClickListener != null) {
 				
 				getTracker().sendEvent(
 						ITracker.CATEGORY_GUI, 
@@ -85,7 +88,7 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 						getResources().getResourceEntryName(v.getId()), 
 						v.getId());
 				
-				currentFragment.click(v);
+				currentClickListener.onClick(v);
 			}
 		}
 	};
@@ -137,25 +140,51 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	 */
 	protected abstract void clear();
 	
+	
+	/* (non-Javadoc)
+	 * @see android.content.ContextWrapper#getSharedPreferences(java.lang.String, int)
+	 */
+	@Override
+	public SharedPreferences getSharedPreferences(String name, int mode) {
+		
+		final SharedPreferences exit;
+		
+		if(Cons.ENCRYPT) {
+			exit = SecurePreferences.getSecurePreferences(
+					this,
+					name);
+			
+			Logger.i(this.getClass().getSimpleName(), "Init activity shared preferences on encryption mode.");
+		}
+		else {
+			exit = super.getSharedPreferences(name, mode);
+			
+			Logger.i(this.getClass().getSimpleName(), "Init activity shared preferences on private mode.");
+		}
+		
+		return exit;
+		
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initWindowFeatures();
-		setContentView(getLayout());
-		
-		preferences = getSharedPreferences(
-				this.getClass().getSimpleName(), 
-				Activity.MODE_PRIVATE);		
-		Logger.i(this.getClass().getSimpleName(), "Init activity shared preferences on private mode.");
-		
+		setContentView(getLayout());		
 	}	
 	
 	/**
-	 * Get the main click listener.
-	 * @return The activity main click listener.
+	 * Set the activity current click listener.
 	 */
-	public OnClickListener getClickListener() {
-		return clickListener;
+	public void setClickListener(OnClickListener currentClickListener) {
+		this.currentClickListener = currentClickListener;
+	}
+
+	/**
+	 * Set the activity current back listener.
+	 */
+	public void setBackListener(CallableBackFragment currentBackListener) {
+		this.currentBackListener = currentBackListener;
 	}
 	
 	@Override
@@ -178,18 +207,13 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	
 	@Override
 	public void onBackPressed() {
-		if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-			super.onBackPressed();
-				
-			fragTagStack.pop();
-			String tag = fragTagStack.peek();
-			android.support.v4.app.Fragment frag = (android.support.v4.app.Fragment) 
-					getSupportFragmentManager().findFragmentByTag(tag);
+		if (getSupportFragmentManager().getBackStackEntryCount() > INITIAL_BACK_STACK_SIZE) {
 			
-			if (frag.isVisible() && frag instanceof ClickableFragment) {
-			   currentFragment = (ClickableFragment) frag;
+			if(this.currentBackListener != null) {
+				this.currentBackListener.onBackPressed();
 			}
-							
+			
+			super.onBackPressed();										
 		} else {			
 			clear();
 			finish();
@@ -203,10 +227,6 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	 * @param addToStack True to add to back stack, false otherwise.
 	 */
 	public void switchFragment(android.support.v4.app.Fragment fragment, String tag, boolean addToStack) {
-
-		if(fragment instanceof ClickableFragment) {
-			currentFragment = (ClickableFragment) fragment;
-		}
 		
 		if (addToStack) {
 			getSupportFragmentManager().beginTransaction()
@@ -214,9 +234,6 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 					.addToBackStack(fragment.getClass().getName())
 					.commit();
 			Logger.i(this.getClass().getSimpleName(), "Add: " + tag + ", saving to stack");
-			
-			fragTagStack.push(tag);
-			Logger.i(this.getClass().getSimpleName(), "Add: " + tag + ", saving to tag stack");
 			
 		} else {
 			getSupportFragmentManager().popBackStack();
@@ -227,6 +244,20 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 			Logger.i(this.getClass().getSimpleName(), "Add: " + tag + ", without saving to stack");
 		}		
 
+	}
+	
+	/***
+	 * Clear the back stack to its initial state.
+	 * Normally with the first fragment setted when activity is created firstly.
+	 */
+	public void clearBackStack() {
+		android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+
+	    while (fragmentManager.getBackStackEntryCount() > INITIAL_BACK_STACK_SIZE) {
+	    	// If you use popBackStack you probably setup an infinite loop.
+	        fragmentManager.popBackStackImmediate();
+	    }
+	    
 	}
 	
 	/**
@@ -252,11 +283,12 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	}
 	
 	/**
-	 * Get the activity shared preferences.
+	 * Get the activity private shared preferences.
+	 * If ENCRYPT mode is enable the preferences are encrypted.
 	 * @return The activity shared preferences.
 	 */
 	public SharedPreferences getPreferences() {
-		return preferences;
+		return getSharedPreferences(this.getClass().getSimpleName(), Context.MODE_PRIVATE);
 	}
 	
 	/**
@@ -322,5 +354,15 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 			dialogListenerWrapper = null;
 		}
 	}
+	
+	/**
+	 * Add support to fragments to receive from activity back events.
+	 */
+	public interface CallableBackFragment {
+		/**
+		 * Back event.
+		 */
+		public void onBackPressed();
+	};
 	
 }
