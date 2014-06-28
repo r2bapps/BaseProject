@@ -39,7 +39,7 @@
 <p><strong>Base Application</strong>:</p>
 
 <ul>
-<li>Load config constants as debug, show logs, use tracker, use fake data, ...</li>
+<li>Load config constants as debug, show logs, use tracker, use fake data, use encryption, ...</li>
 <li>Used as singleton and main manager to get other managers as tracker, db manager, ...</li>
 </ul><p><strong>Base Activity</strong>:</p>
 
@@ -49,16 +49,18 @@ to this views, ... </li>
 <li>Show common toast.</li>
 <li>Show correctly only one fragment dialog, in all app.</li>
 <li>A main click listener to send to current fragments and centralized its management.</li>
-<li>Shared preferences only for activity.</li>
+<li>Shared preferences only for activity and encrypted or not.</li>
 <li>A switch fragment method that runs correctly on back and retry again.</li>
+<li>A clear back stack method.</li>
 </ul><p><strong>Base Fragment</strong>:</p>
 
 <ul>
 <li>Activity methods façade: You do not need to call ((MyActivity) getActivity())... methods.</li>
 <li>Methods for common operations like: findById, set values to this views, set listeners 
 to this views, ... </li>
-<li>Shared preferences only for fragment.</li>
+<li>Shared preferences only for fragment, and encrypted or not.</li>
 <li>A switch fragment method for child fragments.</li>
+<li>Back event listener with the same functionality as onBackPressed than activity class.</li>
 </ul><p><strong>Base Dialog Fragment</strong>:</p>
 
 <ul>
@@ -82,6 +84,10 @@ disable the feature and all tracking goes to Logger, this one can disable this l
 
 <ul>
 <li>Logs all events. You can disable it.</li>
+</ul><p><strong>SecurePreferences</strong>:</p>
+
+<ul>
+<li>Key-value encrypted shared preferences.</li>
 </ul><p><strong>AESCipher</strong>:</p>
 
 <ul>
