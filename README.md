@@ -47,6 +47,9 @@ disable the feature and all tracking goes to Logger, this one can disable this l
 **Logger**:
 * Logs all events. You can disable it.
 
+**SecurePreferences**:
+* Key-value encrypted shared preferences.
+
 **AESCipher**:
 * Encrypt/Decrypt strings with AES 128-bits using key based on device ANDROID_ID.
 
