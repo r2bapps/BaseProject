@@ -8,7 +8,7 @@ Android project with a base common development
 Main functionality
 ------------------
 **Base Application**:
-* Load config constants as debug, show logs, use tracker, use fake data, ...
+* Load config constants as debug, show logs, use tracker, use fake data, use encryption, ...
 * Used as singleton and main manager to get other managers as tracker, db manager, ...
 
 **Base Activity**:
@@ -17,15 +17,17 @@ to this views, ...
 * Show common toast.
 * Show correctly only one fragment dialog, in all app.
 * A main click listener to send to current fragments and centralized its management.
-* Shared preferences only for activity.
+* Shared preferences only for activity and encrypted or not.
 * A switch fragment method that runs correctly on back and retry again.
+* A clear back stack method.
 
 **Base Fragment**:
 * Activity methods façade: You do not need to call ((MyActivity) getActivity())... methods.
 * Methods for common operations like: findById, set values to this views, set listeners 
 to this views, ... 
-* Shared preferences only for fragment.
+* Shared preferences only for fragment, and encrypted or not.
 * A switch fragment method for child fragments.
+* Back event listener with the same functionality as onBackPressed than activity class.
 
 **Base Dialog Fragment**:
 * A dialog that can show a title, up to three buttons, a traditional 
