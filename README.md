@@ -53,6 +53,8 @@ disable the feature and all tracking goes to Logger, this one can disable this l
 **AESCipher**:
 * Encrypt/Decrypt strings with AES 128-bits using key based on device ANDROID_ID.
 
+**Base Splash Activity**:
+* A simple way to load and launch splash and main activity.
 
 
 Documentation
