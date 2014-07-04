@@ -275,7 +275,11 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 	 */
 	public void showDialog(android.support.v4.app.DialogFragment dialog, BaseDialogListener listener) {
 		android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		ft.commit();
+		android.support.v4.app.Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+		if (prev != null) {
+			ft.remove(prev);
+		}
+		ft.addToBackStack(null).commit();
 	    
 	    this.dialogListenerWrapper = listener;
 	    
