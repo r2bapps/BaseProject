@@ -45,7 +45,7 @@ import android.view.LayoutInflater;
 
 /**
  * A fragment that handles a dialog that can show a title, up to three 
- * buttons, a traditional single choice list, a list of selectable items 
+ * buttons, a traditional list, a list of selectable items 
  * (single with radio or multiple choice with checkbox), or a custom layout.
  */
 public class BaseDialog extends android.support.v4.app.DialogFragment {
