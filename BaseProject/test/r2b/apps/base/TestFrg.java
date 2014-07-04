@@ -93,12 +93,10 @@ public class TestFrg extends BaseFragment {
 					"Title", 
 					"Message", 
 					true, 
-					0, 
-					0, 
 					android.R.string.ok, 
-					android.R.string.cancel, 
-					android.R.string.unknownName, 
-					android.R.array.postalAddressTypes, 0, 0),
+					android.R.string.cancel,  
+					android.R.array.postalAddressTypes, 
+					2),
 					dialogListener);
 			
 			if(etIn.getText().toString() != null && !"".equals(etIn.getText().toString())) {
