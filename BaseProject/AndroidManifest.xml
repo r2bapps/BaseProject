@@ -17,14 +17,19 @@
         android:name="r2b.apps.base.BaseApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >       
+        android:label="@string/app_name" >    
         <activity
-            android:name="r2b.apps.base.TestAct"
+            android:name="r2b.apps.base.Splash"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>   
+        
+        <activity
+            android:name="r2b.apps.base.TestAct"
+            android:label="@string/app_name" >
         </activity>
     </application>
 
