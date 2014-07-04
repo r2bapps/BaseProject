@@ -88,7 +88,7 @@ public abstract class BaseSplashActivity extends Activity {
             public void run() {
                 // Start the next activity
                 Intent mainIntent = new Intent().setClass(context, getNextActivity());
-                startActivity(mainIntent);
+                startActivity(mainIntent);                
  
                 // Close the activity so the user won't able to go back this
                 // activity pressing Back button
