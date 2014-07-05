@@ -240,7 +240,7 @@ public final class Logger {
 	    	    
 	    // Create a path where we will place our file on external storage
 	    File sdCard = Environment.getExternalStorageDirectory();  
-	    File root = new File (sdCard.getAbsolutePath() + "/" + appName);  
+	    File root = new File (sdCard.getAbsolutePath() + File.separator + appName);  
 		if(!root.exists()) {
 			root.mkdirs();
 		}
