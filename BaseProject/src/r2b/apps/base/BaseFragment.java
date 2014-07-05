@@ -130,7 +130,7 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 			exit = context.getSharedPreferences(name, mode);
 			
 			// XXX LOGGER
-			Logger.i(this.getClass().getSimpleName(), "Init fragment shared preferences on private mode.");
+			Logger.v(this.getClass().getSimpleName(), "Init fragment shared preferences on private mode.");
 		}
 		
 		return exit;
@@ -211,7 +211,7 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 					.addToBackStack(fragment.getClass().getName()).commit();
 			
 			// XXX LOGGER
-			Logger.i(this.getClass().getSimpleName(), "Add child: " + tag + ", saving to stack");
+			Logger.v(this.getClass().getSimpleName(), "Add child: " + tag + ", saving to stack");
 		} else {
 			getChildFragmentManager().popBackStack();
 			getChildFragmentManager().beginTransaction()
@@ -219,7 +219,7 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 					.addToBackStack(fragment.getClass().getName()).commit();
 			
 			// XXX LOGGER
-			Logger.i(this.getClass().getSimpleName(), "Add child: " + tag + ", without saving to stack");
+			Logger.v(this.getClass().getSimpleName(), "Add child: " + tag + ", without saving to stack");
 		}
 
 	}	

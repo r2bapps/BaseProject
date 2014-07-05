@@ -142,7 +142,7 @@ public class AESCipher {
         }
         
         // XXX LOGGER
-        Logger.i(AESCipher.class.getSimpleName(), "Encrypt: " + plainText + " to: " + exit);
+        Logger.v(AESCipher.class.getSimpleName(), "Encrypt: " + plainText + " to: " + exit);
 
         return exit;
     }
@@ -188,7 +188,7 @@ public class AESCipher {
         }
 
         // XXX LOGGER
-        Logger.i(AESCipher.class.getSimpleName(), "Decrypt: " + base64Text + " to: " + exit);
+        Logger.v(AESCipher.class.getSimpleName(), "Decrypt: " + base64Text + " to: " + exit);
         
         return exit;
 

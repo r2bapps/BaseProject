@@ -1,7 +1,7 @@
 /*
  * Logger
  * 
- * 0.1.1
+ * 0.2
  * 
  * 2014/05/16
  * 
@@ -39,6 +39,15 @@ import android.util.Log;
 /**
  * Android log wrapper. Useful to add several implementations about log
  * management like send to a service, print in a file,...
+ * 
+ * The order in terms of verbosity, from least to most is ERROR, WARN, INFO, 
+ * DEBUG, VERBOSE. Verbose should never be compiled into an application 
+ * except during development, this class hides them. Debug logs are compiled 
+ * in but stripped at runtime, this class hides them. Error, warning and 
+ * info logs are always kept.
+ * 
+ * If you ofuscate your code a good convention is to declare a TAG constant 
+ * in your class with the arg tag needed here.
  */
 public final class Logger {
 
@@ -67,9 +76,7 @@ public final class Logger {
 	 *            The message you would like logged.
 	 */
 	public static final void i(String tag, String msg) {
-		if (Cons.SHOW_LOGS) {
-			Log.i(tag, msg);
-		}
+		Log.i(tag, msg);
 	}
 
 	/**
@@ -97,9 +104,7 @@ public final class Logger {
 	 *            The message you would like logged.
 	 */
 	public static final void e(String tag, String msg) {
-		if (Cons.SHOW_LOGS) {
-			Log.e(tag, msg);
-		}
+		Log.e(tag, msg);
 	}
 
 	/**
@@ -114,10 +119,7 @@ public final class Logger {
 	 *            An exception to log.
 	 */
 	public static final void e(String tag, String msg, Throwable tr) {
-		if (Cons.SHOW_LOGS) {
-			Log.e(tag, msg, tr);
-		}
+		Log.e(tag, msg, tr);
 	}
-	
 	
 }

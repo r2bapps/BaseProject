@@ -111,7 +111,7 @@ public class SecurePreferences implements SharedPreferences {
 			e.putString(AESCipher.encrypt(key), AESCipher.encrypt(value));
 			
 			// XXX LOGGER
-			Logger.i(this.getClass().getSimpleName(), 
+			Logger.v(this.getClass().getSimpleName(), 
 					"Saving string (" + key + "," + value + ") to (" + encryptKey + ", " + encryptValue + ")");
 			
 			return this;
@@ -131,7 +131,7 @@ public class SecurePreferences implements SharedPreferences {
 			e.putStringSet(encryptKey, encryptedValues);
 			
 			// XXX LOGGER
-			Logger.i(this.getClass().getSimpleName(), 
+			Logger.v(this.getClass().getSimpleName(), 
 					"Saving string set (" + key + "," + values.toString() + ") "
 							+ "to (" + encryptKey + ", " + encryptedValues.toString() + ")");
 			
@@ -312,7 +312,7 @@ public class SecurePreferences implements SharedPreferences {
 		prefs.registerOnSharedPreferenceChangeListener(listener);
 		
 		// XXX LOGGER
-		Logger.i(this.getClass().getSimpleName(), 
+		Logger.v(this.getClass().getSimpleName(), 
 				"Register preferences change listener: " 
 						+ listener == null ? "null" : listener.getClass().getSimpleName());
 	}
@@ -326,7 +326,7 @@ public class SecurePreferences implements SharedPreferences {
 		prefs.unregisterOnSharedPreferenceChangeListener(listener);
 		
 		// XXX LOGGER
-		Logger.i(this.getClass().getSimpleName(), 
+		Logger.v(this.getClass().getSimpleName(), 
 				"Unregister preferences change listener: " 
 						+ listener == null ? "null" : listener.getClass().getSimpleName());
 	}

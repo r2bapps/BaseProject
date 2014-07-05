@@ -92,7 +92,7 @@ public class BaseTracker implements ITracker {
 			tracker.setScreenName(screenName);
 			tracker.send(new HitBuilders.AppViewBuilder().build());
 			// XXX LOGGER
-			Logger.i(this.getClass().getSimpleName(), "Sending screen name: " + screenName);
+			Logger.v(this.getClass().getSimpleName(), "Sending screen name: " + screenName);
 		}
 	}
 	
@@ -120,7 +120,7 @@ public class BaseTracker implements ITracker {
 				.setValue(value).build());
 			
 			// XXX LOGGER
-			Logger.i(this.getClass().getSimpleName(), "Sending event, " + 
+			Logger.v(this.getClass().getSimpleName(), "Sending event, " + 
 					"category : " + category + 
 					", action: " + action + 
 					", label: " + label + 
