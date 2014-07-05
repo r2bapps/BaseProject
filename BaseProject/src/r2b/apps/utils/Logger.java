@@ -73,6 +73,21 @@ public final class Logger {
 	}
 
 	/**
+	 * Send a DEBUG log message.
+	 * 
+	 * @param tag
+	 *            Used to identify the source of a log message. It usually
+	 *            identifies the class or activity where the log call occurs.
+	 * @param msg
+	 *            The message you would like logged.
+	 */
+	public static final void d(String tag, String msg) {
+		if (Cons.SHOW_LOGS) {
+			Log.d(tag, msg);
+		}
+	}
+	
+	/**
 	 * Send an ERROR log message.
 	 * 
 	 * @param tag

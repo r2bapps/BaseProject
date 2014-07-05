@@ -34,7 +34,7 @@ package r2b.apps.base;
 
 import java.util.List;
 
-import r2b.apps.utils.ITracker;
+import r2b.apps.utils.BaseTracker;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
@@ -77,11 +77,18 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	protected final OnItemClickListener itemClickListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+			
+			// XXX TRACKER
+			String item_click = BaseTracker.ACTION.grid_item_click.name();
+			if(absListView instanceof ListView) {
+				item_click = BaseTracker.ACTION.list_item_click.name();
+			}
+			
 			getTracker().sendEvent(
-					ITracker.CATEGORY_GUI, 
-					ITracker.ACTION_LIST_ITEM_CLICK, 
-					String.valueOf(position),
-					id);
+					BaseTracker.CATEGORY.GUI.name(), 
+					item_click,
+					getResources().getResourceEntryName(view.getId()),
+					position);
 			
 			itemClick(view, position, id);
 		}	

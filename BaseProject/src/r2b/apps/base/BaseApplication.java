@@ -83,6 +83,7 @@ public class BaseApplication extends Application {
 		Cons.TRACKER = getResources().getBoolean(R.bool.track);
 		Cons.ENCRYPT = getResources().getBoolean(R.bool.encrypt);
 		
+		// XXX LOGGER
 		Logger.i(this.getClass().getSimpleName(), "Config DEBUG: " + String.valueOf(Cons.DEBUG));
 		Logger.i(this.getClass().getSimpleName(), "Config SHOW_LOGS: " + String.valueOf(Cons.SHOW_LOGS));
 		Logger.i(this.getClass().getSimpleName(), "Config FAKE_DATA: " + String.valueOf(Cons.FAKE_DATA));

@@ -39,6 +39,7 @@ import android.util.Base64;
 
 
 
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -79,6 +80,8 @@ public class AESCipher {
     	
     	// The fixes need to be applied via apply() before any use of Java Cryptography Architecture primitives.
     	PRNGFixes.apply();
+    	// XXX LOGGER
+    	Logger.i(AESCipher.class.getSimpleName(), "PRNGFixes applied");
     	
         // 64 bit hex string
         final String id = Settings.Secure
@@ -92,6 +95,9 @@ public class AESCipher {
         key = key.substring(0, 32);
         
         initialized = true;
+        
+        // XXX LOGGER
+        Logger.i(AESCipher.class.getSimpleName(), "Initialized with key: " + key);
         
     }
 
@@ -134,6 +140,9 @@ public class AESCipher {
         		InvalidKeyException e) {
             Logger.e(AESCipher.class.getSimpleName(), e.toString());
         }
+        
+        // XXX LOGGER
+        Logger.i(AESCipher.class.getSimpleName(), "Encrypt: " + plainText + " to: " + exit);
 
         return exit;
     }
@@ -178,6 +187,9 @@ public class AESCipher {
             Logger.e(AESCipher.class.getSimpleName(), e.toString());
         }
 
+        // XXX LOGGER
+        Logger.i(AESCipher.class.getSimpleName(), "Decrypt: " + base64Text + " to: " + exit);
+        
         return exit;
 
     }

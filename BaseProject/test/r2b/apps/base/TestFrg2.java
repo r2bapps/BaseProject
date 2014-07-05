@@ -57,7 +57,6 @@ public class TestFrg2 extends BaseAbsListFragment<Person> {
 
 	@Override
 	protected void clear() {
-		// TODO Auto-generated method stub
 		
 	}
 	

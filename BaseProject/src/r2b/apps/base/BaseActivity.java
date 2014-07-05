@@ -36,6 +36,7 @@ import java.util.List;
 
 import r2b.apps.R;
 import r2b.apps.base.BaseDialog.BaseDialogListener;
+import r2b.apps.utils.BaseTracker;
 import r2b.apps.utils.Cons;
 import r2b.apps.utils.ITracker;
 import r2b.apps.utils.Logger;
@@ -82,9 +83,10 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 		public void onClick(View v) {
 			if(currentClickListener != null) {
 				
+				// XXX TRACKER
 				getTracker().sendEvent(
-						ITracker.CATEGORY_GUI, 
-						ITracker.ACTION_CLICK, 
+						BaseTracker.CATEGORY.GUI.name(), 
+						BaseTracker.ACTION.click.name(), 
 						getResources().getResourceEntryName(v.getId()), 
 						v.getId());
 				
@@ -153,12 +155,12 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 			exit = SecurePreferences.getSecurePreferences(
 					this,
 					name);
-			
-			Logger.i(this.getClass().getSimpleName(), "Init activity shared preferences on encryption mode.");
+
 		}
 		else {
 			exit = super.getSharedPreferences(name, mode);
 			
+			// XXX LOGGER
 			Logger.i(this.getClass().getSimpleName(), "Init activity shared preferences on private mode.");
 		}
 		
@@ -233,6 +235,8 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 					.add(R.id.container, fragment, tag)
 					.addToBackStack(fragment.getClass().getName())
 					.commit();
+			
+			// XXX LOGGER
 			Logger.i(this.getClass().getSimpleName(), "Add: " + tag + ", saving to stack");
 			
 		} else {
@@ -241,6 +245,8 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 					.add(R.id.container, fragment, tag)
 					.addToBackStack(fragment.getClass().getName())
 					.commit();
+			
+			// XXX LOGGER
 			Logger.i(this.getClass().getSimpleName(), "Add: " + tag + ", without saving to stack");
 		}		
 

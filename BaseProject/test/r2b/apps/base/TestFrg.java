@@ -32,19 +32,17 @@ public class TestFrg extends BaseFragment {
 
 		@Override
 		public void onDialogPositiveClick(DialogFragment dialog) {
-			// TODO Auto-generated method stub
+
 			
 		}
 
 		@Override
 		public void onDialogNegativeClick(DialogFragment dialog) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void onDialogNeutralClick(DialogFragment dialog) {
-			// TODO Auto-generated method stub
 			
 		}
 
@@ -56,19 +54,16 @@ public class TestFrg extends BaseFragment {
 		@Override
 		public void onSelectedItems(DialogFragment dialog,
 				List<Integer> selectedItems) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void onCancel(DialogInterface dialog) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void onDismiss(DialogInterface dialog) {
-			// TODO Auto-generated method stub
 			
 		}
 		
