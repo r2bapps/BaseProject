@@ -86,29 +86,29 @@ public class SecurePreferences implements SharedPreferences {
 
 		@Override
 		public Editor putBoolean(String key, boolean value) {
-			return putString(AESCipher.encrypt(key), AESCipher.encrypt(Boolean.toString(value)));
+			return putString(key, Boolean.toString(value));
 		}
 
 		@Override
 		public Editor putFloat(String key, float value) {
-			return putString(AESCipher.encrypt(key), AESCipher.encrypt(Float.toString(value)));
+			return putString(key, Float.toString(value));
 		}
 
 		@Override
 		public Editor putInt(String key, int value) {
-			return putString(AESCipher.encrypt(key), AESCipher.encrypt(Integer.toString(value)));
+			return putString(key, Integer.toString(value));
 		}
 
 		@Override
 		public Editor putLong(String key, long value) {
-			return putString(AESCipher.encrypt(key), AESCipher.encrypt(Long.toString(value)));
+			return putString(key, Long.toString(value));
 		}
 
 		@Override
 		public Editor putString(String key, String value) {
 			final String encryptKey = AESCipher.encrypt(key);
 			final String encryptValue = AESCipher.encrypt(value);
-			e.putString(AESCipher.encrypt(key), AESCipher.encrypt(value));
+			e.putString(encryptKey, encryptValue);
 			
 			// XXX LOGGER
 			Logger.v(this.getClass().getSimpleName(), 

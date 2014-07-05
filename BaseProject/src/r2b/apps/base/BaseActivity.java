@@ -44,6 +44,7 @@ import r2b.apps.utils.SecurePreferences;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -84,10 +85,17 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 			if(currentClickListener != null) {
 				
 				// XXX TRACKER
+				String label;
+				try {
+					label = getResources().getResourceEntryName(v.getId());
+				} catch(Resources.NotFoundException e) {
+					label = "no_xml_id";
+				}
+				
 				getTracker().sendEvent(
 						BaseTracker.CATEGORY.GUI.name(), 
 						BaseTracker.ACTION.click.name(), 
-						getResources().getResourceEntryName(v.getId()), 
+						label, 
 						v.getId());
 				
 				currentClickListener.onClick(v);

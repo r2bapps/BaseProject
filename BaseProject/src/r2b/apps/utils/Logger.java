@@ -32,9 +32,17 @@
 
 package r2b.apps.utils;
 
-import android.util.Log;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-// TODO ADD HERE LOG4J FOR ANDROID: https://code.google.com/p/android-logging-log4j/
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
 
 /**
  * Android log wrapper. Useful to add several implementations about log
@@ -48,8 +56,23 @@ import android.util.Log;
  * 
  * If you ofuscate your code a good convention is to declare a TAG constant 
  * in your class with the arg tag needed here.
+ * 
+ * WARNING: ERROR & INFO logs are allways showing on logcat and saving on log file.
  */
 public final class Logger {
+	
+	/**
+	 * Log printer.
+	 */
+	private static PrintWriter printer;
+	/**
+	 * Application context
+	 */
+	private static Context context;
+	/**
+	 * Logcat date format.
+	 */
+	private static SimpleDateFormat dateFormat;
 
 	/**
 	 * Send a VERBOSE log message.
@@ -60,9 +83,13 @@ public final class Logger {
 	 * @param msg
 	 *            The message you would like logged.
 	 */
-	public static final void v(String tag, String msg) {
-		if (Cons.SHOW_LOGS) {
+	public static void v(String tag, String msg) {
+		if (Cons.DEBUG) {
 			Log.v(tag, msg);
+			if(printer != null) {
+				printer.write(parseLog("V", tag, msg));   
+				printer.flush();
+			}
 		}
 	}
 	
@@ -75,8 +102,12 @@ public final class Logger {
 	 * @param msg
 	 *            The message you would like logged.
 	 */
-	public static final void i(String tag, String msg) {
+	public static void i(String tag, String msg) {
 		Log.i(tag, msg);
+		if(printer != null) {
+			printer.write(parseLog("I", tag, msg));
+			printer.flush();
+		}
 	}
 
 	/**
@@ -88,9 +119,13 @@ public final class Logger {
 	 * @param msg
 	 *            The message you would like logged.
 	 */
-	public static final void d(String tag, String msg) {
-		if (Cons.SHOW_LOGS) {
+	public static void d(String tag, String msg) {
+		if (Cons.DEBUG) {
 			Log.d(tag, msg);
+			if(printer != null) {
+				printer.write(parseLog("D", tag, msg));
+				printer.flush();
+			}
 		}
 	}
 	
@@ -103,8 +138,12 @@ public final class Logger {
 	 * @param msg
 	 *            The message you would like logged.
 	 */
-	public static final void e(String tag, String msg) {
+	public static void e(String tag, String msg) {
 		Log.e(tag, msg);
+		if(printer != null) {
+			printer.write(parseLog("E", tag, msg));
+			printer.flush();
+		}
 	}
 
 	/**
@@ -118,8 +157,126 @@ public final class Logger {
 	 * @param tr
 	 *            An exception to log.
 	 */
-	public static final void e(String tag, String msg, Throwable tr) {
+	public static void e(String tag, String msg, Throwable tr) {
 		Log.e(tag, msg, tr);
+		if(printer != null) {
+			printer.write(parseLog("E", tag, msg));
+			printer.flush();
+		}
+	}
+		
+	/**
+	 * Save log to file.	 
+	 * @param context Application context.
+	 */
+	@SuppressLint("SimpleDateFormat")
+	public static void openLogFile(final Context context) {
+		
+		Logger.context = context.getApplicationContext();
+		
+		if( isStorageReady() ) {
+			createExternalStorageLogFile();
+			dateFormat = new SimpleDateFormat("dd-MM HH:mm:ss.SSS");
+		}		
+		else {
+			Logger.context = null;
+		}
+		
+	}
+
+	/**
+	 * Close log file.
+	 */
+	public static void closeLogFile() {
+		if(printer != null) {
+			printer.flush();		
+			printer.close();
+			printer = null;
+			dateFormat = null;
+			context = null;
+		}
+	}
+	
+	private static boolean isStorageReady() {
+		
+		final String externalStorageState = Environment.getExternalStorageState();
+		boolean isStorageReady = false;
+		
+		if ( Environment.MEDIA_MOUNTED.equals( externalStorageState ) ) {
+		    // We can read and write the media
+			isStorageReady = true;
+		} 
+		else {
+			Log.i(Logger.class.getSimpleName(), "Storage not ready to save logs.");
+		}
+		
+		return isStorageReady;
+		
+	}
+	
+	private static void createExternalStorageLogFile() {
+
+		File file = hasExternalStorageLogFile();
+		if( file != null) {
+			try {
+				printer = new PrintWriter( new FileWriter(file, true) );
+			} catch (IOException e) {
+				Log.e(Logger.class.getSimpleName(), e.toString());
+			}
+		}
+	    
+	}
+	
+	private static File hasExternalStorageLogFile() {
+		
+		int stringId = context.getApplicationInfo().labelRes;
+	    String appName = context.getString(stringId);
+	    if(appName == null) {
+	    	appName = "R2BAppsBaseProject";
+	    }
+	    else {
+	    	appName = appName.replaceAll("\\s+",""); // Replace whitespaces and non visible characteres	    	
+	    }
+	    	    
+	    // Create a path where we will place our file on external storage
+	    File sdCard = Environment.getExternalStorageDirectory();  
+	    File root = new File (sdCard.getAbsolutePath() + "/" + appName);  
+		if(!root.exists()) {
+			root.mkdirs();
+		}
+		
+	    // Get path for the file on external storage.  If external
+	    // storage is not currently mounted this will fail.
+	    File file = new File(root, appName + ".log");	   
+	    if(!file.exists()) {
+	    	try {
+				file.createNewFile();
+			} catch (IOException e) {
+				Log.e(Logger.class.getSimpleName(), e.toString());
+			}
+	    }
+	    
+	    return file;
+	  
+	}
+	
+	/**
+	 * Print log with the format: Level\tTime\tPID\tTID\tApplication\tTag\tText\n
+	 * @param level
+	 * @param tag
+	 * @param msg
+	 * @return
+	 */
+	private static String parseLog(String level, String tag, String msg) {
+		StringBuilder log = new StringBuilder();
+		log.append(level).append("\t");
+		log.append(dateFormat.format(new Date(System.currentTimeMillis()))).append("\t");
+		log.append(android.os.Process.myPid()).append("\t");
+		log.append(Thread.currentThread().getId()).append("\t");
+		log.append(context.getPackageName()).append("\t");
+		log.append(tag).append("\t");
+		log.append(msg).append("\n");
+		return log.toString();
 	}
 	
 }

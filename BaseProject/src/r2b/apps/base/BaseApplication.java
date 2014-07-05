@@ -1,7 +1,7 @@
 /*
  * BaseApplication
  * 
- * 0.1.1
+ * 0.1.2
  * 
  * 2014/05/16
  * 
@@ -56,11 +56,22 @@ public class BaseApplication extends Application {
 		
 		initConfig();
 		
+		// Initialize log file previously the sending of logs.
+		if(Cons.DEBUG) {
+			Logger.openLogFile(getApplicationContext());
+		}
+		
 		tracker = new BaseTracker(this);
 		
 		if(Cons.ENCRYPT) {
 			AESCipher.init(getApplicationContext());
 		}
+		
+		// XXX LOGGER
+		Logger.i(this.getClass().getSimpleName(), "Config DEBUG: " + String.valueOf(Cons.DEBUG));
+		Logger.i(this.getClass().getSimpleName(), "Config FAKE_DATA: " + String.valueOf(Cons.FAKE_DATA));
+		Logger.i(this.getClass().getSimpleName(), "Config TRACKER: " + String.valueOf(Cons.TRACKER));
+		Logger.i(this.getClass().getSimpleName(), "Config ENCRYPT: " + String.valueOf(Cons.ENCRYPT));
 
 	}
 
@@ -78,19 +89,16 @@ public class BaseApplication extends Application {
 	private void initConfig() {			
 		
 		Cons.DEBUG = getResources().getBoolean(R.bool.debug);
-		Cons.SHOW_LOGS = Cons.DEBUG && getResources().getBoolean(R.bool.log);
 		Cons.FAKE_DATA = Cons.DEBUG && getResources().getBoolean(R.bool.fake);
 		Cons.TRACKER = getResources().getBoolean(R.bool.track);
-		Cons.ENCRYPT = getResources().getBoolean(R.bool.encrypt);
+		Cons.ENCRYPT = getResources().getBoolean(R.bool.encrypt);			
 		
-		// XXX LOGGER
-		Logger.i(this.getClass().getSimpleName(), "Config DEBUG: " + String.valueOf(Cons.DEBUG));
-		Logger.i(this.getClass().getSimpleName(), "Config SHOW_LOGS: " + String.valueOf(Cons.SHOW_LOGS));
-		Logger.i(this.getClass().getSimpleName(), "Config FAKE_DATA: " + String.valueOf(Cons.FAKE_DATA));
-		Logger.i(this.getClass().getSimpleName(), "Config TRACKER: " + String.valueOf(Cons.TRACKER));
-		Logger.i(this.getClass().getSimpleName(), "Config ENCRYPT: " + String.valueOf(Cons.ENCRYPT));
+	}
 
-		
+	@Override
+	public void onTerminate() {
+		Logger.closeLogFile();
+		super.onTerminate();
 	}
 	
 }

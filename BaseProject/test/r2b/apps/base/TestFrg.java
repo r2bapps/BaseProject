@@ -137,26 +137,26 @@ public class TestFrg extends BaseFragment {
 		showToast("Init fragment, current time:" + String.valueOf(currentTime));
 
 		getFragmentPreferences().edit().putString("test", "test value").commit();
-		Assert.assertEquals("test value", getFragmentPreferences().getString("test", "eror"));
+		Assert.assertEquals("test value", getFragmentPreferences().getString("test", "error"));
 		
-		getFragmentPreferences().edit().putInt("test", 5).commit();
-		Assert.assertEquals(5, getFragmentPreferences().getInt("test", 0));
+		getFragmentPreferences().edit().putInt("test1", 5).commit();
+		Assert.assertEquals(5, getFragmentPreferences().getInt("test1", 0));
 		
-		getFragmentPreferences().edit().putLong("test", 5l).commit();
-		Assert.assertEquals(5l, getFragmentPreferences().getLong("test", 0l));
+		getFragmentPreferences().edit().putLong("test2", 5l).commit();
+		Assert.assertEquals(5l, getFragmentPreferences().getLong("test2", 0l));
 		
-		getFragmentPreferences().edit().putFloat("test", 5.5f).commit();
-		Assert.assertEquals(5.5f, getFragmentPreferences().getFloat("test", 0.0f));
+		getFragmentPreferences().edit().putFloat("test3", 5.5f).commit();
+		Assert.assertEquals(5.5f, getFragmentPreferences().getFloat("test3", 0.0f));
 		
-		getFragmentPreferences().edit().putBoolean("test", true).commit();
-		Assert.assertEquals(true, getFragmentPreferences().getBoolean("test", false));
+		getFragmentPreferences().edit().putBoolean("test4", true).commit();
+		Assert.assertEquals(true, getFragmentPreferences().getBoolean("test4", false));
 		
 		Set<String> set = new HashSet<String>(2);
 		set.add("hello");
 		set.add("world");
-		getFragmentPreferences().edit().putStringSet("test", set).commit();
+		getFragmentPreferences().edit().putStringSet("test5", set).commit();
 		
-		set = getFragmentPreferences().getStringSet("test", null);
+		set = getFragmentPreferences().getStringSet("test5", null);
 		Assert.assertNotNull(set);
 		Assert.assertEquals("hello", set.toArray()[0]);
 		Assert.assertEquals("world", set.toArray()[1]);

@@ -40,7 +40,7 @@ package r2b.apps.utils;
 public final class Cons {
 	
 	public static boolean DEBUG;
-	public static boolean SHOW_LOGS;
+
 	public static boolean FAKE_DATA;
 	
 	public static boolean ENCRYPT;

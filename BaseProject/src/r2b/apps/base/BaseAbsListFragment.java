@@ -35,6 +35,7 @@ package r2b.apps.base;
 import java.util.List;
 
 import r2b.apps.utils.BaseTracker;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
@@ -84,10 +85,17 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 				item_click = BaseTracker.ACTION.list_item_click.name();
 			}
 			
+			String label;
+			try {
+				label = getResources().getResourceEntryName(view.getId());
+			} catch(Resources.NotFoundException e) {
+				label = "no_xml_id";
+			}
+			
 			getTracker().sendEvent(
 					BaseTracker.CATEGORY.GUI.name(), 
 					item_click,
-					getResources().getResourceEntryName(view.getId()),
+					label,
 					position);
 			
 			itemClick(view, position, id);
