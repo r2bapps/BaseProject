@@ -58,7 +58,7 @@ public class BaseApplication extends Application {
 		
 		// Initialize log file previously the sending of logs.
 		if(Cons.DEBUG) {
-			Logger.openLogFile(getApplicationContext());
+			Logger.init(getApplicationContext());
 		}
 		
 		tracker = new BaseTracker(this);
@@ -97,7 +97,7 @@ public class BaseApplication extends Application {
 
 	@Override
 	public void onTerminate() {
-		Logger.closeLogFile();
+		Logger.close();
 		super.onTerminate();
 	}
 	

@@ -32,16 +32,10 @@
 
 package r2b.apps.utils;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Environment;
 import android.util.Log;
 
 /**
@@ -62,17 +56,17 @@ import android.util.Log;
 public final class Logger {
 	
 	/**
-	 * Log printer.
+	 * Application context.
 	 */
-	private static PrintWriter printer;
+	private static Context context;	
 	/**
-	 * Application context
+	 * File logger.
 	 */
-	private static Context context;
+	private static FileReceiver fileReceiver;	
 	/**
 	 * Logcat date format.
 	 */
-	private static SimpleDateFormat dateFormat;
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM HH:mm:ss.SSS");
 
 	/**
 	 * Send a VERBOSE log message.
@@ -86,10 +80,7 @@ public final class Logger {
 	public static void v(String tag, String msg) {
 		if (Cons.DEBUG) {
 			Log.v(tag, msg);
-			if(printer != null) {
-				printer.write(parseLog("V", tag, msg));   
-				printer.flush();
-			}
+			fileReceiver.v(parseLog("V", tag, msg));
 		}
 	}
 	
@@ -104,10 +95,7 @@ public final class Logger {
 	 */
 	public static void i(String tag, String msg) {
 		Log.i(tag, msg);
-		if(printer != null) {
-			printer.write(parseLog("I", tag, msg));
-			printer.flush();
-		}
+		fileReceiver.i(parseLog("I", tag, msg));
 	}
 
 	/**
@@ -122,10 +110,7 @@ public final class Logger {
 	public static void d(String tag, String msg) {
 		if (Cons.DEBUG) {
 			Log.d(tag, msg);
-			if(printer != null) {
-				printer.write(parseLog("D", tag, msg));
-				printer.flush();
-			}
+			fileReceiver.d(parseLog("D", tag, msg));
 		}
 	}
 	
@@ -140,10 +125,7 @@ public final class Logger {
 	 */
 	public static void e(String tag, String msg) {
 		Log.e(tag, msg);
-		if(printer != null) {
-			printer.write(parseLog("E", tag, msg));
-			printer.flush();
-		}
+		fileReceiver.e(parseLog("E", tag, msg));
 	}
 
 	/**
@@ -159,105 +141,15 @@ public final class Logger {
 	 */
 	public static void e(String tag, String msg, Throwable tr) {
 		Log.e(tag, msg, tr);
-		if(printer != null) {
-			printer.write(parseLog("E", tag, msg));
-			printer.flush();
-		}
-	}
-		
-	/**
-	 * Save log to file.	 
-	 * @param context Application context.
-	 */
-	@SuppressLint("SimpleDateFormat")
-	public static void openLogFile(final Context context) {
-		
-		Logger.context = context.getApplicationContext();
-		
-		if( isStorageReady() ) {
-			createExternalStorageLogFile();
-			dateFormat = new SimpleDateFormat("dd-MM HH:mm:ss.SSS");
-		}		
-		else {
-			Logger.context = null;
-		}
-		
-	}
-
-	/**
-	 * Close log file.
-	 */
-	public static void closeLogFile() {
-		if(printer != null) {
-			printer.flush();		
-			printer.close();
-			printer = null;
-			dateFormat = null;
-			context = null;
-		}
+		fileReceiver.e(parseLog("E", tag, msg));
 	}
 	
-	private static boolean isStorageReady() {
-		
-		final String externalStorageState = Environment.getExternalStorageState();
-		boolean isStorageReady = false;
-		
-		if ( Environment.MEDIA_MOUNTED.equals( externalStorageState ) ) {
-		    // We can read and write the media
-			isStorageReady = true;
-		} 
-		else {
-			Log.i(Logger.class.getSimpleName(), "Storage not ready to save logs.");
-		}
-		
-		return isStorageReady;
-		
+	public static void init(final Context context) {
+		fileReceiver = new FileReceiver(context);
 	}
 	
-	private static void createExternalStorageLogFile() {
-
-		File file = hasExternalStorageLogFile();
-		if( file != null) {
-			try {
-				printer = new PrintWriter( new FileWriter(file, true) );
-			} catch (IOException e) {
-				Log.e(Logger.class.getSimpleName(), e.toString());
-			}
-		}
-	    
-	}
-	
-	private static File hasExternalStorageLogFile() {
-		
-		int stringId = context.getApplicationInfo().labelRes;
-	    String appName = context.getString(stringId);
-	    if(appName == null) {
-	    	appName = "R2BAppsBaseProject";
-	    }
-	    else {
-	    	appName = appName.replaceAll("\\s+",""); // Replace whitespaces and non visible characteres	    	
-	    }
-	    	    
-	    // Create a path where we will place our file on external storage
-	    File sdCard = Environment.getExternalStorageDirectory();  
-	    File root = new File (sdCard.getAbsolutePath() + File.separator + appName);  
-		if(!root.exists()) {
-			root.mkdirs();
-		}
-		
-	    // Get path for the file on external storage.  If external
-	    // storage is not currently mounted this will fail.
-	    File file = new File(root, appName + ".log");	   
-	    if(!file.exists()) {
-	    	try {
-				file.createNewFile();
-			} catch (IOException e) {
-				Log.e(Logger.class.getSimpleName(), e.toString());
-			}
-	    }
-	    
-	    return file;
-	  
+	public static void close() {
+		fileReceiver.close();
 	}
 	
 	/**
