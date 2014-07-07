@@ -32,10 +32,6 @@
 
 package r2b.apps.utils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import android.content.Context;
 import android.util.Log;
 
 /**
@@ -56,19 +52,6 @@ import android.util.Log;
 public final class Logger {
 	
 	/**
-	 * Application context.
-	 */
-	private static Context context;	
-	/**
-	 * File logger.
-	 */
-	private static FileReceiver fileReceiver;	
-	/**
-	 * Logcat date format.
-	 */
-	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM HH:mm:ss.SSS");
-
-	/**
 	 * Send a VERBOSE log message.
 	 * 
 	 * @param tag
@@ -80,7 +63,6 @@ public final class Logger {
 	public static void v(String tag, String msg) {
 		if (Cons.DEBUG) {
 			Log.v(tag, msg);
-			fileReceiver.v(parseLog("V", tag, msg));
 		}
 	}
 	
@@ -95,7 +77,6 @@ public final class Logger {
 	 */
 	public static void i(String tag, String msg) {
 		Log.i(tag, msg);
-		fileReceiver.i(parseLog("I", tag, msg));
 	}
 
 	/**
@@ -110,7 +91,6 @@ public final class Logger {
 	public static void d(String tag, String msg) {
 		if (Cons.DEBUG) {
 			Log.d(tag, msg);
-			fileReceiver.d(parseLog("D", tag, msg));
 		}
 	}
 	
@@ -125,7 +105,6 @@ public final class Logger {
 	 */
 	public static void e(String tag, String msg) {
 		Log.e(tag, msg);
-		fileReceiver.e(parseLog("E", tag, msg));
 	}
 
 	/**
@@ -141,34 +120,7 @@ public final class Logger {
 	 */
 	public static void e(String tag, String msg, Throwable tr) {
 		Log.e(tag, msg, tr);
-		fileReceiver.e(parseLog("E", tag, msg));
 	}
 	
-	public static void init(final Context context) {
-		fileReceiver = new FileReceiver(context);
-	}
-	
-	public static void close() {
-		fileReceiver.close();
-	}
-	
-	/**
-	 * Print log with the format: Level\tTime\tPID\tTID\tApplication\tTag\tText\n
-	 * @param level
-	 * @param tag
-	 * @param msg
-	 * @return
-	 */
-	private static String parseLog(String level, String tag, String msg) {
-		StringBuilder log = new StringBuilder();
-		log.append(level).append("\t");
-		log.append(dateFormat.format(new Date(System.currentTimeMillis()))).append("\t");
-		log.append(android.os.Process.myPid()).append("\t");
-		log.append(Thread.currentThread().getId()).append("\t");
-		log.append(context.getPackageName()).append("\t");
-		log.append(tag).append("\t");
-		log.append(msg).append("\n");
-		return log.toString();
-	}
 	
 }

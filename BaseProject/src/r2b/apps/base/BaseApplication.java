@@ -56,11 +56,6 @@ public class BaseApplication extends Application {
 		
 		initConfig();
 		
-		// Initialize log file previously the sending of logs.
-		if(Cons.DEBUG) {
-			Logger.init(getApplicationContext());
-		}
-		
 		tracker = new BaseTracker(this);
 		
 		if(Cons.ENCRYPT) {
@@ -93,12 +88,6 @@ public class BaseApplication extends Application {
 		Cons.TRACKER = getResources().getBoolean(R.bool.track);
 		Cons.ENCRYPT = getResources().getBoolean(R.bool.encrypt);			
 		
-	}
-
-	@Override
-	public void onTerminate() {
-		Logger.close();
-		super.onTerminate();
 	}
 	
 }
