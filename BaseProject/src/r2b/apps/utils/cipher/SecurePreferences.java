@@ -30,13 +30,15 @@
  * 
  */
 
-package r2b.apps.utils;
+package r2b.apps.utils.cipher;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import r2b.apps.utils.logger.Logger;
 
 import android.annotation.TargetApi;
 import android.content.Context;

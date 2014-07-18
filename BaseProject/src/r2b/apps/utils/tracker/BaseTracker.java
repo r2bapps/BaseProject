@@ -29,9 +29,11 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
-package r2b.apps.utils;
+package r2b.apps.utils.tracker;
 
 import r2b.apps.R;
+import r2b.apps.utils.Cons;
+import r2b.apps.utils.logger.Logger;
 import android.content.Context;
 
 import com.google.android.gms.analytics.GoogleAnalytics;

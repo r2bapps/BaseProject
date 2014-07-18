@@ -1,7 +1,7 @@
 /*
  * Logger
  * 
- * 0.2
+ * 0.3
  * 
  * 2014/05/16
  * 
@@ -30,8 +30,14 @@
  * 
  */
 
-package r2b.apps.utils;
+package r2b.apps.utils.logger;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import r2b.apps.utils.Cons;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 
 /**
@@ -52,6 +58,25 @@ import android.util.Log;
 public final class Logger {
 	
 	/**
+	 * Application context.
+	 */
+	private static Context context;	
+	/**
+	 * Receivers to call.
+	 */
+	private static Receiver [] receivers = new Receiver[0];
+	/**
+	 * Initialized flag.
+	 */
+	private static boolean initialized;
+	
+	/**
+	 * Logcat date format.
+	 */
+	@SuppressLint("SimpleDateFormat")
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM HH:mm:ss.SSS");
+
+	/**
 	 * Send a VERBOSE log message.
 	 * 
 	 * @param tag
@@ -63,6 +88,11 @@ public final class Logger {
 	public static void v(String tag, String msg) {
 		if (Cons.DEBUG) {
 			Log.v(tag, msg);
+			
+			for(Receiver receiver : receivers) {
+				receiver.v(parseLog("V", tag, msg));
+			}
+			
 		}
 	}
 	
@@ -77,6 +107,11 @@ public final class Logger {
 	 */
 	public static void i(String tag, String msg) {
 		Log.i(tag, msg);
+		
+		for(Receiver receiver : receivers) {
+			receiver.i(parseLog("I", tag, msg));
+		}
+		
 	}
 
 	/**
@@ -91,6 +126,11 @@ public final class Logger {
 	public static void d(String tag, String msg) {
 		if (Cons.DEBUG) {
 			Log.d(tag, msg);
+			
+			for(Receiver receiver : receivers) {
+				receiver.d(parseLog("D", tag, msg));
+			}
+			
 		}
 	}
 	
@@ -105,6 +145,10 @@ public final class Logger {
 	 */
 	public static void e(String tag, String msg) {
 		Log.e(tag, msg);
+		
+		for(Receiver receiver : receivers) {
+			receiver.e(parseLog("E", tag, msg));
+		}
 	}
 
 	/**
@@ -120,7 +164,66 @@ public final class Logger {
 	 */
 	public static void e(String tag, String msg, Throwable tr) {
 		Log.e(tag, msg, tr);
+		
+		for(Receiver receiver : receivers) {
+			receiver.e(parseLog("E", tag, msg));
+		}
 	}
 	
+	public static void init(final Context context, Receiver [] receivers) {
+		Logger.context = context.getApplicationContext();
+		
+		if(receivers != null) {
+			Logger.receivers = new Receiver[receivers.length];
+			
+			for(int i = 0; i < receivers.length; i++) {
+				Logger.receivers [i] = receivers [i];
+			}
+		}
+		
+		initialized = true;
+		
+	}
+	
+	public static void close() {
+		if(initialized) {
+			
+			Thread worker = new Thread() {
+				
+				@Override
+				public void run() {											
+					for(Receiver receiver : receivers) {
+						receiver.close();
+					}
+					
+					Logger.receivers = null;
+					Logger.context = null;
+				}
+			};
+			
+			worker.start();
+			
+			initialized = false;
+		}
+	}
+	
+	/**
+	 * Print log with the format: Level\tTime\tPID\tTID\tApplication\tTag\tText\n
+	 * @param level
+	 * @param tag
+	 * @param msg
+	 * @return
+	 */
+	private synchronized static String parseLog(String level, String tag, String msg) {
+		StringBuilder log = new StringBuilder();
+		log.append(level).append("\t");
+		log.append(dateFormat.format(new Date(System.currentTimeMillis()))).append("\t");
+		log.append(android.os.Process.myPid()).append("\t");
+		log.append(Thread.currentThread().getId()).append("\t");
+		log.append(context.getPackageName()).append("\t");
+		log.append(tag).append("\t");
+		log.append(msg).append("\n");
+		return log.toString();
+	}
 	
 }

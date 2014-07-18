@@ -13,4 +13,7 @@
     <!-- Enable encryption -->
     <bool name="encrypt">true</bool>
     
+    <!-- Enable logger to remote --> <!-- Change to your url -->
+    <string name="logger_remote_url">http://192.168.0.195:8080/LogLiteUploadServer/UploadDownloadFileServlet</string>
+    
 </resources>

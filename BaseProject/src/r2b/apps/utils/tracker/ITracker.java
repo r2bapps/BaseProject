@@ -1,7 +1,7 @@
 /*
- * Cons
+ * ITracker
  * 
- * 0.2
+ * 0.1
  * 
  * 2014/05/16
  * 
@@ -30,20 +30,26 @@
  * 
  */
 
-package r2b.apps.utils;
-
+package r2b.apps.utils.tracker;
 
 /**
- * Constants class.
+ * All tracker objects must implements this interface.
  */
-public final class Cons {
+public interface ITracker {
 	
-	public static boolean DEBUG;
-
-	public static boolean FAKE_DATA;
+	/**
+	 * Set and send the screen name.
+	 * @param screenName The screen name.
+	 */
+	public void sendScreenName(String screenName);
 	
-	public static boolean ENCRYPT;
+	/**
+	 * Set and send event.
+	 * @param category the event category.
+	 * @param action The event action.
+	 * @param label The label of the element that launch the event.
+	 * @param value The value.
+	 */
+	public void sendEvent(String category, String action, String label, long value);
 	
-	public static boolean TRACKER;
-
 }

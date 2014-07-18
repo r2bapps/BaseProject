@@ -1,9 +1,9 @@
 /*
- * Cons
+ * StringUtils
  * 
- * 0.2
+ * 0.1
  * 
- * 2014/05/16
+ * 2014/07/16
  * 
  * (The MIT License)
  * 
@@ -32,18 +32,18 @@
 
 package r2b.apps.utils;
 
-
 /**
- * Constants class.
+ * String utility class.
  */
-public final class Cons {
+public final class StringUtils {
 	
-	public static boolean DEBUG;
-
-	public static boolean FAKE_DATA;
-	
-	public static boolean ENCRYPT;
-	
-	public static boolean TRACKER;
+	/**
+	 * Replace whitespaces and non visible characteres
+	 * @param text
+	 * @return
+	 */
+	public static String replaceAllWithespacesAndNonVisibleCharacteres(final String text) {
+		return text.replaceAll("\\s+",""); 	  
+	}
 
 }

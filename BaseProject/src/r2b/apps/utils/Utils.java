@@ -1,9 +1,9 @@
 /*
- * Cons
+ * Utils
  * 
- * 0.2
+ * 0.1
  * 
- * 2014/05/16
+ * 2014/07/16
  * 
  * (The MIT License)
  * 
@@ -32,18 +32,24 @@
 
 package r2b.apps.utils;
 
+import android.content.Context;
 
 /**
- * Constants class.
+ * Generic utility class.
  */
-public final class Cons {
-	
-	public static boolean DEBUG;
+public final class Utils {
 
-	public static boolean FAKE_DATA;
+	/**
+	 * Get the application name.
+	 * @param context The application context.
+	 * @return Application name or null if is not provided with its label.
+	 */
+	public static String getApplicationName(Context context) {
+		
+		int stringId = context.getApplicationInfo().labelRes;
+	    String appName = context.getString(stringId);
+	    
+	    return appName;	    
+	}
 	
-	public static boolean ENCRYPT;
-	
-	public static boolean TRACKER;
-
 }

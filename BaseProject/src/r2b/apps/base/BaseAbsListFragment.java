@@ -34,7 +34,7 @@ package r2b.apps.base;
 
 import java.util.List;
 
-import r2b.apps.utils.BaseTracker;
+import r2b.apps.utils.tracker.BaseTracker;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;

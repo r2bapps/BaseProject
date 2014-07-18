@@ -1,9 +1,9 @@
 /*
- * ITracker
+ * Environment
  * 
  * 0.1
  * 
- * 2014/05/16
+ * 2014/07/18
  * 
  * (The MIT License)
  * 
@@ -32,24 +32,12 @@
 
 package r2b.apps.utils;
 
+
 /**
- * All tracker objects must implements this interface.
+ * Environment class.
  */
-public interface ITracker {
+public final class Environment {
 	
-	/**
-	 * Set and send the screen name.
-	 * @param screenName The screen name.
-	 */
-	public void sendScreenName(String screenName);
-	
-	/**
-	 * Set and send event.
-	 * @param category the event category.
-	 * @param action The event action.
-	 * @param label The label of the element that launch the event.
-	 * @param value The value.
-	 */
-	public void sendEvent(String category, String action, String label, long value);
-	
+	public static String LOGGER_REMOTE_URL;
+
 }

@@ -36,11 +36,11 @@ import java.util.List;
 
 import r2b.apps.R;
 import r2b.apps.base.BaseDialog.BaseDialogListener;
-import r2b.apps.utils.BaseTracker;
 import r2b.apps.utils.Cons;
-import r2b.apps.utils.ITracker;
-import r2b.apps.utils.Logger;
-import r2b.apps.utils.SecurePreferences;
+import r2b.apps.utils.cipher.SecurePreferences;
+import r2b.apps.utils.logger.Logger;
+import r2b.apps.utils.tracker.BaseTracker;
+import r2b.apps.utils.tracker.ITracker;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -226,7 +226,7 @@ public abstract class BaseActivity extends android.support.v4.app.FragmentActivi
 			super.onBackPressed();										
 		} else {			
 			clear();
-			finish();
+			((BaseApplication) getApplication()).finish(this);
 		}	
 	}
 	

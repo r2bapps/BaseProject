@@ -12,6 +12,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<!-- Needed for Analytics -->
+	
+	<!-- Needed for Logger -->
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+	<!-- Needed for Logger -->
 
     <application
         android:name="r2b.apps.base.BaseApplication"

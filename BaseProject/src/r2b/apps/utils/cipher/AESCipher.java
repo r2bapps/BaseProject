@@ -30,7 +30,7 @@
  * 
  */
 
-package r2b.apps.utils;
+package r2b.apps.utils.cipher;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -46,6 +46,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import r2b.apps.utils.logger.Logger;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;

@@ -34,9 +34,9 @@ package r2b.apps.base;
 
 import r2b.apps.base.BaseDialog.BaseDialogListener;
 import r2b.apps.utils.Cons;
-import r2b.apps.utils.ITracker;
-import r2b.apps.utils.Logger;
-import r2b.apps.utils.SecurePreferences;
+import r2b.apps.utils.cipher.SecurePreferences;
+import r2b.apps.utils.logger.Logger;
+import r2b.apps.utils.tracker.ITracker;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;

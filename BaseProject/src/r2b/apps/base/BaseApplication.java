@@ -33,11 +33,15 @@
 package r2b.apps.base;
 
 import r2b.apps.R;
-import r2b.apps.utils.AESCipher;
-import r2b.apps.utils.BaseTracker;
 import r2b.apps.utils.Cons;
-import r2b.apps.utils.ITracker;
-import r2b.apps.utils.Logger;
+import r2b.apps.utils.Environment;
+import r2b.apps.utils.cipher.AESCipher;
+import r2b.apps.utils.logger.FileReceiver;
+import r2b.apps.utils.logger.Logger;
+import r2b.apps.utils.logger.Receiver;
+import r2b.apps.utils.logger.RemoteReceiver;
+import r2b.apps.utils.tracker.BaseTracker;
+import r2b.apps.utils.tracker.ITracker;
 import android.app.Application;
 
 /**
@@ -55,6 +59,8 @@ public class BaseApplication extends Application {
 		super.onCreate();		
 		
 		initConfig();
+		
+		initLogger();
 		
 		tracker = new BaseTracker(this);
 		
@@ -86,8 +92,33 @@ public class BaseApplication extends Application {
 		Cons.DEBUG = getResources().getBoolean(R.bool.debug);
 		Cons.FAKE_DATA = Cons.DEBUG && getResources().getBoolean(R.bool.fake);
 		Cons.TRACKER = getResources().getBoolean(R.bool.track);
-		Cons.ENCRYPT = getResources().getBoolean(R.bool.encrypt);			
+		Cons.ENCRYPT = getResources().getBoolean(R.bool.encrypt);
 		
+		Environment.LOGGER_REMOTE_URL = getResources().getString(R.string.logger_remote_url);		
+		
+	}
+	
+	private void initLogger() {
+		FileReceiver fileReceiver = 
+				new FileReceiver(this, null, true, false);
+		
+		RemoteReceiver remoteReceiver = new RemoteReceiver(
+						this, 
+						Environment.LOGGER_REMOTE_URL, 
+						fileReceiver, 
+						false);
+		
+		Receiver [] receivers = new Receiver[2];
+		receivers[0] = fileReceiver;
+		receivers[1] = remoteReceiver;
+		
+		Logger.init(this, receivers);
+		
+	}
+
+	public void finish(BaseActivity baseActivity) {
+		Logger.close();
+		baseActivity.finish();
 	}
 	
 }

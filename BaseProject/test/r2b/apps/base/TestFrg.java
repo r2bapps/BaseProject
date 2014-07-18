@@ -6,7 +6,7 @@ import java.util.Set;
 import junit.framework.Assert;
 import r2b.apps.R;
 import r2b.apps.base.BaseDialog.BaseDialogListener;
-import r2b.apps.utils.AESCipher;
+import r2b.apps.utils.cipher.AESCipher;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
