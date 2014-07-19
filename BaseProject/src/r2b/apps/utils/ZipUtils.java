@@ -82,7 +82,7 @@ public final class ZipUtils {
 	 * @param delete True to delete the original file, false not delete.
 	 * @return Success true, false otherwise and not replace the original file.
 	 */
-	public synchronized static boolean zip(File zipFile, final String file, boolean delete) {
+	public static boolean zip(File zipFile, final String file, boolean delete) {
 	
 		final String[] files = new String[1];
 		files[0] = file;
@@ -99,7 +99,7 @@ public final class ZipUtils {
 	 * @param delete True to delete the original file, false not delete.
 	 * @return Success true, false otherwise and not replace the original file.
 	 */
-	public synchronized static boolean zip(File zipFile, final String[] files, boolean delete) {
+	public static boolean zip(File zipFile, final String[] files, boolean delete) {
 		boolean success = false;
 		
 		success = write(zipFile, files);
@@ -117,7 +117,7 @@ public final class ZipUtils {
 	 * @param files The file to compress.
 	 * @return Success true, false otherwise.
 	 */
-	private synchronized static boolean write(File zipFile, final String[] files) {
+	private static boolean write(File zipFile, final String[] files) {
 		
 		boolean success = false;
 		

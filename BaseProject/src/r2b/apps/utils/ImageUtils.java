@@ -1,5 +1,5 @@
 /*
- * StringUtils
+ * ImageUtils
  * 
  * 0.1
  * 
@@ -33,31 +33,8 @@
 package r2b.apps.utils;
 
 /**
- * String utility class.
+ * Images utility class.
  */
-public final class StringUtils {
-	
-	/**
-	 * Replace whitespaces and non visible characteres
-	 * @param text
-	 * @return
-	 */
-	public static String replaceAllWithespacesAndNonVisibleCharacteres(final String text) {
-		String exit = text.replaceAll("\\s+","");
-		return exit;
-	}
-	
-	/**
-	 * Check if string is null or empty.
-	 * @param text Text to check.
-	 * @return True null or empty, false otherwise.
-	 */
-	public static boolean nullOrEmptyString(String text) {
-		boolean nullOrEmpty = false;
-		if(text == null || text.length() == 0) {
-			nullOrEmpty = true;
-		}
-		return nullOrEmpty;
-	}
+public final class ImageUtils {
 
 }

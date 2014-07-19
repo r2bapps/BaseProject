@@ -146,7 +146,7 @@ public final class FileUtils {
 	 * @param absolutePath The absolute path of the file.
 	 * @return The file path.
 	 */
-	public synchronized static String getFilePath(final String absolutePath) {
+	public static String getFilePath(final String absolutePath) {
 		String filePath = absolutePath.
 			    substring(0, absolutePath.lastIndexOf(File.separator));
 		
@@ -180,7 +180,7 @@ public final class FileUtils {
 	 * Removes a file from an absolute path.
 	 * @param absolutePath The absolute path to remove.
 	 */
-	public synchronized static void removeFile(final String absolutePath) {
+	public static void removeFile(final String absolutePath) {
 		
 		if(absolutePath != null) {
 		    File fileToDelete = new File(absolutePath);

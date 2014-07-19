@@ -1,7 +1,7 @@
 /*
  * Utils
  * 
- * 0.1
+ * 0.2
  * 
  * 2014/07/16
  * 
@@ -32,7 +32,19 @@
 
 package r2b.apps.utils;
 
+import java.util.Locale;
+
+import r2b.apps.utils.logger.Logger;
+
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
+import android.net.Uri;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 /**
  * Generic utility class.
@@ -50,6 +62,146 @@ public final class Utils {
 	    String appName = context.getString(stringId);
 	    
 	    return appName;	    
+	}
+	
+	/**
+	 * Make a call if number is not null or empty.
+	 * @param context The application context.
+	 * @param number Number to call.
+	 */
+	public static void makeACall(Context context, String number) {
+		if( !StringUtils.nullOrEmptyString(number) ) {
+			String url = "tel:" + number;
+			Intent intent = new Intent(Intent.ACTION_CALL);
+			intent.setData(Uri.parse(url));
+			context.startActivity(intent);	
+		}
+	}
+	
+	/**
+	 * Open the dialer with the number inserted, 
+	 * if number is not null or empty.
+	 * @param context The application context.
+	 * @param number Number to call.
+	 */
+	public static void openDialerToCall(Context context, String number) {
+		if( !StringUtils.nullOrEmptyString(number) ) {
+			String url = "tel:" + number;
+			Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			context.startActivity(intent);
+		}
+	}
+	
+	/**
+	 * Open the send sms app if number is not null or empty.
+	 * @param context The application context.
+	 * @param number Number to call.
+	 * @param text Text to send if is not null or empty.
+	 */
+	public static void openToSendSms(Context context, String number, String text) {
+		if( !StringUtils.nullOrEmptyString(number) ) {
+			String url = "tel:" + number;
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+			if( !StringUtils.nullOrEmptyString(text) ) {
+				intent.putExtra("sms_body", text);
+			}
+			intent.setType("vnd.android-dir/mms-sms"); 
+			context.startActivity(intent);
+		}
+	}
+	
+	/**
+	 * Open the send email app.
+	 * @param context Aplication context.
+	 * @param account Email account to send.
+	 * @param text Text to send.
+	 */
+	public static void openToSendEmail(Context context, String account, String text){
+		if( !StringUtils.nullOrEmptyString(account) &&
+				!StringUtils.nullOrEmptyString(text) ) {
+			Intent i = new Intent(Intent.ACTION_SEND);
+		    i.setType("text/plain");
+		    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		    i.putExtra(Intent.EXTRA_EMAIL, new String[]{account});
+		    context.startActivity(Intent.createChooser(i, text));
+		}
+	}
+	
+	/**
+	 * Hide the keyboard
+	 * @param context
+	 * @param view
+	 */
+	public static void hideKeyBoard(Context context, View view){
+		InputMethodManager imm = (InputMethodManager)context.
+				getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+	}
+	
+	/**
+	 * Show the keyboard
+	 * @param context
+	 * @param view
+	 */
+	public static void showKeyBoard(Context context, View view){
+		InputMethodManager imm = (InputMethodManager)context.
+				getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.showSoftInput(view, 0);
+	}
+	
+	/**
+	 * Load the GPS settings screen to activate/deactivate the GPS.
+	 * @param activity The current activity.
+	 * @param requestValue The request value for retrieve on activity for result.
+	 */
+	public static void openGPSSettingsScreen(Activity activity, int requestValue){
+		activity.startActivityForResult(
+				new Intent(
+						android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 
+						requestValue);
+	}
+	
+	/**
+	 * Open a url in the app to view urls.
+	 * @param context Application context.
+	 * @param url The url.
+	 */
+	public static void openUrl(Context context, String url){
+		if( !StringUtils.nullOrEmptyString(url) ) {
+			context.startActivity(
+					new Intent("android.intent.action.VIEW", Uri.parse(url)));
+		}
+	}
+	
+	/**
+	 * Force a locale to the app.
+	 * @param context Application context.
+	 * @param locale Locale to force.
+	 */
+	public static void forceLocale(Context context, String locale){
+		Resources res = context.getResources();
+		DisplayMetrics dm = res.getDisplayMetrics();
+		android.content.res.Configuration conf = res.getConfiguration();
+		conf.locale = new Locale(locale);
+		res.updateConfiguration(conf, dm);
+	}
+	
+	/**
+	 * Get the app version name.
+	 * @param context Application context.
+	 * @return App version anme or empty string if error.
+	 */
+	public static String getAppVersion(Context context) {
+		String version = "";
+        try {
+			version = context.getPackageManager().
+					getPackageInfo(context.getPackageName(), 0).versionName;
+		} catch (NameNotFoundException e) {
+			Logger.e(Utils.class.getSimpleName(), e.toString());
+		}
+		
+		return version;
 	}
 	
 }
