@@ -58,6 +58,12 @@ disable the feature and all tracking goes to Logger, this one can disable this l
 **Base Splash Activity**:
 * A simple way to load and launch splash and main activity.
 
+**DAOLite module with**:
+* CRUD operations.
+* Bulk CUD operations inside transactions.
+* Delete on cascade support.
+* Referential integrity check support.
+
 
 Documentation
 =============
