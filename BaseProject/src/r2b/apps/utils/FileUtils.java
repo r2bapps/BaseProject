@@ -32,14 +32,20 @@
 
 package r2b.apps.utils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.channels.FileChannel;
 
-import r2b.apps.utils.logger.Logger;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import r2b.apps.utils.logger.Logger;
 import android.content.Context;
 import android.os.Environment;
 
@@ -198,6 +204,87 @@ public final class FileUtils {
 			}
 		}	  
 		
+	}
+	
+	/**
+	 * Get a json array from asset file.
+	 * @param context The application context.
+	 * @param assetFile The asset file resource id.
+	 * @return The JSONArray or null if error.
+	 */
+	public static JSONArray getJsonArrayFromAssetsFile(Context context, int assetFile) {
+		JSONArray json = null;
+		
+		Object obj = getJsonFromAssetsFile(context, assetFile);
+		if(obj != null) {
+			json = (JSONArray) obj;
+		}
+		
+		return json;
+	}
+	
+	/**
+	 * Get a json object from asset file.
+	 * @param context The application context.
+	 * @param assetFile The asset file resource id.
+	 * @return The JSONObject or null if error.
+	 */
+	public static JSONObject getJsonObjectFromAssetsFile(Context context, int assetFile) {
+		JSONObject json = null;
+		
+		Object obj = getJsonFromAssetsFile(context, assetFile);
+		if(obj != null) {
+			json = (JSONObject) obj;
+		}
+		
+		return json;
+	}
+	
+	/**
+	 * Get a json entity from asset file.
+	 * @param context The application context.
+	 * @param assetFile The asset file resource id.
+	 * @return The JSONArray/JSONObject or null if error.
+	 */
+	public synchronized static Object getJsonFromAssetsFile(Context context, int assetFile) {
+		BufferedReader reader = null;
+		Object json = null;
+		
+		try {
+			InputStream inputStream = context.getResources().openRawResource(assetFile);
+		    reader = new BufferedReader(
+		        new InputStreamReader(inputStream, "UTF-8")); 
+		    StringBuilder builder = new StringBuilder();
+
+		    String mLine = reader.readLine();
+		    String firstLine = mLine;
+		    while (mLine != null) {
+		    	mLine = reader.readLine();
+		    	builder.append(mLine); 
+		    }
+		    
+		    if(firstLine.charAt(0) == '[') {
+		    	json = new JSONArray(builder.toString());
+		    }
+		    else {
+		    	json = new JSONObject(builder.toString());
+		    }
+		    
+		} catch (IOException e) {
+    		Logger.e(FileUtils.class.getSimpleName(), e.toString());
+		} catch (JSONException e) {
+			Logger.e(FileUtils.class.getSimpleName(), e.toString());
+		} finally {
+		    if (reader != null) {
+		         try {
+		             reader.close();
+		         } catch (IOException e) {
+		        	 Logger.e(FileUtils.class.getSimpleName(), e.toString());
+		         }
+		    }
+		}
+		
+		return json;
 	}
 
 }
