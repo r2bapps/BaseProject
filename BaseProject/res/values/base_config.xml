@@ -16,4 +16,13 @@
     <!-- Enable logger to remote --> <!-- Change to your url -->
     <string name="logger_remote_url">http://192.168.0.195:8080/LogLiteUploadServer/UploadDownloadFileServlet</string>
     
+    <!-- Enable clear db on startup -->
+    <bool name="clear_db_startup">true</bool>
+    
+    <!-- Setup db version -->
+    <integer name="db_version">1</integer>
+    
+    <!-- Setup db name -->
+    <string name="db_name">r2b.apps.genericdaolite.db</string>
+    
 </resources>

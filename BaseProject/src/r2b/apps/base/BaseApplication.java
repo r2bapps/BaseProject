@@ -1,7 +1,7 @@
 /*
  * BaseApplication
  * 
- * 0.1.2
+ * 0.2
  * 
  * 2014/05/16
  * 
@@ -68,11 +68,16 @@ public class BaseApplication extends Application {
 			AESCipher.init(getApplicationContext());
 		}
 		
-		// XXX LOGGER
+		// CONFIG
 		Logger.i(this.getClass().getSimpleName(), "Config DEBUG: " + String.valueOf(Cons.DEBUG));
 		Logger.i(this.getClass().getSimpleName(), "Config FAKE_DATA: " + String.valueOf(Cons.FAKE_DATA));
 		Logger.i(this.getClass().getSimpleName(), "Config TRACKER: " + String.valueOf(Cons.TRACKER));
 		Logger.i(this.getClass().getSimpleName(), "Config ENCRYPT: " + String.valueOf(Cons.ENCRYPT));
+		
+		// DB
+		Logger.i(this.getClass().getSimpleName(), "Config CLEAR DB ON STARTUP: " + String.valueOf(Cons.DB.CLEAR_DB_ON_START));
+		Logger.i(this.getClass().getSimpleName(), "Config DB VERSION: " + String.valueOf(Cons.DB.DATABASE_VERSION));
+		Logger.i(this.getClass().getSimpleName(), "Config DB NAME: " + String.valueOf(Cons.DB.DATABASE_NAME));
 
 	}
 
@@ -93,6 +98,10 @@ public class BaseApplication extends Application {
 		Cons.FAKE_DATA = Cons.DEBUG && getResources().getBoolean(R.bool.fake);
 		Cons.TRACKER = getResources().getBoolean(R.bool.track);
 		Cons.ENCRYPT = getResources().getBoolean(R.bool.encrypt);
+		
+		Cons.DB.CLEAR_DB_ON_START = Cons.DEBUG && getResources().getBoolean(R.bool.clear_db_startup);
+		Cons.DB.DATABASE_VERSION = getResources().getInteger(R.integer.db_version);
+		Cons.DB.DATABASE_NAME = getResources().getString(R.string.db_name);
 		
 		Environment.LOGGER_REMOTE_URL = getResources().getString(R.string.logger_remote_url);		
 		

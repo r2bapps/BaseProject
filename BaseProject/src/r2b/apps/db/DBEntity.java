@@ -1,7 +1,7 @@
 /*
- * Cons
+ * DBEntity
  * 
- * 0.3
+ * 0.1
  * 
  * 2014/05/16
  * 
@@ -30,26 +30,25 @@
  * 
  */
 
-package r2b.apps.utils;
+package r2b.apps.db;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 
 /**
- * Constants class.
+ * 
+ * Database entity.
+ * 
+ * @param <K> Key
  */
-public final class Cons {
-	
-	public static boolean DEBUG;
+public interface DBEntity<K> {
 
-	public static boolean FAKE_DATA;
+	public static final String COL_ID = "id";
 	
-	public static boolean ENCRYPT;
+	public String getTableName();
+	public K getKey();
+	public void setKey(final K id);
+	public ContentValues getTableContentValues();
+	public DBEntity<K> valueOf(final Cursor c);
 	
-	public static boolean TRACKER;
-	
-	public static final class DB {
-		public static String DATABASE_NAME;
-		public static int DATABASE_VERSION;
-		public static boolean CLEAR_DB_ON_START;
-	}
-
 }
