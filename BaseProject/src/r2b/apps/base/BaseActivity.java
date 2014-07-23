@@ -41,11 +41,12 @@ import r2b.apps.utils.cipher.SecurePreferences;
 import r2b.apps.utils.logger.Logger;
 import r2b.apps.utils.tracker.BaseTracker;
 import r2b.apps.utils.tracker.ITracker;
-import android.annotation.TargetApi;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -217,23 +218,21 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 	}
 	
 	/**
-	 * Overrides setProgressBarIndeterminateVisibility
+	 * Overrides setSupportProgressBarIndeterminateVisibility and
+	 * setProgressBarIndeterminateVisibility to check if action bar exists.
 	 * @param visible Whether to show the progress bars in the title.
 	 */
-	@TargetApi(/*Build.VERSION_CODES.HONEYCOMB*/11) 
+	@SuppressLint("NewApi") 
 	public void setProgressIndeterminateVisibility(boolean visible) {
-		if(getActionBar() != null) {
-			super.setProgressBarIndeterminateVisibility(visible);
+		if(Build.VERSION.SDK_INT >= 11 /*HONEYCOMB+*/) {
+			if(getActionBar() != null) {
+				super.setProgressBarIndeterminateVisibility(visible);
+			}
 		}
-	}
-	
-	/**
-	 * Overrides setSupportProgressBarIndeterminateVisibility
-	 * @param visible Whether to show the progress bars in the title.
-	 */
-	public void setSupportProgressBarIndeterminateVisibility(boolean visible) {
-		if(getSupportActionBar() != null) {
-			super.setSupportProgressBarIndeterminateVisibility(visible);
+		else {
+			if(getSupportActionBar() != null) {
+				super.setSupportProgressBarIndeterminateVisibility(visible);
+			}
 		}
 	}
 	
