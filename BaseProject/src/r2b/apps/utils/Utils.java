@@ -35,13 +35,13 @@ package r2b.apps.utils;
 import java.util.Locale;
 
 import r2b.apps.utils.logger.Logger;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -156,10 +156,18 @@ public final class Utils {
 	 * @param requestValue The request value for retrieve on activity for result.
 	 */
 	public static void openGPSSettingsScreen(Activity activity, int requestValue){
-		activity.startActivityForResult(
-				new Intent(
-						android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 
-						requestValue);
+		Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+		activity.startActivityForResult(intent, requestValue);
+	}
+	
+	/**
+	 * Load the contacts screen to select one and retrieve on activity for result.
+	 * @param activity The current activity.
+	 * @param requestValue The request value for retrieve on activity for result.
+	 */
+	public static void openContactsScreen(Activity activity, int requestValue){
+		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+		activity.startActivityForResult(intent, requestValue);
 	}
 	
 	/**
