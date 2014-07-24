@@ -44,7 +44,8 @@ public final class Validation {
 	
 
 	private static final String DECIMAL = "[-+]?[0-9]*\\.?[0-9]+";
-	
+	private static final String SYMBOLS = "[_\\W]";
+	private static final String LOWER_UPPER_DIGIT_SYMBOL = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*(_|[^\\w])).+$";
 	private static final String DATE_yyyy_mm_dd = 
 			"^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$";
 	
@@ -92,6 +93,97 @@ public final class Validation {
 		
 		if ( !StringUtils.nullOrEmptyString(input) ) {
 			valid =  android.util.Patterns.WEB_URL.matcher(input).matches();
+		}
+		
+		return valid;
+	}
+	
+	/**
+	 * Check integer with a min and max length
+	 * @param input
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	public static boolean integer(String input, int min, int max) {	
+		boolean valid = false;
+		
+		if ( !StringUtils.nullOrEmptyString(input) ) {
+		      Pattern r = Pattern.compile("[0-9]{"+min+","+max+"}");
+		      Matcher m = r.matcher(input);
+		      valid = m.matches();
+		}
+		
+		return valid;
+	}
+	
+	/**
+	 * Check text with a min and max length
+	 * @param input
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	public static boolean text(String input, int min, int max) {	
+		boolean valid = false;
+		
+		if ( !StringUtils.nullOrEmptyString(input) && 
+				input.length() >= min && 
+				input.length() <= max) {
+		      valid = true;
+		}
+		
+		return valid;
+	}
+	
+	/**
+	 * Check text with at least one digit
+	 * @param input
+	 * @return
+	 */
+	public static boolean containsAtLeastOneDigit(String input) {	
+		boolean valid = false;
+		
+		if ( !StringUtils.nullOrEmptyString(input)) {
+		      Pattern r = Pattern.compile("\\d");
+		      Matcher m = r.matcher(input);
+		      valid = m.matches();
+		}
+		
+		return valid;
+	}
+	
+	/**
+	 * Check text with at least one symbol
+	 * @param input
+	 * @return
+	 */
+	public static boolean containsAtLeastOneSymbol(String input) {	
+		boolean valid = false;
+		
+		if ( !StringUtils.nullOrEmptyString(input)) {
+		      Pattern r = Pattern.compile(SYMBOLS);
+		      Matcher m = r.matcher(input);
+		      valid = m.matches();
+		}
+		
+		return valid;
+	}
+	
+	/**
+	 * Check text with at least one lower case, 
+	 * one upper case, one digit and one symbol.
+	 * 
+	 * @param input
+	 * @return
+	 */
+	public static boolean containsAtLeastOneLowerUpperDigitSymbol(String input) {	
+		boolean valid = false;
+		
+		if ( !StringUtils.nullOrEmptyString(input)) {
+		      Pattern r = Pattern.compile(LOWER_UPPER_DIGIT_SYMBOL);
+		      Matcher m = r.matcher(input);
+		      valid = m.matches();
 		}
 		
 		return valid;
