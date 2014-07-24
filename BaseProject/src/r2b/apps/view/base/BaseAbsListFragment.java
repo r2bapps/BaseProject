@@ -30,7 +30,7 @@
  * 
  */
 
-package r2b.apps.base;
+package r2b.apps.view.base;
 
 import java.util.List;
 
@@ -65,7 +65,7 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	/**
 	 * Adapter.
 	 */
-	protected r2b.apps.base.BaseAdapter<T> adapter;
+	protected r2b.apps.view.base.BaseAdapter<T> adapter;
 	
 	/** 
 	 * Scroll received to apply. 
@@ -115,7 +115,7 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	 * @param list The info list.
 	 * @return The adapter populated.
 	 */
-	protected abstract r2b.apps.base.BaseAdapter<T> initAdapter(final List<T> list);
+	protected abstract r2b.apps.view.base.BaseAdapter<T> initAdapter(final List<T> list);
 	
 	/**
 	 * Load the info list to the adapter.

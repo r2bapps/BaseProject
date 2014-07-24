@@ -30,7 +30,7 @@
  * 
  */
 
-package r2b.apps.base;
+package r2b.apps.view.base;
 
 import r2b.apps.R;
 import r2b.apps.utils.Cons;

@@ -3,6 +3,7 @@ package r2b.apps.base;
 import java.util.List;
 
 import r2b.apps.R;
+import r2b.apps.view.base.BaseAdapter;
 import android.view.View;
 import android.widget.TextView;
 

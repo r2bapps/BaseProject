@@ -30,17 +30,17 @@
  * 
  */
 
-package r2b.apps.base;
+package r2b.apps.view.base;
 
 import java.util.List;
 
 import r2b.apps.R;
-import r2b.apps.base.BaseDialog.BaseDialogListener;
 import r2b.apps.utils.Cons;
 import r2b.apps.utils.cipher.SecurePreferences;
 import r2b.apps.utils.logger.Logger;
 import r2b.apps.utils.tracker.BaseTracker;
 import r2b.apps.utils.tracker.ITracker;
+import r2b.apps.view.base.BaseDialog.BaseDialogListener;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import r2b.apps.R;
+import r2b.apps.view.base.BaseAbsListFragment;
+import r2b.apps.view.base.BaseAdapter;
 import android.os.Bundle;
 import android.view.View;
 

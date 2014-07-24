@@ -30,7 +30,7 @@
  * 
  */
 
-package r2b.apps.base;
+package r2b.apps.view.base;
 
 import java.util.Timer;
 import java.util.TimerTask;

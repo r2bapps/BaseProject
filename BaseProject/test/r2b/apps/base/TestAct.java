@@ -1,6 +1,7 @@
 package r2b.apps.base;
 
 import r2b.apps.R;
+import r2b.apps.view.base.BaseActivity;
 import android.os.Bundle;
 
 public class TestAct extends BaseActivity {

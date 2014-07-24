@@ -1,6 +1,7 @@
 package r2b.apps.base;
 
 import r2b.apps.R;
+import r2b.apps.view.base.BaseSplashActivity;
 import android.content.pm.ActivityInfo;
 
 public class Splash extends BaseSplashActivity {
