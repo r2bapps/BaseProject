@@ -52,7 +52,11 @@ public abstract class BaseSplashActivity extends Activity {
      *  Set the duration of the splash screen.
      */
     private static final int SPLASH_SCREEN_DELAY = 3000; // Milliseconds
- 
+    /**
+     * Simulates a loading process.
+     */
+    private Timer timer;
+    
 	/**
 	 * Initialize features.
 	 * Called previously setContent().
@@ -97,8 +101,16 @@ public abstract class BaseSplashActivity extends Activity {
         };
  
         // Simulate a long loading process on application startup.
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(task, SPLASH_SCREEN_DELAY);
     }
+    
+	@Override
+	public void onBackPressed() {
+		if(timer != null) {
+			timer.cancel();
+		}
+		super.onBackPressed();
+	}
  
 }
