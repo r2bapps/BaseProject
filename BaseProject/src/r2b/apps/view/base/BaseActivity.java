@@ -34,8 +34,13 @@ package r2b.apps.view.base;
 
 import java.util.List;
 
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.FeedbackManager;
+import net.hockeyapp.android.Tracking;
+import net.hockeyapp.android.UpdateManager;
 import r2b.apps.R;
 import r2b.apps.utils.Cons;
+import r2b.apps.utils.Environment;
 import r2b.apps.utils.cipher.SecurePreferences;
 import r2b.apps.utils.logger.Logger;
 import r2b.apps.utils.tracker.BaseTracker;
@@ -182,7 +187,10 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initWindowFeatures();
-		setContentView(getLayout());		
+		setContentView(getLayout());	
+		
+		// XXX Hockeyapp
+		checkForUpdates();
 	}	
 	
 	/**
@@ -207,12 +215,24 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 		initValues();
 		initListeners();
 		init();
+		
+		// XXX Hockeyapp
+		checkForCrashes();
+		// XXX Hockeyapp
+		if(Build.VERSION.SDK_INT < 14 /*-ICE_CREAM_SANDWICH*/) {
+			Tracking.startUsage(this);
+		}
 	}
 	
 	@Override
 	protected void onPause() {
 		removeListeners();
 		clear();
+		
+		// XXX Hockeyapp
+		if(Build.VERSION.SDK_INT < 14 /*-ICE_CREAM_SANDWICH*/) {
+			Tracking.stopUsage(this);
+		}
 		
 		super.onPause();
 	}
@@ -403,5 +423,34 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 		 */
 		public void onBackPressed();
 	};
+	
+	/**
+	 * Hockeyapp check for crashes
+	 */
+	private void checkForCrashes() {
+		if(Cons.HOCKEYAPP) {
+			CrashManager.register(this, Environment.HOCKEYAPP_APP_ID);
+		}
+	}
+
+	/**
+	 * Hockeyapp check for updates.
+	 * WARNING: ONLY ON DEBUG
+	 */
+	private void checkForUpdates() {
+		if(Cons.DEBUG && Cons.HOCKEYAPP) {
+			UpdateManager.register(this, Environment.HOCKEYAPP_APP_ID);
+		}
+	}
+	
+	/**
+	 * Show the hockeyapp feedback activity.
+	 */
+	public void showFeedbackActivity() {
+		if(Cons.HOCKEYAPP) {
+		  FeedbackManager.register(this, Environment.HOCKEYAPP_APP_ID, null);
+		  FeedbackManager.showFeedbackActivity(this);
+		}
+	}
 	
 }

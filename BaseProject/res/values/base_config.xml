@@ -13,6 +13,10 @@
     <!-- Enable encryption -->
     <bool name="encrypt">true</bool>
     
+    <!-- Enable hackeyapp sdk -->
+    <bool name="hockeyapp">true</bool>
+    <string name="hockeyapp_app_id">YOUR KEY</string> <!-- Change to your key -->
+    
     <!-- Enable logger to remote --> <!-- Change to your url -->
     <string name="logger_remote_url">http://192.168.0.195:8080/LogLiteUploadServer/UploadDownloadFileServlet</string>
     

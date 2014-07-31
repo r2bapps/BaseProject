@@ -1,7 +1,7 @@
 /*
  * BaseApplication
  * 
- * 0.2
+ * 0.2.5
  * 
  * 2014/05/16
  * 
@@ -32,6 +32,7 @@
 
 package r2b.apps.view.base;
 
+import net.hockeyapp.android.Tracking;
 import r2b.apps.R;
 import r2b.apps.utils.Cons;
 import r2b.apps.utils.Environment;
@@ -42,7 +43,12 @@ import r2b.apps.utils.logger.Receiver;
 import r2b.apps.utils.logger.RemoteReceiver;
 import r2b.apps.utils.tracker.BaseTracker;
 import r2b.apps.utils.tracker.ITracker;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Application;
+import android.os.Build;
+import android.os.Bundle;
+import android.provider.Settings.Secure;
 
 /**
  * Used as singleton class to initialize managers and utilities.
@@ -53,8 +59,45 @@ public class BaseApplication extends Application {
 	 * Tracker wrapper.
 	 */
 	private ITracker tracker;
-
+	/**
+	 * Activity lifecycle callbacks
+	 */
+	@SuppressLint("NewApi") 
+	private final ActivityLifecycleCallbacks callbacks = new ActivityLifecycleCallbacks() {
+		@Override
+		public void onActivityCreated(Activity arg0, Bundle arg1) {
+		}
+		@Override
+		public void onActivityDestroyed(Activity arg0) {
+		}
+		@Override
+		public void onActivityPaused(Activity arg0) {
+			if(Cons.HOCKEYAPP) {
+				Tracking.stopUsage(arg0);
+			}
+		}
+		@Override
+		public void onActivityResumed(Activity arg0) {
+			if(Cons.HOCKEYAPP) {
+				Tracking.startUsage(arg0);
+			}
+		}
+		@Override
+		public void onActivitySaveInstanceState(Activity arg0, Bundle arg1) {
+		}
+		@Override
+		public void onActivityStarted(Activity arg0) {
+		}
+		@Override
+		public void onActivityStopped(Activity arg0) {
+		}		
+	};
+	
+	@SuppressLint("NewApi") 
 	@Override
+	/**
+	 * On 14+ registers activity lifecycle callbacks.
+	 */
 	public void onCreate() {
 		super.onCreate();		
 		
@@ -79,6 +122,13 @@ public class BaseApplication extends Application {
 		Logger.i(this.getClass().getSimpleName(), "Config DB VERSION: " + String.valueOf(Cons.DB.DATABASE_VERSION));
 		Logger.i(this.getClass().getSimpleName(), "Config DB NAME: " + String.valueOf(Cons.DB.DATABASE_NAME));
 
+		// Hockeyapp SDK
+		Logger.i(this.getClass().getSimpleName(), "Config HOCKEYAPP: " + String.valueOf(Cons.HOCKEYAPP));
+		
+		if(Build.VERSION.SDK_INT >= 14 /*ICE_CREAM_SANDWICH+*/) {
+			registerActivityLifecycleCallbacks(callbacks);	
+		}		
+		
 	}
 
 	/**
@@ -98,13 +148,15 @@ public class BaseApplication extends Application {
 		Cons.FAKE_DATA = Cons.DEBUG && getResources().getBoolean(R.bool.fake);
 		Cons.TRACKER = getResources().getBoolean(R.bool.track);
 		Cons.ENCRYPT = getResources().getBoolean(R.bool.encrypt);
+		Cons.DEVICE_ID = Secure.getString(getContentResolver(), Secure.ANDROID_ID); 
+		Cons.HOCKEYAPP = getResources().getBoolean(R.bool.hockeyapp);
 		
 		Cons.DB.CLEAR_DB_ON_START = Cons.DEBUG && getResources().getBoolean(R.bool.clear_db_startup);
 		Cons.DB.DATABASE_VERSION = getResources().getInteger(R.integer.db_version);
 		Cons.DB.DATABASE_NAME = getResources().getString(R.string.db_name);
 		
 		Environment.LOGGER_REMOTE_URL = getResources().getString(R.string.logger_remote_url);		
-		
+		Environment.HOCKEYAPP_APP_ID = getResources().getString(R.string.hockeyapp_app_id);
 	}
 	
 	private void initLogger() {

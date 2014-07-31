@@ -9,12 +9,12 @@
         android:targetSdkVersion="19" />
     
     <!-- Needed for Analytics -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Needed for Hockeyapp SDK -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<!-- Needed for Analytics -->
 	
 	<!-- Needed for Logger -->
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!-- Needed for Hockeyapp SDK -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
 	<!-- Needed for Logger -->
@@ -25,6 +25,12 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >    
+        
+        <!-- Needed for Hockeyapp SDK -->
+		<activity android:name="net.hockeyapp.android.UpdateActivity" />
+		<activity android:name="net.hockeyapp.android.FeedbackActivity" />
+		<!-- Needed for Hockeyapp SDK -->
+		
         <activity
             android:name="r2b.apps.base.Splash"
             android:label="@string/app_name" >

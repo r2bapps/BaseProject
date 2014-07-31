@@ -1,7 +1,7 @@
 /*
  * Cons
  * 
- * 0.3
+ * 0.3.1
  * 
  * 2014/05/16
  * 
@@ -46,10 +46,16 @@ public final class Cons {
 	
 	public static boolean TRACKER;
 	
+	public static String DEVICE_ID;
+	
+	public static boolean HOCKEYAPP;
+	
 	public static final class DB {
 		public static String DATABASE_NAME;
 		public static int DATABASE_VERSION;
 		public static boolean CLEAR_DB_ON_START;
 	}
+	
+	
 
 }

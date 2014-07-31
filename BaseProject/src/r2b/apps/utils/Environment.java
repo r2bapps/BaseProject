@@ -1,7 +1,7 @@
 /*
  * Environment
  * 
- * 0.1
+ * 0.1.1
  * 
  * 2014/07/18
  * 
@@ -40,4 +40,6 @@ public final class Environment {
 	
 	public static String LOGGER_REMOTE_URL;
 
+	public static String HOCKEYAPP_APP_ID;
+	
 }
