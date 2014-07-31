@@ -69,6 +69,12 @@ disable the feature and all tracking goes to Logger, this one can disable this l
 * Referential integrity check support.
 
 
+**Hockeyapp SDK lib**:
+* Time ussage tracking.
+* Crash report.
+* Feedback.
+
+
 Documentation
 =============
 You have the [JavaDoc](BaseProject/doc/javadoc) files on doc/javadoc directory, 
