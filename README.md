@@ -12,6 +12,7 @@ Main functionality
 * Used as singleton and main manager to get other managers as tracker, db manager, ...
 
 **Base Activity**:
+* Extends from ActionBarActivity.
 * Methods for common operations like: findById, set values to this views, set listeners 
 to this views, ... 
 * Show common toast.
@@ -46,6 +47,7 @@ disable the feature and all tracking goes to Logger, this one can disable this l
 
 **Logger**:
 * Logs all events. You can disable it.
+* Added firstly beta of LogLite with file and remote logging asynchronously. NOT TESTED!!
 
 **SecurePreferences**:
 * Key-value encrypted shared preferences.
@@ -53,6 +55,24 @@ disable the feature and all tracking goes to Logger, this one can disable this l
 **AESCipher**:
 * Encrypt/Decrypt strings with AES 128-bits using key based on device ANDROID_ID.
 
+**Base Splash Activity**:
+* A simple way to load and launch splash and main activity.
+
+**Utility classes**:
+* File, Image, String, Validation, ...
+
+
+**DAOLite module with**:
+* CRUD operations.
+* Bulk CUD operations inside transactions.
+* Delete on cascade support.
+* Referential integrity check support.
+
+
+**Hockeyapp SDK lib**:
+* Time ussage tracking.
+* Crash report.
+* Feedback.
 
 
 Documentation
