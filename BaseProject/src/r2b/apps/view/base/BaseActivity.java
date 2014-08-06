@@ -334,7 +334,7 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 		if (prev != null) {
 			ft.remove(prev);
 		}
-		ft.addToBackStack(null).commit();
+		ft.commit();
 	    
 	    this.dialogListenerWrapper = listener;
 	    
