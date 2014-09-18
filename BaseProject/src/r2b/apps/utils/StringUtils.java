@@ -32,6 +32,8 @@
 
 package r2b.apps.utils;
 
+import android.location.Location;
+
 /**
  * String utility class.
  */
@@ -58,6 +60,60 @@ public final class StringUtils {
 			nullOrEmpty = true;
 		}
 		return nullOrEmpty;
+	}
+	
+	/**
+	 * Remove html tags on text.
+	 * @param htmlText The html.
+	 * @return Cleaned text.
+	 */
+	public static String removeHtmlTags(String htmlText) {
+		return android.text.Html.fromHtml(htmlText).toString();
+	}
+	
+	/**
+	 * Get string format of location
+	 * @param loc The location
+	 * @return The location in ddº dd' dd,dd N, ddº dd' dd,dd E 
+	 */
+	public static String parseLocation(Location loc) {
+		String cordinatesLat = "";
+
+		String seconds = Location.convert(loc.getLatitude(), 
+		Location.FORMAT_SECONDS);
+
+        String[] splitLat = seconds.split(":"); 
+
+        cordinatesLat += splitLat[0] + "º ";
+        cordinatesLat += splitLat[1] + "' ";
+        cordinatesLat += splitLat[2] + "'' ";
+        if(loc.getLatitude() >= 0) { //N
+            cordinatesLat += "N";
+        }
+        else { // S
+            cordinatesLat += "S";
+        }
+
+        seconds = "";
+
+        String cordinatesLng = "";          
+        seconds = Location.convert(loc.getLongitude(), Location.FORMAT_SECONDS);
+
+        String[] splitLng = seconds.split(":"); 
+
+        cordinatesLng += splitLng[0] + "º ";
+        cordinatesLng += splitLng[1] + "' ";
+        cordinatesLng += splitLng[2] + "'' ";
+        if(loc.getLatitude() >= 0) { //E
+            cordinatesLng += "E";
+        }
+        else { // W
+            cordinatesLng += "W";
+        }
+
+        String cordinates = cordinatesLat + ", " + cordinatesLng;
+        
+        return cordinates;
 	}
 
 }
