@@ -1,7 +1,7 @@
 /*
  * BaseActivity
  * 
- * 0.1.1
+ * 0.2
  * 
  * 2014/05/16
  * 
@@ -371,7 +371,7 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 	}
 	
 	@Override
-	public void onDialogPositiveClick(android.support.v4.app.DialogFragment dialog) {
+	public void onDialogPositiveClick(BaseDialog dialog) {
 		if(dialogListenerWrapper != null) {
 			dialogListenerWrapper.onDialogPositiveClick(dialog);
 			dialogListenerWrapper = null;
@@ -379,7 +379,7 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 	}
 
 	@Override
-	public void onDialogNegativeClick(android.support.v4.app.DialogFragment dialog) {
+	public void onDialogNegativeClick(BaseDialog dialog) {
 		if(dialogListenerWrapper != null) {
 			dialogListenerWrapper.onDialogNegativeClick(dialog);
 			dialogListenerWrapper = null;
@@ -387,7 +387,7 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 	}
 
 	@Override
-	public void onDialogNeutralClick(android.support.v4.app.DialogFragment dialog) {
+	public void onDialogNeutralClick(BaseDialog dialog) {
 		if(dialogListenerWrapper != null) {
 			dialogListenerWrapper.onDialogNeutralClick(dialog);
 			dialogListenerWrapper = null;
@@ -395,7 +395,7 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 	}
 
 	@Override
-	public void onItemClick(android.support.v4.app.DialogFragment dialog, int which) {
+	public void onItemClick(BaseDialog dialog, int which) {
 		if(dialogListenerWrapper != null) {
 			dialogListenerWrapper.onItemClick(dialog, which);
 			dialogListenerWrapper = null;
@@ -403,7 +403,7 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 	}
 
 	@Override
-	public void onSelectedItems(android.support.v4.app.DialogFragment dialog, List<Integer> selectedItems) {
+	public void onSelectedItems(BaseDialog dialog, List<Integer> selectedItems) {
 		if(dialogListenerWrapper != null) {
 			dialogListenerWrapper.onSelectedItems(dialog, selectedItems);
 			dialogListenerWrapper = null;

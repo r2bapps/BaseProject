@@ -3,16 +3,16 @@ package r2b.apps.base;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import junit.framework.Assert;
 import r2b.apps.R;
 import r2b.apps.utils.cipher.AESCipher;
 import r2b.apps.view.base.BaseDialog;
-import r2b.apps.view.base.BaseFragment;
 import r2b.apps.view.base.BaseDialog.BaseDialogListener;
+import r2b.apps.view.base.BaseFragment;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,28 +33,28 @@ public class TestFrg extends BaseFragment {
 	private final BaseDialogListener dialogListener = new BaseDialogListener() {
 
 		@Override
-		public void onDialogPositiveClick(DialogFragment dialog) {
+		public void onDialogPositiveClick(BaseDialog dialog) {
 
 			
 		}
 
 		@Override
-		public void onDialogNegativeClick(DialogFragment dialog) {
+		public void onDialogNegativeClick(BaseDialog dialog) {
 			
 		}
 
 		@Override
-		public void onDialogNeutralClick(DialogFragment dialog) {
+		public void onDialogNeutralClick(BaseDialog dialog) {
 			
 		}
 
 		@Override
-		public void onItemClick(DialogFragment dialog, int which) {
+		public void onItemClick(BaseDialog dialog, int which) {
 			showToast("Item clicked: " + String.valueOf(which));
 		}
 
 		@Override
-		public void onSelectedItems(DialogFragment dialog,
+		public void onSelectedItems(BaseDialog dialog,
 				List<Integer> selectedItems) {
 			
 		}

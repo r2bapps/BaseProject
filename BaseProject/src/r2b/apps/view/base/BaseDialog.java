@@ -1,7 +1,7 @@
 /*
  * BaseDialog
  * 
- * 0.2
+ * 0.3
  * 
  * 2014/05/16
  * 
@@ -40,7 +40,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 
 /**
@@ -93,11 +92,12 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
      *
      */
     public interface BaseDialogListener {
-        public void onDialogPositiveClick(DialogFragment dialog);
-        public void onDialogNegativeClick(DialogFragment dialog);
-        public void onDialogNeutralClick(DialogFragment dialog);
-		public void onItemClick(DialogFragment dialog, int which);
-		public void onSelectedItems(DialogFragment dialog, List<Integer> selectedItems);
+        public void onDialogPositiveClick(BaseDialog dialog);
+        public void onDialogNegativeClick(BaseDialog dialog);
+        public void onDialogNeutralClick(BaseDialog dialog);
+		public void onItemClick(BaseDialog dialog, int which);
+		public void onSelectedItems(BaseDialog dialog, List<Integer> selectedItems);
+		
 		public void onCancel(DialogInterface dialog);
 		public void onDismiss(DialogInterface dialog);
     }
