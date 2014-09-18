@@ -72,6 +72,11 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 	private static final int INITIAL_BACK_STACK_SIZE = 1;
 	
 	/**
+	 * The time to wait for close on press twice back button.
+	 */
+	private static long BACK_PRESSED = 0;
+	
+	/**
 	 * The current fragment.
 	 */
 	private View.OnClickListener currentClickListener;
@@ -265,10 +270,17 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 			}
 			
 			super.onBackPressed();										
-		} else {			
-			clear();
-			((BaseApplication) getApplication()).finish(this);
-		}	
+		} else {		
+			if(BACK_PRESSED + 2000 > System.currentTimeMillis()) {
+				clear();
+				((BaseApplication) getApplication()).finish(this);	
+			}
+			else {
+				showToast(getString(R.string.once_to_exit));
+			}
+			BACK_PRESSED = System.currentTimeMillis();
+		}
+		
 	}
 	
 	/**
