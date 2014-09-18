@@ -43,6 +43,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -210,6 +211,17 @@ public final class Utils {
 		}
 		
 		return version;
+	}
+	
+	/**
+	 * Dip to pixels.
+	 * @param context Application context.
+	 * @param dipValue dip value.
+	 * @return Pixels value.
+	 */
+	public static float dipToPixels(Context context, float dipValue) {
+		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
 	}
 	
 }
