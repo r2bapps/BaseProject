@@ -34,16 +34,12 @@ package r2b.apps.utils;
 
 import java.util.Locale;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-
 import r2b.apps.utils.logger.Logger;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
-import android.location.Location;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.Settings;
@@ -230,30 +226,6 @@ public final class Utils {
 	}
 	
 	/**
-	 * Distance between two locations.
-	 * @param latA
-	 * @param lngA
-	 * @param latB
-	 * @param lngB
-	 * @return The distance.
-	 */
-	public static double distanceBetweenTwoLocations(double latA, double lngA, double latB, double lngB) {
-		Location locationA = new Location("A");
-
-	    locationA.setLatitude(latA);
-	    locationA.setLongitude(lngA);
-
-	    Location locationB = new Location("B");
-
-	    locationB.setLatitude(latB);
-	    locationB.setLongitude(lngB);
-
-	    double distance = locationA.distanceTo(locationB);
-
-	    return distance;
-	}
-	
-	/**
 	 * Get app version name from manifest.
 	 * @param context App context.
 	 * @return The manifest version name.
@@ -262,21 +234,6 @@ public final class Utils {
 	public static String getAppVersionName(Context context) throws NameNotFoundException {
 		String versionName = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
 		return versionName;
-	}
-	
-	/**
-	 * Check google play service installed.
-	 * @param parent Activity parent.
-	 * @return True installed, false otherwise.
-	 */
-	public static boolean checkGooglePlayServicesInstalled(final Activity parent) {
-		final int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(parent);
-		boolean installed = false;
-		if (resultCode == ConnectionResult.SUCCESS) {
-			installed = true;
-		}
-		
-		return installed;
 	}
 	
 	/**
