@@ -4,6 +4,7 @@ import java.util.List;
 
 import r2b.apps.R;
 import r2b.apps.view.base.BaseAdapter;
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,9 +25,23 @@ public class PersonAdapter extends BaseAdapter<Person> {
 	}
 
 	@Override
-	protected void initViewsAndValues(Person item, int position,View convertView) {
+	protected Object initViewHolder(View convertView) {
+		PersonHolder holder = new PersonHolder();
+		
 		TextView txt = (TextView) convertView.findViewById(R.id.person);
-		txt.setText(item.getName());
+		holder.txt = txt;
+			
+		return holder;
 	}
+	
+	@Override
+	protected void setViewHolderValues(Context context, Person item, int position, Object viewHolder) {
+		PersonHolder holder = (PersonHolder) viewHolder;		
+		holder.txt.setText(item.getName());
+	}
+	
+	private static class PersonHolder {
+		TextView txt;
+	};
 
 }
