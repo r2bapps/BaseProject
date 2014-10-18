@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,7 +21,7 @@
       <div class="inner">
         <h1>BaseProject</h1>
         <h2>Android project with a base common development</h2>
-        <a href="https://github.com/r2bapps/BaseProject" class="button"><small>View project on</small>GitHub</a>
+        <a href="https://github.com/r2bapps/BaseProject" class="button"><small>View project on</small> GitHub</a>
       </div>
     </header>
 
@@ -41,9 +41,12 @@
 <ul>
 <li>Load config constants as debug, show logs, use tracker, use fake data, use encryption, ...</li>
 <li>Used as singleton and main manager to get other managers as tracker, db manager, ...</li>
-</ul><p><strong>Base Activity</strong>:</p>
+</ul>
+
+<p><strong>Base Activity</strong>:</p>
 
 <ul>
+<li>Extends from ActionBarActivity.</li>
 <li>Methods for common operations like: findById, set values to this views, set listeners 
 to this views, ... </li>
 <li>Show common toast.</li>
@@ -52,7 +55,10 @@ to this views, ... </li>
 <li>Shared preferences only for activity and encrypted or not.</li>
 <li>A switch fragment method that runs correctly on back and retry again.</li>
 <li>A clear back stack method.</li>
-</ul><p><strong>Base Fragment</strong>:</p>
+<li>Click event tracked.</li>
+</ul>
+
+<p><strong>Base Fragment</strong>:</p>
 
 <ul>
 <li>Activity methods façade: You do not need to call ((MyActivity) getActivity())... methods.</li>
@@ -61,57 +67,115 @@ to this views, ... </li>
 <li>Shared preferences only for fragment, and encrypted or not.</li>
 <li>A switch fragment method for child fragments.</li>
 <li>Back event listener with the same functionality as onBackPressed than activity class.</li>
-</ul><p><strong>Base Dialog Fragment</strong>:</p>
+</ul>
+
+<p><strong>Base Dialog Fragment</strong>:</p>
 
 <ul>
 <li>A dialog that can show a title, up to three buttons, a traditional 
 single choice list, a list of selectable items (single with radio or multiple choice with 
 checkbox), or a custom layout.</li>
-</ul><p><strong>Base AbsList Fragment</strong>: </p>
+</ul>
+
+<p><strong>Base AbsList Fragment</strong>: </p>
 
 <ul>
 <li>Parametrized with templates and capable to show list or grid views.</li>
-</ul><p><strong>Base AbsList Adapter</strong>:</p>
+<li>Interchangeable empty, error and loading views.</li>
+<li>List item selection tracked.</li>
+</ul>
+
+<p><strong>Base AbsList Adapter</strong>:</p>
 
 <ul>
 <li>Adapter to the AbsList.</li>
-</ul><p><strong>Base Tracker</strong>:</p>
+<li>Follow the ViewHolder pattern.</li>
+</ul>
+
+<p><strong>Base Tracker</strong>:</p>
 
 <ul>
 <li>Wraps a tracker like Google Analytics. If you do not need tracking you only need to 
 disable the feature and all tracking goes to Logger, this one can disable this logs.</li>
-</ul><p><strong>Logger</strong>:</p>
+</ul>
+
+<p><strong>Logger</strong>:</p>
 
 <ul>
 <li>Logs all events. You can disable it.</li>
-</ul><p><strong>SecurePreferences</strong>:</p>
+<li>Added firstly beta of LogLite with file and remote logging asynchronously. NOT TESTED!!</li>
+</ul>
+
+<p><strong>SecurePreferences</strong>:</p>
 
 <ul>
 <li>Key-value encrypted shared preferences.</li>
-</ul><p><strong>AESCipher</strong>:</p>
+</ul>
+
+<p><strong>AESCipher</strong>:</p>
 
 <ul>
 <li>Encrypt/Decrypt strings with AES 128-bits using key based on device ANDROID_ID.</li>
-</ul><h1>
+</ul>
+
+<p><strong>Base Splash Activity</strong>:</p>
+
+<ul>
+<li>A simple way to load and launch splash and main activity.</li>
+</ul>
+
+<p><strong>Utility classes</strong>:</p>
+
+<ul>
+<li>File, Image, String, Validation, Zip, Location, ...</li>
+</ul>
+
+<p><strong>DAOLite module with</strong>:</p>
+
+<ul>
+<li>CRUD operations.</li>
+<li>Bulk CUD operations inside transactions.</li>
+<li>Delete on cascade support.</li>
+<li>Referential integrity check support.</li>
+</ul>
+
+<p><strong>TaskManager lib with</strong>:</p>
+
+<ul>
+<li>Sync (running internally asynchronously) and Async tasks.</li>
+<li>Task queue management.</li>
+<li>Priority management.</li>
+<li>Multithread management.</li>
+</ul>
+
+<p><strong>Hockeyapp SDK lib</strong>:</p>
+
+<ul>
+<li>Time ussage tracking.</li>
+<li>Crash report.</li>
+<li>Feedback.</li>
+</ul>
+
+<h1>
 <a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h1>
 
-<p>You have the <a href="https://github.com/r2bapps/BaseProject/blob/master/BaseProject/doc/javadoc">JavaDoc</a> files on doc/javadoc directory, 
-and <a href="https://github.com/r2bapps/BaseProject/blob/master/BaseProject/doc/uml">UML</a> diagrams on doc/uml directory.</p>
+<p>You have the <a href="BaseProject/doc/javadoc">JavaDoc</a> files on doc/javadoc directory, 
+and <a href="BaseProject/doc/uml">UML</a> diagrams on doc/uml directory.</p>
 
 <h2>
 <a name="class-diagram" class="anchor" href="#class-diagram"><span class="octicon octicon-link"></span></a>Class diagram</h2>
 
-<p><img src="https://github.com/r2bapps/BaseProject/blob/master/BaseProject/doc/uml/ClassDiagram.png?raw=true" alt="Class diagram" title="Class diagram"></p>
+<p><img src="BaseProject/doc/uml/ClassDiagram.png?raw=true" alt="Class diagram" title="Class diagram"></p>
 
 <h2>
 <a name="utilities-diagram" class="anchor" href="#utilities-diagram"><span class="octicon octicon-link"></span></a>Utilities diagram</h2>
 
-<p><img src="https://github.com/r2bapps/BaseProject/blob/master/BaseProject/doc/uml/UtilitiesDiagram.png?raw=true" alt="Utilities diagram" title="Utilities diagram"></p>
+<p><img src="BaseProject/doc/uml/UtilitiesDiagram.png?raw=true" alt="Utilities diagram" title="Utilities diagram"></p>
 
 <h2>
 <a name="test-example-diagram" class="anchor" href="#test-example-diagram"><span class="octicon octicon-link"></span></a>Test example diagram</h2>
 
-<p><img src="https://github.com/r2bapps/BaseProject/blob/master/BaseProject/doc/uml/TestingDiagram.png?raw=true" alt="Test example diagram" title="Test example diagram"></p>
+<p><img src="BaseProject/doc/uml/TestingDiagram.png?raw=true" alt="Test example diagram" title="Test example diagram"></p>
 
 <h1>
 <a name="contact" class="anchor" href="#contact"><span class="octicon octicon-link"></span></a>Contact</h1>
@@ -130,7 +194,8 @@ obtain a better performance or add more things will be gratefully accepted.</p>
 <p>If you use BaseProject code in your application you should inform R2B Apps about it ( <em>email: r2b.apps[at]gmail[dot]com</em> ) like this:</p>
 
 <blockquote>
-<p><strong>Subject:</strong> BaseProject usage notification<br><strong>Text:</strong> I use BaseProject &lt;lib_version&gt; in &lt;application_name&gt; - http://link_to_google_play.
+<p><strong>Subject:</strong> BaseProject usage notification<br>
+<strong>Text:</strong> I use BaseProject &lt;lib_version&gt; in &lt;application_name&gt; - http://link_to_google_play.
 I [allow | don't allow] to mention my app in section "Applications using BaseProject" on GitHub.</p>
 </blockquote>
 
