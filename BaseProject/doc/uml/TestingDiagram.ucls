@@ -39,13 +39,35 @@
   </class>  
   <class id="5" language="java" name="r2b.apps.base.TestFrg2" project="BaseProject" 
     file="/BaseProject/test/r2b/apps/base/TestFrg2.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="243" width="262" x="964" y="-1"/>    
+    <position height="-1" width="-1" x="806" y="477"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
+  <class id="6" language="java" name="r2b.apps.base.PersonAdapter.PersonHolder" project="BaseProject" 
+    file="/BaseProject/test/r2b/apps/base/PersonAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="356" y="433"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="r2b.apps.base.Splash" project="BaseProject" 
+    file="/BaseProject/test/r2b/apps/base/Splash.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="540" y="451"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <nesting id="8">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="6"/>  
+  </nesting>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    
