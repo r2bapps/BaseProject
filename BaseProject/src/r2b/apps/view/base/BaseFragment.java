@@ -123,8 +123,7 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 		if(Cons.ENCRYPT) {
 			exit = SecurePreferences.getSecurePreferences(
 					context,
-					name);
-			
+					name);			
 		}
 		else {
 			exit = context.getSharedPreferences(name, mode);

@@ -84,23 +84,7 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 		public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
 			
 			// XXX TRACKER
-			String item_click = BaseTracker.ACTION.grid_item_click.name();
-			if(absListView instanceof ListView) {
-				item_click = BaseTracker.ACTION.list_item_click.name();
-			}
-			
-			String label;
-			try {
-				label = getResources().getResourceEntryName(view.getId());
-			} catch(Resources.NotFoundException e) {
-				label = "no_xml_id";
-			}
-			
-			getTracker().sendEvent(
-					BaseTracker.CATEGORY.GUI.name(), 
-					item_click,
-					label,
-					position);
+			performOnItemClickTracking(adapter, view, position, id);
 			
 			itemClick(view, position, id);
 		}	
@@ -282,6 +266,33 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 		if(loadingView != null) {
 			loadingView.setVisibility(View.VISIBLE);
 		}
+	}
+	
+	/**
+	 * Tracker action performed: onItemClick.
+	 * @param adapter
+	 * @param view
+	 * @param position
+	 * @param id
+	 */
+	private void performOnItemClickTracking(AdapterView<?> adapter, View view, int position, long id) {
+		String item_click = BaseTracker.ACTION.grid_item_click.name();
+		if(absListView instanceof ListView) {
+			item_click = BaseTracker.ACTION.list_item_click.name();
+		}
+		
+		String label;
+		try {
+			label = getResources().getResourceEntryName(view.getId());
+		} catch(Resources.NotFoundException e) {
+			label = "no_xml_id";
+		}
+		
+		getTracker().sendEvent(
+				BaseTracker.CATEGORY.GUI.name(), 
+				item_click,
+				label,
+				position);		
 	}
 	
 }

@@ -97,18 +97,7 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 			if(currentClickListener != null) {
 				
 				// XXX TRACKER
-				String label;
-				try {
-					label = getResources().getResourceEntryName(v.getId());
-				} catch(Resources.NotFoundException e) {
-					label = "no_xml_id";
-				}
-				
-				getTracker().sendEvent(
-						BaseTracker.CATEGORY.GUI.name(), 
-						BaseTracker.ACTION.click.name(), 
-						label, 
-						v.getId());
+				performOnClickTracking(v);
 				
 				currentClickListener.onClick(v);
 			}
@@ -480,6 +469,25 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 		  FeedbackManager.register(this, Environment.HOCKEYAPP_APP_ID, null);
 		  FeedbackManager.showFeedbackActivity(this);
 		}
+	}
+	
+	/**
+	 * Tracker action performed: onClick.
+	 * @param v
+	 */
+	private void performOnClickTracking(View v) {
+		String label;
+		try {
+			label = getResources().getResourceEntryName(v.getId());
+		} catch(Resources.NotFoundException e) {
+			label = "no_xml_id";
+		}
+		
+		getTracker().sendEvent(
+				BaseTracker.CATEGORY.GUI.name(), 
+				BaseTracker.ACTION.click.name(), 
+				label, 
+				v.getId());
 	}
 	
 }
