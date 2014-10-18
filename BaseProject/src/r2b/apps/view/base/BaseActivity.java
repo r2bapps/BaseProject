@@ -287,25 +287,42 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 	 * Switch between fragments.
 	 * @param fragment The new fragment.
 	 * @param tag The tag to identify the fragment.
+	 * @param replace True replace, false add.
 	 * @param addToStack True to add to back stack, false otherwise.
 	 */
-	public void switchFragment(android.support.v4.app.Fragment fragment, String tag, boolean addToStack) {
+	public void switchFragment(android.support.v4.app.Fragment fragment, String tag, boolean replace, boolean addToStack) {
 		
 		if (addToStack) {
-			getSupportFragmentManager().beginTransaction()
+			if(replace) {
+				getSupportFragmentManager().beginTransaction()
+					.replace(R.id.container, fragment, tag)
+					.addToBackStack(fragment.getClass().getName())
+					.commit();
+			}
+			else {
+				getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment, tag)
 					.addToBackStack(fragment.getClass().getName())
 					.commit();
+			}
 			
 			// XXX LOGGER
 			Logger.v(this.getClass().getSimpleName(), "Add: " + tag + ", saving to stack");
 			
 		} else {
 			getSupportFragmentManager().popBackStack();
-			getSupportFragmentManager().beginTransaction()
+			if(replace) {
+				getSupportFragmentManager().beginTransaction()
+					.replace(R.id.container, fragment, tag)
+					.addToBackStack(fragment.getClass().getName())
+					.commit();				
+			}
+			else {
+				getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment, tag)
 					.addToBackStack(fragment.getClass().getName())
-					.commit();
+					.commit();	
+			}
 			
 			// XXX LOGGER
 			Logger.v(this.getClass().getSimpleName(), "Add: " + tag + ", without saving to stack");

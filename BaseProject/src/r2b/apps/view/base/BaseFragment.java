@@ -180,10 +180,11 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 	 * Switch between fragments.
 	 * @param fragment The new fragment.
 	 * @param tag The tag to identify the fragment.
+	 * @param replace True replace, false add.
 	 * @param addToStack True to add to back stack, false otherwise.
 	 */
-	protected void switchFragment(android.support.v4.app.Fragment fragment, String tag, boolean addToStack) {
-		((BaseActivity) getActivity()).switchFragment(fragment, tag, addToStack);
+	protected void switchFragment(android.support.v4.app.Fragment fragment, String tag, boolean replace, boolean addToStack) {
+		((BaseActivity) getActivity()).switchFragment(fragment, tag, replace, addToStack);
 	}
 	
 	/***

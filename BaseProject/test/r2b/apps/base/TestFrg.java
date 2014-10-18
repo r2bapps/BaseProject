@@ -76,10 +76,10 @@ public class TestFrg extends BaseFragment {
 		super.onClick(view);
 		
 		if(view.getId() == R.id.btnListFrg) {
-			switchFragment(TestFrg2.newInstance(false), "test", true);
+			switchFragment(TestFrg2.newInstance(false), "test", false, true);
 		} 
 		else if(view.getId() == R.id.btnListFrgEmpty) {
-			switchFragment(TestFrg2.newInstance(true), "test", true);
+			switchFragment(TestFrg2.newInstance(true), "test", false, true);
 		} 
 		else {
 		

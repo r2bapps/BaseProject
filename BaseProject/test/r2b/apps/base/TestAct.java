@@ -11,7 +11,7 @@ public class TestAct extends BaseActivity {
 		super.onCreate(savedInstanceState);
 
 		if (savedInstanceState == null) {
-			switchFragment(new TestFrg(), "main", true);
+			switchFragment(new TestFrg(), "main", false, true);
 		}
 
 	}	
