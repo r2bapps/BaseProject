@@ -31,6 +31,12 @@
 		<activity android:name="net.hockeyapp.android.FeedbackActivity" />
 		<!-- Needed for Hockeyapp SDK -->
 		
+        <!-- Needed for Google Play Services -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <!-- Needed for Google Play Services -->
+        		
         <activity
             android:name="r2b.apps.base.Splash"
             android:label="@string/app_name" >
@@ -43,7 +49,8 @@
         <activity
             android:name="r2b.apps.base.TestAct"
             android:label="@string/app_name" >
-        </activity>
+        </activity>       
+                
     </application>
 
 </manifest>
