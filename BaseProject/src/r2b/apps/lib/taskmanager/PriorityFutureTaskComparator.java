@@ -1,9 +1,9 @@
 /*
- * Cons
+ * PriorityFutureTaskComparator
  * 
- * 0.3.1
+ * 0.2
  * 
- * 2014/05/16
+ * 2014/06/21
  * 
  * (The MIT License)
  * 
@@ -30,32 +30,40 @@
  * 
  */
 
-package r2b.apps.utils;
+package r2b.apps.lib.taskmanager;
 
+import java.util.Comparator;
 
 /**
- * Constants class.
+ * Compares the priority of PriorityFutureTask<V> classes.
+ * It is useful for priority collections.
  */
-public final class Cons {
-	
-	public static boolean DEBUG;
+class PriorityFutureTaskComparator implements Comparator<Runnable> {
 
-	public static boolean FAKE_DATA;
-	
-	public static boolean ENCRYPT;
-	
-	public static boolean TRACKER;
-	
-	public static String DEVICE_ID;
-	
-	public static boolean HOCKEYAPP;
-	
-	public static final class DB {
-		public static String DATABASE_NAME;
-		public static int DATABASE_VERSION;
-		public static boolean CLEAR_DB_ON_START;
+	/* (non-Javadoc)
+	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+	 */
+	@Override
+	public int compare(Runnable lhs, Runnable rhs)  {
+		
+		if (lhs == null) {
+			throw new IllegalArgumentException("lhs argument is null.");
+		}
+		
+		if (rhs == null) {
+			throw new IllegalArgumentException("rhs argument is null.");
+		}
+		
+		if ( !(lhs instanceof PriorityFutureTask<?>) ) {
+			throw new ClassCastException("lhs argument must be PriorityFutureTask<?> class.");
+		}
+		
+		if ( !(rhs instanceof PriorityFutureTask<?>) ) {
+			throw new ClassCastException("rhs argument must be PriorityFutureTask<?> class.");
+		}
+		
+		return Integer.valueOf(((PriorityFutureTask<?>)lhs).getPriority()).
+				compareTo(Integer.valueOf(((PriorityFutureTask<?>)rhs).getPriority()));
 	}
-	
-	
 
 }

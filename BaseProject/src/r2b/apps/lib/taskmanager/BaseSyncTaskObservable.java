@@ -1,9 +1,9 @@
 /*
- * Cons
+ * BaseSyncTaskObservable
  * 
- * 0.3.1
+ * 0.2
  * 
- * 2014/05/16
+ * 2014/06/21
  * 
  * (The MIT License)
  * 
@@ -30,32 +30,47 @@
  * 
  */
 
-package r2b.apps.utils;
+package r2b.apps.lib.taskmanager;
 
+import java.util.Observable;
 
 /**
- * Constants class.
+ * 
+ * Aggregates a BaseSyncTask<V> on an observable to have observable BaseSyncTasks.
+ *
+ * @param <V> Void or any other object.
  */
-public final class Cons {
-	
-	public static boolean DEBUG;
+class BaseSyncTaskObservable<V> extends Observable {
 
-	public static boolean FAKE_DATA;
+	/**
+	 * The observable task.
+	 */
+	private BaseSyncTask<V> task;
 	
-	public static boolean ENCRYPT;
-	
-	public static boolean TRACKER;
-	
-	public static String DEVICE_ID;
-	
-	public static boolean HOCKEYAPP;
-	
-	public static final class DB {
-		public static String DATABASE_NAME;
-		public static int DATABASE_VERSION;
-		public static boolean CLEAR_DB_ON_START;
+	/**
+	 * Builder.
+	 * @param task The observable task.
+	 */
+	public BaseSyncTaskObservable(final BaseSyncTask<V> task) {
+		super();
+		this.task = task;
 	}
-	
-	
+
+	/* (non-Javadoc)
+	 * @see java.util.Observable#setChanged()
+	 */
+	@Override
+	protected void setChanged() {
+		super.setChanged();
+	}
+
+	/**
+	 * Get the task.
+	 * @return The task.
+	 */
+	public BaseSyncTask<V> getTask() {
+		return task;
+	}
 
 }
+

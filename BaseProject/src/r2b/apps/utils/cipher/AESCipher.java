@@ -30,12 +30,13 @@
  * 
  */
 
-package r2b.apps.utils;
+package r2b.apps.utils.cipher;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.provider.Settings;
 import android.util.Base64;
+
 
 
 
@@ -45,6 +46,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import r2b.apps.utils.logger.Logger;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -79,6 +82,8 @@ public class AESCipher {
     	
     	// The fixes need to be applied via apply() before any use of Java Cryptography Architecture primitives.
     	PRNGFixes.apply();
+    	// XXX LOGGER
+    	Logger.i(AESCipher.class.getSimpleName(), "PRNGFixes applied");
     	
         // 64 bit hex string
         final String id = Settings.Secure
@@ -92,6 +97,9 @@ public class AESCipher {
         key = key.substring(0, 32);
         
         initialized = true;
+        
+        // XXX LOGGER
+        Logger.i(AESCipher.class.getSimpleName(), "Initialized with key: " + key);
         
     }
 
@@ -134,6 +142,9 @@ public class AESCipher {
         		InvalidKeyException e) {
             Logger.e(AESCipher.class.getSimpleName(), e.toString());
         }
+        
+        // XXX LOGGER
+        Logger.v(AESCipher.class.getSimpleName(), "Encrypt: " + plainText + " to: " + exit);
 
         return exit;
     }
@@ -178,6 +189,9 @@ public class AESCipher {
             Logger.e(AESCipher.class.getSimpleName(), e.toString());
         }
 
+        // XXX LOGGER
+        Logger.v(AESCipher.class.getSimpleName(), "Decrypt: " + base64Text + " to: " + exit);
+        
         return exit;
 
     }

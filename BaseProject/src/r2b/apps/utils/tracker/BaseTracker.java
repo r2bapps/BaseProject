@@ -29,9 +29,11 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
-package r2b.apps.utils;
+package r2b.apps.utils.tracker;
 
 import r2b.apps.R;
+import r2b.apps.utils.Cons;
+import r2b.apps.utils.logger.Logger;
 import android.content.Context;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -47,6 +49,20 @@ import com.google.android.gms.analytics.Tracker;
 public class BaseTracker implements ITracker {
 	
 	/**
+	 * Categories.
+	 */
+	public static enum CATEGORY {
+		GUI
+	};
+	
+	/**
+	 * Actions.
+	 */
+	public static enum ACTION {
+		click, button_click, list_item_click, grid_item_click
+	};
+	
+	/**
 	 * Google analytics tracker.
 	 */
 	private Tracker tracker;
@@ -59,6 +75,8 @@ public class BaseTracker implements ITracker {
 		if(Cons.TRACKER) {
 			tracker = GoogleAnalytics.getInstance(context.getApplicationContext())
 					.newTracker(R.xml.analytics_tracker);
+
+			// XXX LOGGER
 			Logger.i(this.getClass().getSimpleName(), "Analytics tracker initialized.");
 		}
 	}
@@ -69,11 +87,14 @@ public class BaseTracker implements ITracker {
 	 */
 	public void sendScreenName(String screenName) {
 		if(tracker == null) {
+			// XXX LOGGER
 			Logger.v(this.getClass().getSimpleName(), screenName);
 		}
 		else {
 			tracker.setScreenName(screenName);
 			tracker.send(new HitBuilders.AppViewBuilder().build());
+			// XXX LOGGER
+			Logger.v(this.getClass().getSimpleName(), "Sending screen name: " + screenName);
 		}
 	}
 	
@@ -86,6 +107,7 @@ public class BaseTracker implements ITracker {
 	 */
 	public void sendEvent(String category, String action, String label, long value) {
 		if(tracker == null) {
+			// XXX LOGGER
 			Logger.v(this.getClass().getSimpleName(), 
 					"category : " + category + 
 					", action: " + action + 
@@ -98,6 +120,13 @@ public class BaseTracker implements ITracker {
 				.setAction(action)
 				.setLabel(label)
 				.setValue(value).build());
+			
+			// XXX LOGGER
+			Logger.v(this.getClass().getSimpleName(), "Sending event, " + 
+					"category : " + category + 
+					", action: " + action + 
+					", label: " + label + 
+					", value: " + String.valueOf(value));
 		}
 	}
 	

@@ -1,9 +1,9 @@
 /*
- * Cons
+ * BaseSyncTaskObserver
  * 
- * 0.3.1
+ * 0.2
  * 
- * 2014/05/16
+ * 2014/06/21
  * 
  * (The MIT License)
  * 
@@ -30,32 +30,36 @@
  * 
  */
 
-package r2b.apps.utils;
+package r2b.apps.lib.taskmanager;
 
+import java.util.Observable;
+import java.util.Observer;
 
 /**
- * Constants class.
+ * Wraps an Observer to have a more suitable update interface.
+ * 
+ * WARNING: The notify is made in the same thread as the task is running, 
+ * you can not make direct gui calls on the "completed" method.
+ *
+ * @param <V> Void or any other object.
  */
-public final class Cons {
-	
-	public static boolean DEBUG;
+public abstract class BaseSyncTaskObserver<V> implements Observer {
 
-	public static boolean FAKE_DATA;
-	
-	public static boolean ENCRYPT;
-	
-	public static boolean TRACKER;
-	
-	public static String DEVICE_ID;
-	
-	public static boolean HOCKEYAPP;
-	
-	public static final class DB {
-		public static String DATABASE_NAME;
-		public static int DATABASE_VERSION;
-		public static boolean CLEAR_DB_ON_START;
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public final void update(Observable observable, Object data) {
+		completed(((BaseSyncTaskObservable<V>) observable).getTask(), (V) data);
 	}
-	
-	
 
+	/**
+	 * Notify when a task has finished.
+	 * @param task The completed task.
+	 * @param data The task retrieved data. 
+	 */
+	public abstract void completed(BaseSyncTask<V> task, V data);
+	
 }
+

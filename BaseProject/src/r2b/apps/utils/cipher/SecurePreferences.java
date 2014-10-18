@@ -1,7 +1,7 @@
 /*
  * SecurePreferences
  * 
- * 0.1
+ * 0.1.1
  * 
  * 2014/06/26
  * 
@@ -30,13 +30,15 @@
  * 
  */
 
-package r2b.apps.utils;
+package r2b.apps.utils.cipher;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import r2b.apps.utils.logger.Logger;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -86,31 +88,34 @@ public class SecurePreferences implements SharedPreferences {
 
 		@Override
 		public Editor putBoolean(String key, boolean value) {
-			e.putString(AESCipher.encrypt(key), AESCipher.encrypt(Boolean.toString(value)));
-			return this;
+			return putString(key, Boolean.toString(value));
 		}
 
 		@Override
 		public Editor putFloat(String key, float value) {
-			e.putString(AESCipher.encrypt(key), AESCipher.encrypt(Float.toString(value)));
-			return this;
+			return putString(key, Float.toString(value));
 		}
 
 		@Override
 		public Editor putInt(String key, int value) {
-			e.putString(AESCipher.encrypt(key), AESCipher.encrypt(Integer.toString(value)));
-			return this;
+			return putString(key, Integer.toString(value));
 		}
 
 		@Override
 		public Editor putLong(String key, long value) {
-			e.putString(AESCipher.encrypt(key), AESCipher.encrypt(Long.toString(value)));
-			return this;
+			return putString(key, Long.toString(value));
 		}
 
 		@Override
 		public Editor putString(String key, String value) {
-			e.putString(AESCipher.encrypt(key), AESCipher.encrypt(value));
+			final String encryptKey = AESCipher.encrypt(key);
+			final String encryptValue = AESCipher.encrypt(value);
+			e.putString(encryptKey, encryptValue);
+			
+			// XXX LOGGER
+			Logger.v(this.getClass().getSimpleName(), 
+					"Saving string (" + key + "," + value + ") to (" + encryptKey + ", " + encryptValue + ")");
+			
 			return this;
 		}
 
@@ -123,7 +128,14 @@ public class SecurePreferences implements SharedPreferences {
 				encryptedValues.add(AESCipher.encrypt(value));
 			}
 			
-			e.putStringSet(AESCipher.encrypt(key), encryptedValues);
+			final String encryptKey = AESCipher.encrypt(key);
+			
+			e.putStringSet(encryptKey, encryptedValues);
+			
+			// XXX LOGGER
+			Logger.v(this.getClass().getSimpleName(), 
+					"Saving string set (" + key + "," + values.toString() + ") "
+							+ "to (" + encryptKey + ", " + encryptedValues.toString() + ")");
 			
 			return this;
 		}
@@ -138,6 +150,9 @@ public class SecurePreferences implements SharedPreferences {
 		
 	private SecurePreferences (Context context, String name) {
 		prefs = context.getApplicationContext().getSharedPreferences(name, Context.MODE_PRIVATE);
+		
+		// XXX LOGGER
+		Logger.i(this.getClass().getSimpleName(), "Init on private mode.");
 	}
 	
 	/**
@@ -297,6 +312,11 @@ public class SecurePreferences implements SharedPreferences {
 	public void registerOnSharedPreferenceChangeListener(
 			OnSharedPreferenceChangeListener listener) {
 		prefs.registerOnSharedPreferenceChangeListener(listener);
+		
+		// XXX LOGGER
+		Logger.v(this.getClass().getSimpleName(), 
+				"Register preferences change listener: " 
+						+ listener == null ? "null" : listener.getClass().getSimpleName());
 	}
 
 	/* (non-Javadoc)
@@ -306,6 +326,11 @@ public class SecurePreferences implements SharedPreferences {
 	public void unregisterOnSharedPreferenceChangeListener(
 			OnSharedPreferenceChangeListener listener) {
 		prefs.unregisterOnSharedPreferenceChangeListener(listener);
+		
+		// XXX LOGGER
+		Logger.v(this.getClass().getSimpleName(), 
+				"Unregister preferences change listener: " 
+						+ listener == null ? "null" : listener.getClass().getSimpleName());
 	}
 
 }

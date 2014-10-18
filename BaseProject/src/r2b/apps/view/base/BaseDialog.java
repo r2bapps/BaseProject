@@ -1,7 +1,7 @@
 /*
  * BaseDialog
  * 
- * 0.2
+ * 0.3
  * 
  * 2014/05/16
  * 
@@ -30,7 +30,7 @@
  * 
  */
 
-package r2b.apps.base;
+package r2b.apps.view.base;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,12 +40,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 
 /**
  * A fragment that handles a dialog that can show a title, up to three 
- * buttons, a traditional single choice list, a list of selectable items 
+ * buttons, a traditional list, a list of selectable items 
  * (single with radio or multiple choice with checkbox), or a custom layout.
  */
 public class BaseDialog extends android.support.v4.app.DialogFragment {
@@ -61,7 +60,9 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
 	private static final String NEUTRAL_BUTTON_TEXT_RES = "NEUTRAL_BUTTON_TEXT_RES";
 	private static final String LIST_ARRAY_RES = "LIST_ARRAY_RES";
 	private static final String SINGLE_CHOICE_LIST_ARRAY_RES = "SINGLE_CHOICE_LIST_ARRAY_RES";
+	private static final String SINGLE_CHOICE_DEFAULT_SELECTED = "SINGLE_CHOICE_DEFAULT_SELECTED";
 	private static final String MULTI_CHOICE_LIST_ARRAY_RES = "MULTI_CHOICE_LIST_ARRAY_RES";
+	private static final String MULTI_CHOICE_DEFAULT_SELECTED = "MULTI_CHOICE_DEFAULT_SELECTED";
 	
 	private int iconRes;
 	private String title;
@@ -74,7 +75,9 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
 	private int neutralButonTextRes;
 	private int listArrayRes;
 	private int singleChoiceListArrayRes;
+	private int singleChoiceDefaultSelected;
 	private int multiChoiceListArrayRes;
+	private boolean[] multiChoiceDefaultSelected;	
 	
 	/**
 	 * The interface to deliver action events
@@ -89,11 +92,12 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
      *
      */
     public interface BaseDialogListener {
-        public void onDialogPositiveClick(DialogFragment dialog);
-        public void onDialogNegativeClick(DialogFragment dialog);
-        public void onDialogNeutralClick(DialogFragment dialog);
-		public void onItemClick(DialogFragment dialog, int which);
-		public void onSelectedItems(DialogFragment dialog, List<Integer> selectedItems);
+        public void onDialogPositiveClick(BaseDialog dialog);
+        public void onDialogNegativeClick(BaseDialog dialog);
+        public void onDialogNeutralClick(BaseDialog dialog);
+		public void onItemClick(BaseDialog dialog, int which);
+		public void onSelectedItems(BaseDialog dialog, List<Integer> selectedItems);
+		
 		public void onCancel(DialogInterface dialog);
 		public void onDismiss(DialogInterface dialog);
     }
@@ -196,82 +200,12 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
      * @param positiveButonTextRes 0 disabled
      * @param negativeButonTextRes 0 disabled
      * @param singleChoiceListArrayRes 0 disabled
-     * @return BaseDialog
-     */
-	public static BaseDialog newInstanceSingleChoice(int iconRes, String title, String text,
-			boolean isCancelable, int positiveButonTextRes, 
-			int negativeButonTextRes, int singleChoiceListArrayRes) {
-		
-		BaseDialog f = new BaseDialog();
-		
-		Bundle args = new Bundle();
-		args.putInt(ICON_RES_KEY, iconRes);
-		args.putString(TITLE_KEY, title);
-		args.putString(TEXT_KEY, text);		
-		args.putBoolean(IS_CANCELABLE_KEY, isCancelable);
-		args.putInt(POSITIVE_BUTTON_TEXT_RES, positiveButonTextRes);
-		args.putInt(NEGATIVE_BUTTON_TEXT_RES, negativeButonTextRes);
-		args.putInt(SINGLE_CHOICE_LIST_ARRAY_RES, singleChoiceListArrayRes);
-		
-		f.setArguments(args);
-
-		return f;
-	}
-	
-    /**
-     * Set dialog style and functionality.
-     * 
-     * @param iconRes 0 disabled
-     * @param title null disabled
-     * @param text null disabled
-     * @param isCancelable By default true
-     * @param positiveButonTextRes 0 disabled
-     * @param negativeButonTextRes 0 disabled
-     * @param multiChoiceListArrayRes 0 disabled
-     * @return BaseDialog
-     */
-	public static BaseDialog newInstanceMultiChoice(int iconRes, String title, String text,
-			boolean isCancelable, int positiveButonTextRes, 
-			int negativeButonTextRes, int multiChoiceListArrayRes) {
-		
-		BaseDialog f = new BaseDialog();
-		
-		Bundle args = new Bundle();
-		args.putInt(ICON_RES_KEY, iconRes);
-		args.putString(TITLE_KEY, title);
-		args.putString(TEXT_KEY, text);		
-		args.putBoolean(IS_CANCELABLE_KEY, isCancelable);
-		args.putInt(POSITIVE_BUTTON_TEXT_RES, positiveButonTextRes);
-		args.putInt(NEGATIVE_BUTTON_TEXT_RES, negativeButonTextRes);
-		args.putInt(MULTI_CHOICE_LIST_ARRAY_RES, multiChoiceListArrayRes);
-		
-		f.setArguments(args);
-
-		return f;
-	}
-	
-    /**
-     * Set dialog style and functionality.
-     * 
-     * @param iconRes 0 disabled
-     * @param title null disabled
-     * @param text null disabled
-     * @param isCancelable By default true
-     * @param customTitleViewRes 0 disabled
-     * @param viewRes 0 disabled
-     * @param positiveButonTextRes 0 disabled
-     * @param negativeButonTextRes 0 disabled
-     * @param neutralButonTextRes 0 disabled
-     * @param listArrayRes 0 disabled
-     * @param singleChoiceListArrayRes 0 disabled
-     * @param multiChoiceListArrayRes 0 disabled
+     * @param singleChoiceDefaultSelected -1 no selected
      * @return BaseDialog
      */
 	public static BaseDialog newInstance(int iconRes, String title, String text,
-			boolean isCancelable, int customTitleViewRes, int viewRes,
-			int positiveButonTextRes, int negativeButonTextRes,
-			int neutralButonTextRes, int listArrayRes, 
-			int singleChoiceListArrayRes, int multiChoiceListArrayRes) {
+			boolean isCancelable, int positiveButonTextRes, int negativeButonTextRes, 
+			int singleChoiceListArrayRes, int singleChoiceDefaultSelected) {
 		
 		BaseDialog f = new BaseDialog();
 		
@@ -280,19 +214,50 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
 		args.putString(TITLE_KEY, title);
 		args.putString(TEXT_KEY, text);		
 		args.putBoolean(IS_CANCELABLE_KEY, isCancelable);
-		args.putInt(CUSTOM_TITLE_VIEW_RES_KEY, customTitleViewRes);
-		args.putInt(VIEW_RES_KEY, viewRes);
 		args.putInt(POSITIVE_BUTTON_TEXT_RES, positiveButonTextRes);
 		args.putInt(NEGATIVE_BUTTON_TEXT_RES, negativeButonTextRes);
-		args.putInt(NEUTRAL_BUTTON_TEXT_RES, neutralButonTextRes);
-		args.putInt(LIST_ARRAY_RES, listArrayRes);
 		args.putInt(SINGLE_CHOICE_LIST_ARRAY_RES, singleChoiceListArrayRes);
+		args.putInt(SINGLE_CHOICE_DEFAULT_SELECTED, singleChoiceDefaultSelected);
+		
+		f.setArguments(args);
+
+		return f;
+	}	
+	
+    /**
+     * Set dialog style and functionality.
+     * 
+     * @param iconRes 0 disabled
+     * @param title null disabled
+     * @param text null disabled
+     * @param isCancelable By default true
+     * @param positiveButonTextRes 0 disabled
+     * @param negativeButonTextRes 0 disabled
+     * @param multiChoiceListArrayRes 0 disabled
+     * @param multiChoiceDefaultSelected null no selected
+     * @return BaseDialog
+     */
+	public static BaseDialog newInstance(int iconRes, String title, String text,
+			boolean isCancelable, int positiveButonTextRes, int negativeButonTextRes, 
+			int multiChoiceListArrayRes, boolean[] multiChoiceDefaultSelected) {
+		
+		BaseDialog f = new BaseDialog();
+		
+		Bundle args = new Bundle();
+		args.putInt(ICON_RES_KEY, iconRes);
+		args.putString(TITLE_KEY, title);
+		args.putString(TEXT_KEY, text);		
+		args.putBoolean(IS_CANCELABLE_KEY, isCancelable);
+		args.putInt(POSITIVE_BUTTON_TEXT_RES, positiveButonTextRes);
+		args.putInt(NEGATIVE_BUTTON_TEXT_RES, negativeButonTextRes);
 		args.putInt(MULTI_CHOICE_LIST_ARRAY_RES, multiChoiceListArrayRes);
+		args.putBooleanArray(MULTI_CHOICE_DEFAULT_SELECTED, multiChoiceDefaultSelected);
 		
 		f.setArguments(args);
 
 		return f;
 	}
+	
 	
 	@Override
     public void onAttach(Activity activity) {
@@ -312,8 +277,8 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
 	
 	@Override
 	public void onDetach() {
-		dialogListener = null;
 		super.onDetach();
+		dialogListener = null;
 	}
 
 	@Override
@@ -330,7 +295,9 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
 		neutralButonTextRes = getArguments().getInt(NEUTRAL_BUTTON_TEXT_RES, 0);
 		listArrayRes = getArguments().getInt(LIST_ARRAY_RES, 0);
 		singleChoiceListArrayRes = getArguments().getInt(SINGLE_CHOICE_LIST_ARRAY_RES, 0);
+		singleChoiceDefaultSelected = getArguments().getInt(SINGLE_CHOICE_DEFAULT_SELECTED, -1);
 		multiChoiceListArrayRes = getArguments().getInt(MULTI_CHOICE_LIST_ARRAY_RES, 0);
+		multiChoiceDefaultSelected = getArguments().getBooleanArray(MULTI_CHOICE_DEFAULT_SELECTED);
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		final ArrayList<Integer> selectedItems = new ArrayList<Integer>();
@@ -415,7 +382,8 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
 		if(singleChoiceListArrayRes != 0) {			
 			// Specify the list array, the items to be selected by default (-1 for none),
 			// and the listener through which to receive callbacks when item is selected
-			builder.setSingleChoiceItems(singleChoiceListArrayRes, -1, new DialogInterface.OnClickListener() {				
+			builder.setSingleChoiceItems(singleChoiceListArrayRes, singleChoiceDefaultSelected, 
+					new DialogInterface.OnClickListener() {				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					// The 'which' argument contains the index position of the selected item
@@ -427,7 +395,8 @@ public class BaseDialog extends android.support.v4.app.DialogFragment {
 		if(multiChoiceListArrayRes != 0) {			
 			// Specify the list array, the items to be selected by default (null for none),
 			// and the listener through which to receive callbacks when items are selected
-			builder.setMultiChoiceItems(multiChoiceListArrayRes, null, new DialogInterface.OnMultiChoiceClickListener() {
+			builder.setMultiChoiceItems(multiChoiceListArrayRes, multiChoiceDefaultSelected, 
+					new DialogInterface.OnMultiChoiceClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 					if (isChecked) {

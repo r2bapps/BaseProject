@@ -1,9 +1,9 @@
 /*
- * Cons
+ * PriorityFutureTask
  * 
- * 0.3.1
+ * 0.2
  * 
- * 2014/05/16
+ * 2014/06/21
  * 
  * (The MIT License)
  * 
@@ -30,32 +30,59 @@
  * 
  */
 
-package r2b.apps.utils;
+package r2b.apps.lib.taskmanager;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 
 /**
- * Constants class.
+ * Wraps a priority attribute on a FutureTask<V>.
+ * @param <V> Void or any other object.
  */
-public final class Cons {
-	
-	public static boolean DEBUG;
+class PriorityFutureTask<V> extends FutureTask<V> {
 
-	public static boolean FAKE_DATA;
+	/**
+	 * The future task priority.
+	 */
+	private int priority;
 	
-	public static boolean ENCRYPT;
-	
-	public static boolean TRACKER;
-	
-	public static String DEVICE_ID;
-	
-	public static boolean HOCKEYAPP;
-	
-	public static final class DB {
-		public static String DATABASE_NAME;
-		public static int DATABASE_VERSION;
-		public static boolean CLEAR_DB_ON_START;
+	/**
+	 * Builder.
+	 * @param runnable The runnable to call.
+	 * @param result The retrieved result.
+	 */
+	public PriorityFutureTask(Runnable runnable, V result) {
+		super(runnable, result);
+	}
+
+	/**
+	 * Builder.
+	 * @param callable The callable to call.
+	 */
+	public PriorityFutureTask(Callable<V> callable) {
+		super(callable);
 	}
 	
-	
+	/**
+	 * Gets the future task priority.
+	 * @return The task priority.
+	 */
+	public final int getPriority() {
+		return priority;
+	}
+
+	/**
+	 * Sets the future task priority.
+	 * @param priority The task priority, a positive value..
+	 */
+	public void setPriority(int priority) {
+		
+		if (priority < 0) {
+			throw new IllegalArgumentException("priority argument is negative.");
+		}
+		
+		this.priority = priority;
+	}
 
 }
+

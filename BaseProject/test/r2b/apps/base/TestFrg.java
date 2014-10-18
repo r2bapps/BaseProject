@@ -3,14 +3,16 @@ package r2b.apps.base;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import junit.framework.Assert;
 import r2b.apps.R;
-import r2b.apps.base.BaseDialog.BaseDialogListener;
-import r2b.apps.utils.AESCipher;
+import r2b.apps.utils.cipher.AESCipher;
+import r2b.apps.view.base.BaseDialog;
+import r2b.apps.view.base.BaseDialog.BaseDialogListener;
+import r2b.apps.view.base.BaseFragment;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,44 +33,39 @@ public class TestFrg extends BaseFragment {
 	private final BaseDialogListener dialogListener = new BaseDialogListener() {
 
 		@Override
-		public void onDialogPositiveClick(DialogFragment dialog) {
-			// TODO Auto-generated method stub
+		public void onDialogPositiveClick(BaseDialog dialog) {
+
 			
 		}
 
 		@Override
-		public void onDialogNegativeClick(DialogFragment dialog) {
-			// TODO Auto-generated method stub
+		public void onDialogNegativeClick(BaseDialog dialog) {
 			
 		}
 
 		@Override
-		public void onDialogNeutralClick(DialogFragment dialog) {
-			// TODO Auto-generated method stub
+		public void onDialogNeutralClick(BaseDialog dialog) {
 			
 		}
 
 		@Override
-		public void onItemClick(DialogFragment dialog, int which) {
+		public void onItemClick(BaseDialog dialog, int which) {
 			showToast("Item clicked: " + String.valueOf(which));
 		}
 
 		@Override
-		public void onSelectedItems(DialogFragment dialog,
+		public void onSelectedItems(BaseDialog dialog,
 				List<Integer> selectedItems) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void onCancel(DialogInterface dialog) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void onDismiss(DialogInterface dialog) {
-			// TODO Auto-generated method stub
 			
 		}
 		
@@ -79,10 +76,10 @@ public class TestFrg extends BaseFragment {
 		super.onClick(view);
 		
 		if(view.getId() == R.id.btnListFrg) {
-			switchFragment(TestFrg2.newInstance(false), "test", true);
+			switchFragment(TestFrg2.newInstance(false), "test", false, true);
 		} 
 		else if(view.getId() == R.id.btnListFrgEmpty) {
-			switchFragment(TestFrg2.newInstance(true), "test", true);
+			switchFragment(TestFrg2.newInstance(true), "test", false, true);
 		} 
 		else {
 		
@@ -93,12 +90,10 @@ public class TestFrg extends BaseFragment {
 					"Title", 
 					"Message", 
 					true, 
-					0, 
-					0, 
 					android.R.string.ok, 
-					android.R.string.cancel, 
-					android.R.string.unknownName, 
-					android.R.array.postalAddressTypes, 0, 0),
+					android.R.string.cancel,  
+					android.R.array.postalAddressTypes, 
+					2),
 					dialogListener);
 			
 			if(etIn.getText().toString() != null && !"".equals(etIn.getText().toString())) {
@@ -144,26 +139,26 @@ public class TestFrg extends BaseFragment {
 		showToast("Init fragment, current time:" + String.valueOf(currentTime));
 
 		getFragmentPreferences().edit().putString("test", "test value").commit();
-		Assert.assertEquals("test value", getFragmentPreferences().getString("test", "eror"));
+		Assert.assertEquals("test value", getFragmentPreferences().getString("test", "error"));
 		
-		getFragmentPreferences().edit().putInt("test", 5).commit();
-		Assert.assertEquals(5, getFragmentPreferences().getInt("test", 0));
+		getFragmentPreferences().edit().putInt("test1", 5).commit();
+		Assert.assertEquals(5, getFragmentPreferences().getInt("test1", 0));
 		
-		getFragmentPreferences().edit().putLong("test", 5l).commit();
-		Assert.assertEquals(5l, getFragmentPreferences().getLong("test", 0l));
+		getFragmentPreferences().edit().putLong("test2", 5l).commit();
+		Assert.assertEquals(5l, getFragmentPreferences().getLong("test2", 0l));
 		
-		getFragmentPreferences().edit().putFloat("test", 5.5f).commit();
-		Assert.assertEquals(5.5f, getFragmentPreferences().getFloat("test", 0.0f));
+		getFragmentPreferences().edit().putFloat("test3", 5.5f).commit();
+		Assert.assertEquals(5.5f, getFragmentPreferences().getFloat("test3", 0.0f));
 		
-		getFragmentPreferences().edit().putBoolean("test", true).commit();
-		Assert.assertEquals(true, getFragmentPreferences().getBoolean("test", false));
+		getFragmentPreferences().edit().putBoolean("test4", true).commit();
+		Assert.assertEquals(true, getFragmentPreferences().getBoolean("test4", false));
 		
 		Set<String> set = new HashSet<String>(2);
 		set.add("hello");
 		set.add("world");
-		getFragmentPreferences().edit().putStringSet("test", set).commit();
+		getFragmentPreferences().edit().putStringSet("test5", set).commit();
 		
-		set = getFragmentPreferences().getStringSet("test", null);
+		set = getFragmentPreferences().getStringSet("test5", null);
 		Assert.assertNotNull(set);
 		Assert.assertEquals("hello", set.toArray()[0]);
 		Assert.assertEquals("world", set.toArray()[1]);

@@ -1,9 +1,9 @@
 /*
- * Cons
+ * BaseAsyncTask
  * 
- * 0.3.1
+ * 0.2
  * 
- * 2014/05/16
+ * 2014/06/21
  * 
  * (The MIT License)
  * 
@@ -30,32 +30,41 @@
  * 
  */
 
-package r2b.apps.utils;
-
+package r2b.apps.lib.taskmanager;
 
 /**
- * Constants class.
+ * This class is useful for packaging any task implementation and 
+ * run on a task pool with multithreading and priority support.
+ * 
+ * Run a task with an asynchronous functionality. 
  */
-public final class Cons {
+public abstract class BaseAsyncTask extends Task<Void> {
 	
-	public static boolean DEBUG;
-
-	public static boolean FAKE_DATA;
-	
-	public static boolean ENCRYPT;
-	
-	public static boolean TRACKER;
-	
-	public static String DEVICE_ID;
-	
-	public static boolean HOCKEYAPP;
-	
-	public static final class DB {
-		public static String DATABASE_NAME;
-		public static int DATABASE_VERSION;
-		public static boolean CLEAR_DB_ON_START;
+	/**
+	 * Builder.
+	 * @param id The task identifier.
+	 * @param priority The task priority.
+	 */
+	public BaseAsyncTask(long id, PRIORITY priority) {
+		super(id);		
+		init(this, priority);
 	}
 	
+	/**
+	 * Builder, with the task default priority and identifier value zero.
+	 */
+	public BaseAsyncTask() {
+		super(0);		
+		init(this, PRIORITY.DEFAULT);
+	}
 	
-
+	/* (non-Javadoc)
+	 * @see r2b.apps.lib.taskmanager.Task#call()
+	 */
+	@Override
+	public final Void call() throws Exception {
+		return super.call();
+	}
+	
 }
+

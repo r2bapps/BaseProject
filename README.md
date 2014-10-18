@@ -21,6 +21,7 @@ to this views, ...
 * Shared preferences only for activity and encrypted or not.
 * A switch fragment method that runs correctly on back and retry again.
 * A clear back stack method.
+* Click event tracked.
 
 **Base Fragment**:
 * Activity methods façade: You do not need to call ((MyActivity) getActivity())... methods.
@@ -37,9 +38,12 @@ checkbox), or a custom layout.
 
 **Base AbsList Fragment**: 
 * Parametrized with templates and capable to show list or grid views.
+* Interchangeable empty, error and loading views.
+* List item selection tracked.
 
 **Base AbsList Adapter**:
 * Adapter to the AbsList.
+* Follow the ViewHolder pattern.
 
 **Base Tracker**:
 * Wraps a tracker like Google Analytics. If you do not need tracking you only need to 
@@ -59,7 +63,7 @@ disable the feature and all tracking goes to Logger, this one can disable this l
 * A simple way to load and launch splash and main activity.
 
 **Utility classes**:
-* File, Image, String, Validation, ...
+* File, Image, String, Validation, Zip, Location, ...
 
 
 **DAOLite module with**:
@@ -67,6 +71,13 @@ disable the feature and all tracking goes to Logger, this one can disable this l
 * Bulk CUD operations inside transactions.
 * Delete on cascade support.
 * Referential integrity check support.
+
+
+**TaskManager lib with**:
+* Sync (running internally asynchronously) and Async tasks.
+* Task queue management.
+* Priority management.
+* Multithread management.
 
 
 **Hockeyapp SDK lib**:

@@ -1,9 +1,9 @@
 /*
- * Cons
+ * PRIORITY
  * 
- * 0.3.1
+ * 0.2
  * 
- * 2014/05/16
+ * 2014/06/21
  * 
  * (The MIT License)
  * 
@@ -30,32 +30,20 @@
  * 
  */
 
-package r2b.apps.utils;
+package r2b.apps.lib.taskmanager;
 
+public enum PRIORITY {
 
-/**
- * Constants class.
- */
-public final class Cons {
+	CRITICAL(0), VERY_HIGH(20), HIGH(40), DEFAULT(60), LOW(80), VERY_LOW(100);
 	
-	public static boolean DEBUG;
-
-	public static boolean FAKE_DATA;
+	private int priority;
 	
-	public static boolean ENCRYPT;
-	
-	public static boolean TRACKER;
-	
-	public static String DEVICE_ID;
-	
-	public static boolean HOCKEYAPP;
-	
-	public static final class DB {
-		public static String DATABASE_NAME;
-		public static int DATABASE_VERSION;
-		public static boolean CLEAR_DB_ON_START;
+	PRIORITY(int priority) {
+		this.priority = priority;
 	}
 	
+	public int getValue() {
+		return priority;
+	}
 	
-
 }

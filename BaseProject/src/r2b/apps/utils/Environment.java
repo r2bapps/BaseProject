@@ -1,9 +1,9 @@
 /*
- * Cons
+ * Environment
  * 
- * 0.3.1
+ * 0.1.1
  * 
- * 2014/05/16
+ * 2014/07/18
  * 
  * (The MIT License)
  * 
@@ -34,28 +34,12 @@ package r2b.apps.utils;
 
 
 /**
- * Constants class.
+ * Environment class.
  */
-public final class Cons {
+public final class Environment {
 	
-	public static boolean DEBUG;
+	public static String LOGGER_REMOTE_URL;
 
-	public static boolean FAKE_DATA;
+	public static String HOCKEYAPP_APP_ID;
 	
-	public static boolean ENCRYPT;
-	
-	public static boolean TRACKER;
-	
-	public static String DEVICE_ID;
-	
-	public static boolean HOCKEYAPP;
-	
-	public static final class DB {
-		public static String DATABASE_NAME;
-		public static int DATABASE_VERSION;
-		public static boolean CLEAR_DB_ON_START;
-	}
-	
-	
-
 }

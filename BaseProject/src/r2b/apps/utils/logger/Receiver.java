@@ -1,9 +1,9 @@
 /*
- * Logger
+ * Receiver
  * 
- * 0.1.1
+ * 0.1
  * 
- * 2014/05/16
+ * 2014/07/17
  * 
  * (The MIT License)
  * 
@@ -30,20 +30,20 @@
  * 
  */
 
-package r2b.apps.utils;
-
-import android.util.Log;
-
-// TODO ADD HERE LOG4J FOR ANDROID: https://code.google.com/p/android-logging-log4j/
+package r2b.apps.utils.logger;
 
 /**
- * Android log wrapper. Useful to add several implementations about log
- * management like send to a service, print in a file,...
+ * All receivers must have.
  */
-public final class Logger {
+public interface Receiver {
 
 	/**
-	 * Send a VERBOSE log message.
+	 * Close resources, flush and send info of the object.
+	 */
+	public void close();
+	
+	/**
+	 * Send an ERROR log message.
 	 * 
 	 * @param tag
 	 *            Used to identify the source of a log message. It usually
@@ -51,11 +51,18 @@ public final class Logger {
 	 * @param msg
 	 *            The message you would like logged.
 	 */
-	public static final void v(String tag, String msg) {
-		if (Cons.SHOW_LOGS) {
-			Log.v(tag, msg);
-		}
-	}
+	public void e(String parseLog);
+	
+	/**
+	 * Send a DEBUG log message.
+	 * 
+	 * @param tag
+	 *            Used to identify the source of a log message. It usually
+	 *            identifies the class or activity where the log call occurs.
+	 * @param msg
+	 *            The message you would like logged.
+	 */
+	public void d(String parseLog);
 	
 	/**
 	 * Send a INFO log message.
@@ -66,14 +73,10 @@ public final class Logger {
 	 * @param msg
 	 *            The message you would like logged.
 	 */
-	public static final void i(String tag, String msg) {
-		if (Cons.SHOW_LOGS) {
-			Log.i(tag, msg);
-		}
-	}
-
+	public void i(String parseLog);
+	
 	/**
-	 * Send an ERROR log message.
+	 * Send a VERBOSE log message.
 	 * 
 	 * @param tag
 	 *            Used to identify the source of a log message. It usually
@@ -81,28 +84,6 @@ public final class Logger {
 	 * @param msg
 	 *            The message you would like logged.
 	 */
-	public static final void e(String tag, String msg) {
-		if (Cons.SHOW_LOGS) {
-			Log.e(tag, msg);
-		}
-	}
+	public void v(String parseLog);
 
-	/**
-	 * Send an ERROR log message and log the exception.
-	 * 
-	 * @param tag
-	 *            Used to identify the source of a log message. It usually
-	 *            identifies the class or activity where the log call occurs.
-	 * @param msg
-	 *            The message you would like logged.
-	 * @param tr
-	 *            An exception to log.
-	 */
-	public static final void e(String tag, String msg, Throwable tr) {
-		if (Cons.SHOW_LOGS) {
-			Log.e(tag, msg, tr);
-		}
-	}
-	
-	
 }

@@ -16,7 +16,7 @@
  * http://android-developers.blogspot.com.es/2013/08/some-securerandom-thoughts.html 
  */
 
-package r2b.apps.utils;
+package r2b.apps.utils.cipher;
 
 import android.os.Build;
 import android.os.Process;
@@ -155,7 +155,8 @@ public final class PRNGFixes {
      * {@code Provider} of {@code SecureRandom} engines which pass through
      * all requests to the Linux PRNG.
      */
-    private static class LinuxPRNGSecureRandomProvider extends Provider {
+    @SuppressWarnings("serial")
+	private static class LinuxPRNGSecureRandomProvider extends Provider {
 
         public LinuxPRNGSecureRandomProvider() {
             super("LinuxPRNG",
@@ -175,7 +176,8 @@ public final class PRNGFixes {
      * {@link SecureRandomSpi} which passes all requests to the Linux PRNG
      * ({@code /dev/urandom}).
      */
-    public static class LinuxPRNGSecureRandom extends SecureRandomSpi {
+    @SuppressWarnings("serial")
+	public static class LinuxPRNGSecureRandom extends SecureRandomSpi {
 
         /*
          * IMPLEMENTATION NOTE: Requests to generate bytes and to mix in a seed

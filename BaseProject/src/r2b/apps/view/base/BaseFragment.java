@@ -30,13 +30,13 @@
  * 
  */
 
-package r2b.apps.base;
+package r2b.apps.view.base;
 
-import r2b.apps.base.BaseDialog.BaseDialogListener;
 import r2b.apps.utils.Cons;
-import r2b.apps.utils.ITracker;
-import r2b.apps.utils.Logger;
-import r2b.apps.utils.SecurePreferences;
+import r2b.apps.utils.cipher.SecurePreferences;
+import r2b.apps.utils.logger.Logger;
+import r2b.apps.utils.tracker.ITracker;
+import r2b.apps.view.base.BaseDialog.BaseDialogListener;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -57,7 +57,7 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 	protected abstract int getLayout();
 	
 	/**
-	 * Initialize all activity views. It is call on onResume.
+	 * Initialize all fragmnt views. It is call on onResume.
 	 * Used with findViewByid...
 	 * Order of call on onResume 1.
 	 */
@@ -123,14 +123,13 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 		if(Cons.ENCRYPT) {
 			exit = SecurePreferences.getSecurePreferences(
 					context,
-					name);
-			
-			Logger.i(this.getClass().getSimpleName(), "Init fragment shared preferences on encryption mode.");
+					name);			
 		}
 		else {
 			exit = context.getSharedPreferences(name, mode);
 			
-			Logger.i(this.getClass().getSimpleName(), "Init fragment shared preferences on private mode.");
+			// XXX LOGGER
+			Logger.v(this.getClass().getSimpleName(), "Init fragment shared preferences on private mode.");
 		}
 		
 		return exit;
@@ -167,24 +166,24 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 	
 	@Override
 	public void onPause() {
+		super.onPause();
 		
 		((BaseActivity) getActivity()).setClickListener(null);
 		((BaseActivity) getActivity()).setBackListener(null);
 		
 		removeListeners();
-		clear();
-		
-		super.onPause();
+		clear();	
 	}	
 	
 	/**
 	 * Switch between fragments.
 	 * @param fragment The new fragment.
 	 * @param tag The tag to identify the fragment.
+	 * @param replace True replace, false add.
 	 * @param addToStack True to add to back stack, false otherwise.
 	 */
-	protected void switchFragment(android.support.v4.app.Fragment fragment, String tag, boolean addToStack) {
-		((BaseActivity) getActivity()).switchFragment(fragment, tag, addToStack);
+	protected void switchFragment(android.support.v4.app.Fragment fragment, String tag, boolean replace, boolean addToStack) {
+		((BaseActivity) getActivity()).switchFragment(fragment, tag, replace, addToStack);
 	}
 	
 	/***
@@ -209,13 +208,17 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 			getChildFragmentManager().beginTransaction()
 					.add(frgContainerId, fragment, tag)
 					.addToBackStack(fragment.getClass().getName()).commit();
-			Logger.i(this.getClass().getSimpleName(), "Add child: " + tag + ", saving to stack");
+			
+			// XXX LOGGER
+			Logger.v(this.getClass().getSimpleName(), "Add child: " + tag + ", saving to stack");
 		} else {
 			getChildFragmentManager().popBackStack();
 			getChildFragmentManager().beginTransaction()
 					.add(frgContainerId, fragment, tag)
 					.addToBackStack(fragment.getClass().getName()).commit();
-			Logger.i(this.getClass().getSimpleName(), "Add child: " + tag + ", without saving to stack");
+			
+			// XXX LOGGER
+			Logger.v(this.getClass().getSimpleName(), "Add child: " + tag + ", without saving to stack");
 		}
 
 	}	

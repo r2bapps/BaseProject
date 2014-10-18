@@ -1,9 +1,9 @@
 /*
- * ITracker
+ * LocationUtils
  * 
  * 0.1
  * 
- * 2014/05/16
+ * 2014/09/18
  * 
  * (The MIT License)
  * 
@@ -32,37 +32,54 @@
 
 package r2b.apps.utils;
 
+import android.app.Activity;
+import android.location.Location;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 /**
- * All tracker objects must implements this interface.
+ * Locations and maps utility class.
  */
-public interface ITracker {
+public final class LocationUtils {
 	
 	/**
-	 * Category for GUI actions.
+	 * Distance between two locations.
+	 * @param latA
+	 * @param lngA
+	 * @param latB
+	 * @param lngB
+	 * @return The distance.
 	 */
-	public static final String CATEGORY_GUI = "GUI";	
-	/**
-	 * Action click.
-	 */
-	public static final String ACTION_CLICK = "click";
-	/**
-	 * List item action click.
-	 */
-	public static final String ACTION_LIST_ITEM_CLICK = "list_item_click";
+	public static double distanceBetweenTwoLocations(double latA, double lngA, double latB, double lngB) {
+		Location locationA = new Location("A");
+
+	    locationA.setLatitude(latA);
+	    locationA.setLongitude(lngA);
+
+	    Location locationB = new Location("B");
+
+	    locationB.setLatitude(latB);
+	    locationB.setLongitude(lngB);
+
+	    double distance = locationA.distanceTo(locationB);
+
+	    return distance;
+	}
 	
 	/**
-	 * Set and send the screen name.
-	 * @param screenName The screen name.
+	 * Check google play service installed.
+	 * @param parent Activity parent.
+	 * @return True installed, false otherwise.
 	 */
-	public void sendScreenName(String screenName);
-	
-	/**
-	 * Set and send event.
-	 * @param category the event category.
-	 * @param action The event action.
-	 * @param label The label of the element that launch the event.
-	 * @param value The value.
-	 */
-	public void sendEvent(String category, String action, String label, long value);
+	public static boolean checkGooglePlayServicesInstalled(final Activity parent) {
+		final int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(parent);
+		boolean installed = false;
+		if (resultCode == ConnectionResult.SUCCESS) {
+			installed = true;
+		}
+		
+		return installed;
+	}
 	
 }

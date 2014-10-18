@@ -1,7 +1,7 @@
 /*
  * BaseAdapter
  * 
- * 0.1
+ * 0.2
  * 
  * 2014/05/16
  * 
@@ -30,17 +30,19 @@
  * 
  */
 
-package r2b.apps.base;
+package r2b.apps.view.base;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 /**
  * Wrapper for base adapter main functionality.
+ * This class uses View Holder Pattern.
  * @param <T> The item type of the list.
  */
 public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
@@ -57,12 +59,20 @@ public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
 	protected abstract int getLayout();
 	
 	/**
-	 * Initialize views and values.
-	 * @param item The item.
-	 * @param position The position of the item.
+	 * Get new instance of the view holder initializing the views.
+	 * @return The view holder.
 	 * @param convertView The view where find views.
 	 */
-	protected abstract void initViewsAndValues(T item, int position, View convertView);
+	protected abstract Object initViewHolder(View convertView);
+	
+	/**
+	 * Setup the values of the view holder.
+	 * @param context Parent context.
+	 * @param item The item.
+	 * @param position The position of the item.
+	 * @param viewHolder The view holder where setup values.
+	 */
+	protected abstract void setViewHolderValues(Context context, T item, int position, Object viewHolder);
 	
 	/**
 	 * Build adapter with the list items.
@@ -92,9 +102,12 @@ public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
 		if (convertView == null) {
 			convertView = LayoutInflater.
 					from(parent.getContext()).inflate(getLayout(), parent, false);
+			// View Holder pattern
+			Object viewHolder = initViewHolder(convertView);
+			convertView.setTag(viewHolder);
 		}
 		
-		initViewsAndValues(item, position, convertView);
+		setViewHolderValues(parent.getContext(), item, position, convertView.getTag());
 		
 		return convertView;
 	}
