@@ -1,122 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.6" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="r2b.apps.base.BaseFragment" project="BaseProject" 
-    file="/BaseProject/src/r2b/apps/base/BaseFragment.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="477" width="293" x="303" y="-271"/>    
+  <class id="1" language="java" name="r2b.apps.view.base.BaseApplication" project="BaseProject" 
+    file="/BaseProject/src/r2b/apps/view/base/BaseApplication.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="78" y="-61"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="r2b.apps.base.BaseAbsListFragment" project="BaseProject" 
-    file="/BaseProject/src/r2b/apps/base/BaseAbsListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="333" width="209" x="303" y="480"/>    
+  <class id="2" language="java" name="r2b.apps.view.base.BaseActivity" project="BaseProject" 
+    file="/BaseProject/src/r2b/apps/view/base/BaseActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1053" y="209"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="r2b.apps.base.BaseApplication" project="BaseProject" 
-    file="/BaseProject/src/r2b/apps/base/BaseApplication.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="171" width="166" x="97" y="-271"/>    
+  <class id="3" language="java" name="r2b.apps.view.base.BaseSplashActivity" project="BaseProject" 
+    file="/BaseProject/src/r2b/apps/view/base/BaseSplashActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="361" y="-61"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="4" language="java" name="r2b.apps.base.ClickableFragment" project="BaseProject" 
-    file="/BaseProject/src/r2b/apps/base/ClickableFragment.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="81" width="130" x="552" y="480"/>    
+  <interface id="4" language="java" name="r2b.apps.view.base.BaseActivity.CallableBackFragment" project="BaseProject" 
+    file="/BaseProject/src/r2b/apps/view/base/BaseActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="976" y="846"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <interface id="5" language="java" name="r2b.apps.base.BaseDialog.BaseDialogListener" project="BaseProject" 
-    file="/BaseProject/src/r2b/apps/base/BaseDialog.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="189" width="275" x="798" y="480"/>    
+  <interface id="5" language="java" name="r2b.apps.view.base.BaseDialog.BaseDialogListener" project="BaseProject" 
+    file="/BaseProject/src/r2b/apps/view/base/BaseDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1246" y="865"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="6" language="java" name="r2b.apps.base.BaseDialog" project="BaseProject" 
-    file="/BaseProject/src/r2b/apps/base/BaseDialog.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="711" width="380" x="960" y="-271"/>    
+  <class id="6" language="java" name="r2b.apps.view.base.BaseDialog" project="BaseProject" 
+    file="/BaseProject/src/r2b/apps/view/base/BaseDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1418" y="218"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="r2b.apps.base.BaseAdapter" project="BaseProject" 
-    file="/BaseProject/src/r2b/apps/base/BaseAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="207" width="202" x="303" y="853"/>    
+  <class id="7" language="java" name="r2b.apps.view.base.BaseAbsListFragment" project="BaseProject" 
+    file="/BaseProject/src/r2b/apps/view/base/BaseAbsListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="697" y="888"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="r2b.apps.base.BaseActivity" project="BaseProject" 
-    file="/BaseProject/src/r2b/apps/base/BaseActivity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="585" width="284" x="636" y="-271"/>    
+  <class id="8" language="java" name="r2b.apps.view.base.BaseAdapter" project="BaseProject" 
+    file="/BaseProject/src/r2b/apps/view/base/BaseAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="658" y="1288"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="9">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="10" name="dialogListener"/>      
-      <multiplicity id="11" minimum="0" maximum="1"/>    
+  <class id="9" language="java" name="r2b.apps.view.base.BaseFragment" project="BaseProject" 
+    file="/BaseProject/src/r2b/apps/view/base/BaseFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="705" y="74"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <realization id="10">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <association id="11">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="12" name="dialogListenerWrapper"/>      
+      <multiplicity id="13" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="12">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="13" name="adapter"/>      
-      <multiplicity id="14" minimum="0" maximum="1"/>    
+  <nesting id="14">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </nesting>  
+  <association id="15">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="16" name="dialogListener"/>      
+      <multiplicity id="17" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="15">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="5"/>  
-  </nesting>  
-  <association id="16">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="17" name="currentClickListener"/>      
-      <multiplicity id="18" minimum="0" maximum="1"/>    
+  <association id="18">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="19" name="currentBackListener"/>      
+      <multiplicity id="20" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="19">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="20" name="dialogListenerWrapper"/>      
-      <multiplicity id="21" minimum="0" maximum="1"/>    
+  <association id="21">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="22" name="adapter"/>      
+      <multiplicity id="23" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="22">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="5"/>  
+  <realization id="24">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="4"/>  
   </realization>  
-  <generalization id="23">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="1"/>  
+  <generalization id="25">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="9"/>  
   </generalization>  
+  <nesting id="26">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="5"/>  
+  </nesting>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    
