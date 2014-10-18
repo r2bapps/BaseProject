@@ -170,6 +170,21 @@ public final class Logger {
 		}
 	}
 	
+	/**
+	 * Send a DEBUG log message for performance notice.
+	 * 
+	 * @param tag
+	 *            Used to identify the source of a log message. It usually
+	 *            identifies the class or activity where the log call occurs.
+	 * @param method
+	 *            Used to identify the method of a log performance message.
+	 * @param time
+	 *            The performance time in milliseconds you would like logged.
+	 */
+	public static final void performance(String tag, String method, long time) {
+		Log.d("Performance:" + tag, method + ": " + String.valueOf(time) + " ms");
+	}		
+	
 	public static void init(final Context context, Receiver [] receivers) {
 		Logger.context = context.getApplicationContext();
 		

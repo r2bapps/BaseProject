@@ -1,7 +1,7 @@
 /*
  * DBManager
  * 
- * 0.1
+ * 0.1.5
  * 
  * 2014/05/16
  * 
@@ -35,7 +35,6 @@ package r2b.apps.db;
 import java.util.List;
 
 import r2b.apps.utils.logger.Logger;
-
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -155,6 +154,8 @@ public class DBManager<K> {
 			throw new IllegalArgumentException("list argument is null");
 		}
 		
+		long performanceBegin = System.currentTimeMillis();
+		
 		try {
 			
 			db.beginTransaction();
@@ -171,6 +172,10 @@ public class DBManager<K> {
 		} finally {						
 			db.endTransaction();			
 		}
+		
+	    Logger.performance(DBManager.class.getSimpleName(), 
+	    		"void bulkInsert(List<DBEntity<K>> list)", 
+	    		System.currentTimeMillis()-performanceBegin);	
 	}
 	
 	/**
@@ -183,6 +188,8 @@ public class DBManager<K> {
 		if(list == null) {
 			throw new IllegalArgumentException("list argument is null");
 		}
+		
+		long performanceBegin = System.currentTimeMillis();
 		
 		try {
 			
@@ -200,6 +207,10 @@ public class DBManager<K> {
 		} finally {						
 			db.endTransaction();			
 		}
+		
+	    Logger.performance(DBManager.class.getSimpleName(), 
+	    		"void bulkUpdate(List<DBEntity<K>> list)", 
+	    		System.currentTimeMillis()-performanceBegin);
 	}
 	
 	/**
@@ -212,6 +223,8 @@ public class DBManager<K> {
 		if(list == null) {
 			throw new IllegalArgumentException("list argument is null");
 		}
+		
+		long performanceBegin = System.currentTimeMillis();
 		
 		try {
 			
@@ -229,6 +242,10 @@ public class DBManager<K> {
 		} finally {						
 			db.endTransaction();			
 		}
+		
+	    Logger.performance(DBManager.class.getSimpleName(), 
+	    		"void bulkDelete(List<DBEntity<K>> list)", 
+	    		System.currentTimeMillis()-performanceBegin);	
 	}	
 	
 	/**

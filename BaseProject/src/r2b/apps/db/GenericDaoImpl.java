@@ -1,7 +1,7 @@
 /*
  * GenericDaoImpl
  * 
- * 0.1
+ * 0.1.5
  * 
  * 2014/05/16
  * 
@@ -83,6 +83,8 @@ public class GenericDaoImpl<T extends DBEntity<?>, K> implements GenericDao<T, K
 			throw new IllegalArgumentException("T table name is null");
 		}		
 		
+		long performanceBegin = System.currentTimeMillis();
+		
 		ContentValues values = t.getTableContentValues();
 		if(incrementalFlagCache.get(t.getTableName())) {
 			// IMPORTANT: We do this because db table keys are AUTOINCREMENTAL
@@ -102,7 +104,11 @@ public class GenericDaoImpl<T extends DBEntity<?>, K> implements GenericDao<T, K
 	    } else {	    	
 	    	((DBEntity)t).setKey(exit);    		    	
 	    	Logger.i(GenericDaoImpl.class.getSimpleName(), "Element created: \n" + t.toString());	    	
-	    }
+	    }	   
+	    
+	    Logger.performance(GenericDaoImpl.class.getSimpleName(), 
+	    		"T create(T t)", 
+	    		System.currentTimeMillis()-performanceBegin);	
 	    
 	    return t;
 	}
@@ -117,6 +123,8 @@ public class GenericDaoImpl<T extends DBEntity<?>, K> implements GenericDao<T, K
 		else if(clazz == null) {
 			throw new IllegalArgumentException("Clazz argument is null or empty");
 		}
+		
+		long performanceBegin = System.currentTimeMillis();
 		
 		T element = null;
 		Cursor c = null;
@@ -165,6 +173,10 @@ public class GenericDaoImpl<T extends DBEntity<?>, K> implements GenericDao<T, K
 		    }  
 		}
 		
+	    Logger.performance(GenericDaoImpl.class.getSimpleName(), 
+	    		"T retrieve(final K id, final Class<T> clazz)", 
+	    		System.currentTimeMillis()-performanceBegin);	
+		
 		return element;
 	}
 	
@@ -181,6 +193,8 @@ public class GenericDaoImpl<T extends DBEntity<?>, K> implements GenericDao<T, K
 		else if(t.getTableName() == null) {
 			throw new IllegalArgumentException("T table name is null");
 		}
+		
+		long performanceBegin = System.currentTimeMillis();
 		
 		T updated = t;
 		
@@ -211,6 +225,10 @@ public class GenericDaoImpl<T extends DBEntity<?>, K> implements GenericDao<T, K
 	    	updated = null;
 	    }
 	    
+	    Logger.performance(GenericDaoImpl.class.getSimpleName(), 
+	    		"T update(T t)", 
+	    		System.currentTimeMillis()-performanceBegin);
+	    
 	    return updated;
 	}
 	
@@ -223,6 +241,8 @@ public class GenericDaoImpl<T extends DBEntity<?>, K> implements GenericDao<T, K
 		else if(t.getKey() == null) {
 			throw new IllegalArgumentException("T table key is null");
 		}
+		
+		long performanceBegin = System.currentTimeMillis();
 		
 		// Which row to delete, based on the ID
 		String selection = DBEntity.COL_ID + " LIKE ?";
@@ -238,6 +258,10 @@ public class GenericDaoImpl<T extends DBEntity<?>, K> implements GenericDao<T, K
 	    			"Can not delete element: \n" + t.toString() + "\n, exit code distinct than 1");
 	    }
 	    
+	    Logger.performance(GenericDaoImpl.class.getSimpleName(), 
+	    		"void delete(final T t)", 
+	    		System.currentTimeMillis()-performanceBegin);
+	    
 	}
 
 	@SuppressWarnings("unchecked")
@@ -247,6 +271,8 @@ public class GenericDaoImpl<T extends DBEntity<?>, K> implements GenericDao<T, K
 		if(clazz == null) {
 			throw new IllegalArgumentException("Clazz argument is null or empty");
 		}
+		
+		long performanceBegin = System.currentTimeMillis();
 		
 		Logger.i(DatabaseHandler.class.getSimpleName(), 
 				"listAll " + clazz.getSimpleName());
@@ -303,6 +329,10 @@ public class GenericDaoImpl<T extends DBEntity<?>, K> implements GenericDao<T, K
 		    }  
 		}
 		
+	    Logger.performance(GenericDaoImpl.class.getSimpleName(), 
+	    		"List<T> listAll(final Class<T> clazz)", 
+	    		System.currentTimeMillis()-performanceBegin);
+	    
 		return elements;
 	}
 	
@@ -313,6 +343,8 @@ public class GenericDaoImpl<T extends DBEntity<?>, K> implements GenericDao<T, K
 		if(clazz == null) {
 			throw new IllegalArgumentException("Clazz argument is null or empty");
 		}
+		
+		long performanceBegin = System.currentTimeMillis();
 		
 		Logger.i(DatabaseHandler.class.getSimpleName(), 
 				"listAll " + clazz.getSimpleName() + ", with order " + order + ", and limit " + String.valueOf(limit));
@@ -368,6 +400,10 @@ public class GenericDaoImpl<T extends DBEntity<?>, K> implements GenericDao<T, K
 		    }  
 		}
 		
+	    Logger.performance(GenericDaoImpl.class.getSimpleName(), 
+	    		"List<T> listAll(final Class<T> clazz, String row, String order, int limit)", 
+	    		System.currentTimeMillis()-performanceBegin);
+	    
 		return elements;
 	}	
 	

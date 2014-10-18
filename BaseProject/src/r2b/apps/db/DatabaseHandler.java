@@ -1,7 +1,7 @@
 /*
  * DatabaseHandler
  * 
- * 0.1
+ * 0.1.5
  * 
  * 2014/05/16
  * 
@@ -278,7 +278,7 @@ final class DatabaseHandler extends SQLiteOpenHelper {
 	}
 	
 	/**
-	 * Get the incremental keys by tablets.
+	 * Get the incremental keys by tables.
 	 * @return True if has key, false otherwise.
 	 */
 	synchronized final Map<String, Boolean> getIncrementalKeys() {
