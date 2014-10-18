@@ -231,15 +231,15 @@ public abstract class BaseActivity extends android.support.v7.app.ActionBarActiv
 	
 	@Override
 	protected void onPause() {
+		super.onPause();
+		
 		removeListeners();
 		clear();
 		
 		// XXX Hockeyapp
 		if(Build.VERSION.SDK_INT < 14 /*-ICE_CREAM_SANDWICH*/) {
 			Tracking.stopUsage(this);
-		}
-		
-		super.onPause();
+		}	
 	}
 	
 	/**

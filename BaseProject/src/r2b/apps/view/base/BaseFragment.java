@@ -167,14 +167,13 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 	
 	@Override
 	public void onPause() {
+		super.onPause();
 		
 		((BaseActivity) getActivity()).setClickListener(null);
 		((BaseActivity) getActivity()).setBackListener(null);
 		
 		removeListeners();
-		clear();
-		
-		super.onPause();
+		clear();	
 	}	
 	
 	/**
