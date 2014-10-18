@@ -57,7 +57,7 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment
 	protected abstract int getLayout();
 	
 	/**
-	 * Initialize all activity views. It is call on onResume.
+	 * Initialize all fragmnt views. It is call on onResume.
 	 * Used with findViewByid...
 	 * Order of call on onResume 1.
 	 */
