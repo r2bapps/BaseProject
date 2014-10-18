@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Enable debugging -->
+    <bool name="debug">false</bool>
+    
+    <!-- Enable fake data -->
+    <bool name="fake">false</bool>
+    
+    <!-- Enable tracking -->
+    <bool name="track">true</bool>
+
+    <!-- Enable encryption -->
+    <bool name="encrypt">true</bool>
+    
+    <!-- Enable hackeyapp sdk -->
+    <bool name="hockeyapp">false</bool>
+    <string name="hockeyapp_app_id" translatable="false">YOUR KEY</string> <!-- Change to your key -->
+    
+    <!-- Enable logger to remote --> <!-- Change to your url -->
+    <string name="logger_remote_url" translatable="false">http://192.168.0.195:8080/LogLiteUploadServer/UploadDownloadFileServlet</string>
+    
+    <!-- Enable clear db on startup -->
+    <bool name="clear_db_startup">false</bool>
+    
+    <!-- Setup db version -->
+    <integer name="db_version">1</integer>
+    
+    <!-- Setup db name -->
+    <string name="db_name" translatable="false">r2b.apps.genericdaolite.db</string>
+    
+</resources>
