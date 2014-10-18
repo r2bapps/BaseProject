@@ -1,7 +1,7 @@
 /*
  * BaseAbsListFragment
  * 
- * 0.1
+ * 0.3
  * 
  * 2014/05/16
  * 
@@ -38,12 +38,14 @@ import r2b.apps.utils.tracker.BaseTracker;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.ListView;	
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 
 /**
  * Wrapper for AbsList main functionality.
@@ -60,7 +62,9 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	 * View. 
 	 */ 
 	protected AbsListView absListView;
-	protected TextView empty;
+	protected View emptyView;
+	protected View errorView;
+	protected View loadingView;	
 	
 	/**
 	 * Adapter.
@@ -70,7 +74,7 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	/** 
 	 * Scroll received to apply. 
 	 */
-	protected int scrollY;
+	protected int scrollY; 
 	
 	/**
 	 * List/Grid item click.
@@ -103,7 +107,7 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	};
 	
 	/**
-	 * 
+	 * The list list/grid item clicked.
 	 * @param view The view clicked
 	 * @param position the position of this view.
 	 * @param id The id of the item on the view.
@@ -122,6 +126,24 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	 * @return The info list.
 	 */
 	protected abstract List<T> loadData();
+	
+	/**
+	 * The list/grid empty.
+	 * @return The empty view.
+	 */
+	protected abstract View getEmptyView();
+	
+	/**
+	 * The list/grid error.
+	 * @return The error view.
+	 */
+	protected abstract View getErrorView();
+	
+	/**
+	 * The list/grid loading.
+	 * @return The loading view.
+	 */
+	protected abstract View getLoadingView();
 	
 	/* (non-Javadoc)
 	 * @see android.support.v4.app.Fragment#onSaveInstanceState(android.os.Bundle)
@@ -146,8 +168,32 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 	@Override
 	protected void initViews() { 
 		absListView = (AbsListView) getView().findViewById(android.R.id.list);
-		empty = (TextView) getView().findViewById(android.R.id.empty);
-		absListView.setEmptyView(empty);
+		
+		emptyView = getEmptyView();
+		errorView = getErrorView();
+		loadingView = getLoadingView();
+		
+		RelativeLayout.LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		lp.addRule(RelativeLayout.CENTER_VERTICAL);
+		RelativeLayout rl = new RelativeLayout(getActivity());
+		rl.setLayoutParams(lp);
+		
+		if (emptyView != null) {
+			rl.addView(emptyView);
+		}
+		if (errorView != null) {
+			rl.addView(errorView);		
+		}
+		if (loadingView != null) {
+			rl.addView(loadingView);
+		}
+
+		ViewGroup parent = (ViewGroup) absListView.getParent();
+		parent.addView(rl);
+		absListView.setEmptyView(rl);
+		
+		showEmptyView();
 	} 
 	
 	/* (non-Javadoc)
@@ -191,6 +237,51 @@ public abstract class BaseAbsListFragment<T> extends BaseFragment {
 			absListView.smoothScrollToPosition(scrollY);
 			scrollY = 0;
 		}		
+	}
+	
+	/**
+	 * Show empty view.
+	 */
+	protected void showEmptyView() {
+		if(emptyView != null) {
+			emptyView.setVisibility(View.VISIBLE);
+		}
+		if(errorView != null) {
+			errorView.setVisibility(View.GONE);
+		}
+		if(loadingView != null) {
+			loadingView.setVisibility(View.GONE);
+		}
+	}
+	
+	/**
+	 * Show error view.
+	 */
+	protected void showErrorView() {
+		if(emptyView != null) {
+			emptyView.setVisibility(View.GONE);
+		}
+		if(errorView != null) {
+			errorView.setVisibility(View.VISIBLE);
+		}
+		if(loadingView != null) {
+			loadingView.setVisibility(View.GONE);
+		}
+	}
+	
+	/**
+	 * Show loading view.
+	 */
+	protected void showLoadingView() {
+		if(emptyView != null) {
+			emptyView.setVisibility(View.GONE);
+		}
+		if(errorView != null) {
+			errorView.setVisibility(View.GONE);
+		}
+		if(loadingView != null) {
+			loadingView.setVisibility(View.VISIBLE);
+		}
 	}
 	
 }
